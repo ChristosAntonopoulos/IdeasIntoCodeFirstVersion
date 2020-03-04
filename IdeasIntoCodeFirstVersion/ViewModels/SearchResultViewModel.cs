@@ -12,7 +12,7 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
 
         public ICollection<Project> Projects { get; set; }
 
-        public string searchString { get; set; }
+        
 
         
 

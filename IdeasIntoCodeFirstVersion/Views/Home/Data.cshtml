@@ -1,10 +1,20 @@
-﻿@*@model IdeasIntoCodeFirstVersion.ViewModels.SearchResultViewModel*@
+﻿@model IdeasIntoCodeFirstVersion.ViewModels.SearchResultViewModel
 
 <h2>Data</h2>
 
 
-<table id="Users" class="table">
-    @*@Html.ActionLink(item.FullName, "UserProfile", "User", new { id = item.UserID }, null)*@
+<div class="form-group">
+    @foreach (var developer in Model.Developers)
+    {
+        @Html.ActionLink(developer.FullName, "DeveloperProfile", "Developer", new { id = developer.ID }, null)
+    }
+    @foreach (var project in Model.Projects)
+    {
+        @Html.ActionLink(project.Title, "ProjectProfile", "Project", new { id = project.ID }, null)
+    }
+</div>
+@*<table id="Users" class="table">
+    @Html.ActionLink(item.FullName, "UserProfile", "User", new { id = item.UserID }, null)
 </table>
 
 
@@ -43,11 +53,11 @@
 
             ]
         });
-    });
+    });*@
     
               
            
-</script>
+@*</script>*@
     @*<script>
             $(document).ready(function () {
                 var table = $("#Users").DataTable({
@@ -82,4 +92,4 @@
             //    });
             //});
         </script>*@
-}
+
