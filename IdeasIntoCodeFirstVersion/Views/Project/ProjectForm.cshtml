@@ -1,0 +1,120 @@
+﻿@model IdeasIntoCodeFirstVersion.ViewModels.ProjectFormViewModel
+
+@{
+    ViewBag.Title = "ProjectForm";
+}
+
+<h2>ProjectForm</h2>
+
+@using (Html.BeginForm("Save", "Project"))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Project</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Project.ProjectID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Project.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Project.Active)
+                @Html.ValidationMessageFor(model => model.Project.Active, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.HiddenFor(p => p.Project.AdminID)
+    </div>
+
+
+    <div>
+        @Html.TextBox("SearchString", "", new { @id = "search", @class = "form-control mr-sm-2 dropdown-toggle", @autocomplete = "off", onkeydown = "Search()", data_toggle = "dropdown" })
+
+        <ul id="searchresult" class="dropdown-menu" aria-labeledby="searchDropdown">
+        </ul>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <table>
+                <tr id="ProgrammingList">
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-danger" />
+        </div>
+    </div>
+
+
+
+</div>
+
+
+        }
+
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+        <script type="text/javascript">
+
+
+    function Search() {
+                $.ajax({
+                    url: '@Url.Action("FindProgrammingLanguageList", "ProgrammingLanguage")',
+                    type: 'GET',
+                    cache: false,
+                    data: { searchString: $('#search').val() }
+                }).done(function (result) {
+                    $('#searchresult').html(result);
+
+                });
+    };
+
+    function ShowSelectedProgrammingLanguage() {
+                $.ajax({
+                    url: '@Url.Action("ShowSelectedProgrammingLanguage", "ProgrammingLanguage")',
+                    type: 'GET',
+                    cache: false,
+                    data: { }
+                }).done(function (result) {
+                    $('#ProgrammingList').html(result);
+
+                });
+        };
+
+
+        </script>
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

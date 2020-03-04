@@ -1,0 +1,85 @@
+﻿@*@model IdeasIntoCodeFirstVersion.ViewModels.SearchResultViewModel*@
+
+<h2>Data</h2>
+
+
+<table id="Users" class="table">
+    @*@Html.ActionLink(item.FullName, "UserProfile", "User", new { id = item.UserID }, null)*@
+</table>
+
+
+<table id="Projects" class="table">
+</table>
+
+@section scripts
+{<script>
+    $(document).ready(function () {
+        var table = $("#Users").DataTable({
+            ajax: {
+                url: "/api/developers/",
+                dataSrc: ""
+            },
+            columns: [
+                {
+                    data: "fullName"
+                   
+                    
+                }
+
+            ]
+        });
+
+          var table = $("#Projects").DataTable({
+            ajax: {
+                url: "/api/Projects/",
+                dataSrc: ""
+            },
+            columns: [
+                {
+                    data: "title"
+                   
+                    
+                }
+
+            ]
+        });
+    });
+    
+              
+           
+</script>
+    @*<script>
+            $(document).ready(function () {
+                var table = $("#Users").DataTable({
+                    ajax: {
+                        url: "api/developers",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "fullName",
+                            //render: function (data, type, developer) {
+                            //    return "<a href='/user/UserProfile/" + developer.id + "'>" + developer.fullName + "</a>";
+                            //}
+                        }
+                    ]
+                });
+            });
+            // $(document).ready(function () {
+            //    var table = $("#Projects").DataTable({
+            //        ajax: {
+            //            url: "api/projects/",
+            //            dataSrc: ""
+            //        },
+            //        columns: [
+            //            {
+            //                    data: "title",
+            //                    render: function (data, type, project) {
+            //                    return "<a href='/project/ProjectProfile/" + project.id + "'>" + project.title + "</a>";
+            //                    }
+            //            },
+            //        ]
+            //    });
+            //});
+        </script>*@
+}
