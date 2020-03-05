@@ -4,15 +4,26 @@
 
 
 <div class="form-group">
-    @foreach (var developer in Model.Developers)
-    {
+    
+        @foreach (var developer in Model.Developers)
+        {
+    <ul>
         @Html.ActionLink(developer.FullName, "DeveloperProfile", "Developer", new { id = developer.ID }, null)
-    }
+    </ul>
+        }
+    
+</div>
+<div class="form-group">
+
     @foreach (var project in Model.Projects)
     {
+    <ul>
         @Html.ActionLink(project.Title, "ProjectProfile", "Project", new { id = project.ID }, null)
-    }
-</div>
+    </ul>
+            }
+        
+    </div>
+
 @*<table id="Users" class="table">
     @Html.ActionLink(item.FullName, "UserProfile", "User", new { id = item.UserID }, null)
 </table>

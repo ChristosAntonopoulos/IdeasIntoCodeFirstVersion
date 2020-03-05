@@ -42,11 +42,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult Data(string searchString)
         {
             
-            var developers = context.Developers.Include(d=>d.ID).AsQueryable();
-            var projects = context.Projects.Include(p => p.ID);
+            var developers = context.Developers.AsEnumerable();
+            var projects = context.Projects.AsEnumerable();
             
             if (!string.IsNullOrEmpty(searchString))
             {
+                
                 developers = developers.Where(s => s.LastName.Contains(searchString)
                 || s.Name.Contains(searchString));
 
@@ -54,8 +55,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
             var viewmodel = new SearchResultViewModel()
             {
-                //Developers = developers,
-                //Projects = projects
+                Developers = developers,
+                Projects = projects
             };
 
             return View(viewmodel);
