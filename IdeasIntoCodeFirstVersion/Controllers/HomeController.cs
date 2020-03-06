@@ -41,9 +41,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult Data(string searchString)
         {
-            
-            var developers = context.Developers.AsEnumerable();
-            var projects = context.Projects.AsEnumerable();
+
+            var developers = from d in context.Developers
+                             select d;
+            var projects = from p in context.Projects
+                           select p;
             
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -55,8 +57,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
             var viewmodel = new SearchResultViewModel()
             {
-                Developers = developers,
-                Projects = projects
+                Developers = developers.ToList(),
+                Projects = projects.ToList()
             };
 
             return View(viewmodel);

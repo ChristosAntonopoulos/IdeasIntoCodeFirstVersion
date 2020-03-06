@@ -8,9 +8,9 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
 {
     public class SearchResultViewModel
     {
-        public IEnumerable<Developer> Developers { get; set; }
+        public List<Developer> Developers { get; set; }
 
-        public IEnumerable<Project> Projects { get; set; }
+        public List<Project> Projects { get; set; }
 
         
 
