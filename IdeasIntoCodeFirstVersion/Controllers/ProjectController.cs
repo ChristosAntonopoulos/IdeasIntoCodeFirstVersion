@@ -28,7 +28,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult ProjectProfile(int ID)
         {
 
-            var project = context.Projects.Include(p => p.Team).Single(p=>p.ID==ID);
+            var project = context.Projects
+                .Include(p => p.Comments.Select(c => c.Developer))
+                .Include(p => p.Team).Single(p=>p.ID==ID);
             return View(project);
         }
 
