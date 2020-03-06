@@ -533,6 +533,8 @@
     <Content Include="Views\Project\ProjectProfile.cshtml" />
     <Content Include="Views\Developer\DeveloperForm.cshtml" />
     <Content Include="Views\Home\Data.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\Developer\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

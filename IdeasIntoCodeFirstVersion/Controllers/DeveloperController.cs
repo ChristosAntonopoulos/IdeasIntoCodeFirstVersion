@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Net;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -99,10 +100,35 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             };
 
-
-
-
             return View("DeveloperForm", viewModel);
         }
+
+        // GET: Instructor/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var developer = context.Developers.Find(id);
+
+            if (developer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(developer);
+        }
+
+        // POST: Instructor/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var developer = context.Developers.Find(id);
+            context.Developers.Remove(developer);
+            context.SaveChanges();
+            return RedirectToAction("Index","Home");
+        }
+
     }
 }
