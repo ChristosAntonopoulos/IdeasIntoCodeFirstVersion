@@ -8,11 +8,11 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
 {
     public class SearchResultViewModel
     {
-        public ICollection<Developer> Developers { get; set; }
+        public List<Developer> Developers { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+        public List<Project> Projects { get; set; }
 
-        public string searchString { get; set; }
+        
 
         
 

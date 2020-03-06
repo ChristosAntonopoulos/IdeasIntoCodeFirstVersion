@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using IdeasIntoCodeFirstVersion.Models;
 using IdeasIntoCodeFirstVersion.ViewModels;
+using System.Net;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -34,9 +35,6 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult New(int ID)
         {
             
-          
-
-
             var viewModel = new ProjectFormViewModel()
             {
                 ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
@@ -122,9 +120,35 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             };
 
 
-            
-
             return View("ViewerForm", viewModel);
         }
+
+        // GET: Instructor/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var project = context.Projects.Find(id);
+
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+            return View(project);
+        }
+
+        // POST: Instructor/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var project = context.Projects.Find(id);
+            context.Projects.Remove(project);
+            context.SaveChanges();
+            return RedirectToAction("ProjectProfile");
+        }
+
     }
 }
