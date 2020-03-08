@@ -13,6 +13,8 @@ namespace IdeasIntoCodeFirstVersion.Models
         public int FollowerID { get; set; }
         public Developer Follower { get; set; }
 
+        public DateTime FollowStarted { get; set; }
+
         [Key, Column(Order = 1)]
         public int FolloweeID { get; set; }
         public Developer Followee { get; set; }

@@ -27,7 +27,8 @@ namespace IdeasIntoCodeFirstVersion.Models
         public  Developer Admin { get; set; }
        
         public Team Team { get; set; }
-
+        
+        public DateTime DateCreated { get; set; }
 
         public ICollection<ProjectCategory> ProjectCategories { get; set; }
 

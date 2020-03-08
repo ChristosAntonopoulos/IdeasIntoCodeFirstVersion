@@ -33,7 +33,9 @@ namespace IdeasIntoCodeFirstVersion.Models
         [Display(Name="E-mail")]
         [EmailAddress]
         public string Email { get; set; }        
-        public string GitHub { get; set; }      
+        public string GitHub { get; set; }   
+        
+        public DateTime DateCreated { get; set; }
 
         public ApplicationUser User { get; set; }
 

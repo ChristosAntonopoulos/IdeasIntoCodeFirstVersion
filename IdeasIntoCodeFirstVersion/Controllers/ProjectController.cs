@@ -51,12 +51,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
 
         [HttpPost]
-        public ActionResult Save(Project project,int[] selectedLanguages)
+        public ActionResult Save(Project project,int[] programmingLanguage)
         {
             var programmingLanguages = new List<ProgrammingLanguage>();
             var categories = new List<ProjectCategory>();
 
-            foreach (var languageID in selectedLanguages)
+            foreach (var languageID in programmingLanguage)
             {
                 programmingLanguages.Add(context.ProgrammingLanguages.Find(languageID));
 
@@ -86,6 +86,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             if (project.ID == 0)
             {
+                project.DateCreated = DateTime.Now;
                 context.Projects.Add(project);
 
             }
@@ -94,6 +95,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 var projectDB = context.Projects.Single(p => p.ID == project.ID);
                 projectDB.Title = project.Title;
                 projectDB.Description = project.Description;
+                
                 
             }
 
