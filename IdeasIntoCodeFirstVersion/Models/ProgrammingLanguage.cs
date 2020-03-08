@@ -17,5 +17,16 @@ namespace IdeasIntoCodeFirstVersion.Models
         public ICollection<Project> Projects { get; set; }
 
         public  ICollection<Developer> Developers { get; set; }
+
+        public ProgrammingLanguage()
+        {
+            Projects = new List<Project>();
+            Developers = new List<Developer>();
+        }
+             
+
+        
+
+        
     }
 }

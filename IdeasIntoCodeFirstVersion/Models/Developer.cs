@@ -56,6 +56,19 @@ namespace IdeasIntoCodeFirstVersion.Models
         
         public ICollection<Follow> Following { get; set; }
 
+        public Developer()
+        {
+            ProjectsOwned = new List<Project>();
+            TeamParicipating = new List<Team>();
+            Comments = new List<Comment>();
+            SendMessages = new List<Message>();
+            RecievedMessages = new List<Message>();
+            Followers = new List<Follow>();
+            Following = new List<Follow>();
+            ProgrammingLanguages = new List<ProgrammingLanguage>();
+
+        }
+
 
     }
 }

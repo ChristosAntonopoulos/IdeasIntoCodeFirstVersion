@@ -1,3 +1,5 @@
+using AutoMapper;
+using IdeasIntoCodeFirstVersion.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace IdeasIntoCodeFirstVersion
     {
         protected void Application_Start()
         {
+            Mapper.Initialize(c => c.AddProfile<OrganizationProfile>());
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
