@@ -36,6 +36,14 @@ namespace IdeasIntoCodeFirstVersion.Models
         public ICollection<Comment> Comments { get; set; }
 
 
+        public Project()
+        {
+            ProjectCategories = new List<ProjectCategory>();
+            ProgrammingLanguages = new List<ProgrammingLanguage>();
+            Comments = new List<Comment>();
+        }
+
+
 
 
     }

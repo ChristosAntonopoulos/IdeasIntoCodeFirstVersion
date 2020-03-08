@@ -1,0 +1,33 @@
+﻿@model ICollection<IdeasIntoCodeFirstVersion.Models.ProgrammingLanguage>
+
+
+
+@foreach (var programmingLanguage in Model)
+{
+    //@Html.ActionLink(programmingLanguage.Name, "ShowSelectedProgrammingLanguage",
+    //"ProgrammingLanguage", new { id = programmingLanguage.ProgrammingLanguageID }, new { @class = "dropdown-item", id = programmingLanguage.ProgrammingLanguageID, onkeydown="ShowSelectedProgrammingLanguage()" })
+    <li>
+        @Ajax.ActionLink(programmingLanguage.Name, "ShowSelectedProgrammingLanguage", "ProgrammingLanguage", new { @class = "dropdown-item", @id = programmingLanguage.ProgrammingLanguageID }, new AjaxOptions
+               {
+                  
+                   UpdateTargetId = "ProgrammingList",
+                   InsertionMode = InsertionMode.InsertAfter,
+                   HttpMethod = "Get"
+                });
+
+    </li>
+   
+
+}
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

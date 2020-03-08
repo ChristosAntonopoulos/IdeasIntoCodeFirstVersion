@@ -7,10 +7,10 @@
 <h2>View</h2>
 
 
-@using (Html.BeginForm("Save","Developer")) 
+@using (Html.BeginForm("Save", "Developer"))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Developer</h4>
         <hr />
@@ -54,7 +54,14 @@
                 @Html.ValidationMessageFor(model => model.Developer.GitHub, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" >Programming Languages</label>
+            <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="form-control" />
+        </div>
 
+        <div class="form-group" id="selectedprogramminglanguages">
+
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -69,4 +76,32 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+
+<script>
+    $(document).ready(function () {
+
+         var programmingLanguages = new Bloodhound({
+                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                  queryTokenizer: Bloodhound.tokenizers.whitespace,
+             prefetch: '/api/programminglanguages'
+                 });
+
+            $('#selectprogramminglanguages').typeahead({
+                minLength: 1,
+                highlight: true
+                },
+                {
+                    name: 'programmingLanguages',
+                    display: 'name',
+                    source: programmingLanguages
+                }).on("typeahead:select", function (e, programminglanguage) {
+
+                    $("#selectedprogramminglanguages").append("<input type='hidden' name='programmingLanguage' value='" + programminglanguage.id + "' /> <p>" + programminglanguage.name+"</p>")
+
+                });      
+
+    })
+</script>
+
 }
