@@ -25,16 +25,26 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View();
         }
 
-        public ActionResult About()
+       public ActionResult NewsFeed(int id)
         {
-            ViewBag.Message = "Your application description page.";
+           
+            var follows = context.Follows.Where(f=>f.FollowerID==id).Select(f => f.FolloweeID).ToList();
+            var comments = context.Comments.Where(c=> follows.Contains(c.DeveloperID)).ToList();
+            var followers = context.Follows.Where(f => follows.Contains(f.FollowerID)).OrderBy(f => f.FollowStarted).Take(10).ToList();
 
-            return View();
-        }
+            //var comments = from s in context.Comments
+            //               join sa in context.Follows on s.DeveloperID equals sa.FolloweeID
+            //               where sa.FollowerID == id
+            //               select s;
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+
+
+            var viewModel = new NewsFeedViewModel
+            {
+                Followers = followers,
+                Projects = context.Projects.OrderBy(p => p.DateCreated).Take(10).ToList(),
+                Comments = comments.ToList()
+                };
 
             return View();
         }

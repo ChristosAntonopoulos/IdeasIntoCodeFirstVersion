@@ -27,13 +27,22 @@ namespace IdeasIntoCodeFirstVersion.Models
         public  Developer Admin { get; set; }
        
         public Team Team { get; set; }
-
+        
+        public DateTime DateCreated { get; set; }
 
         public ICollection<ProjectCategory> ProjectCategories { get; set; }
 
         public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+
+        public Project()
+        {
+            ProjectCategories = new List<ProjectCategory>();
+            ProgrammingLanguages = new List<ProgrammingLanguage>();
+            Comments = new List<Comment>();
+        }
 
 
 

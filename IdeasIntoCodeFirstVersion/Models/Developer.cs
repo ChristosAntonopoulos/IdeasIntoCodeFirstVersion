@@ -33,7 +33,9 @@ namespace IdeasIntoCodeFirstVersion.Models
         [Display(Name="E-mail")]
         [EmailAddress]
         public string Email { get; set; }        
-        public string GitHub { get; set; }      
+        public string GitHub { get; set; }   
+        
+        public DateTime DateCreated { get; set; }
 
         public ApplicationUser User { get; set; }
 
@@ -55,6 +57,19 @@ namespace IdeasIntoCodeFirstVersion.Models
 
         
         public ICollection<Follow> Following { get; set; }
+
+        public Developer()
+        {
+            ProjectsOwned = new List<Project>();
+            TeamParicipating = new List<Team>();
+            Comments = new List<Comment>();
+            SendMessages = new List<Message>();
+            RecievedMessages = new List<Message>();
+            Followers = new List<Follow>();
+            Following = new List<Follow>();
+            ProgrammingLanguages = new List<ProgrammingLanguage>();
+
+        }
 
 
     }

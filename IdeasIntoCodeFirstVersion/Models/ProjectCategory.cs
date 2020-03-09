@@ -13,5 +13,10 @@ namespace IdeasIntoCodeFirstVersion.Models
 
         public ICollection<Project> Projects { get; set; }
 
+        public ProjectCategory()
+        {
+            Projects = new List<Project>();
+        }
+
     }
 }

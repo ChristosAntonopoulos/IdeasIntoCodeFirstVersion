@@ -1,0 +1,23 @@
+﻿@model IdeasIntoCodeFirstVersion.Models.ProgrammingLanguage
+
+@*<li value="@Model.ProgrammingLanguageID" id="@Model.ProgrammingLanguageID" name="selectedLanguages">
+    @Model.Name
+</li>*@
+
+<td>
+    <input type="hidden"
+           readonly
+           name="selectedLanguages"
+           value="@Model.ProgrammingLanguageID"
+           id="@Model.ProgrammingLanguageID"
+          
+           />
+    @Model.Name
+    <br />
+</td>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
