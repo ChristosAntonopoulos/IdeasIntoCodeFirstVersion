@@ -77,7 +77,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                     PopulateProejectCategories(project, category);
                 }
 
-                project.DateCreated = DateTime.Now;
+                project.TimeStamp = DateTime.Now;
 
                 context.Projects.Add(project);
 
@@ -111,11 +111,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 projectDB.Description = project.Description;
                 projectDB.Title = project.Title;
 
-                //DeveloperDB.Name = project.Name;
-                //DeveloperDB.LastName = developer.LastName;
-                //DeveloperDB.GitHub = developer.GitHub;
-                //DeveloperDB.Email = developer.Email;
-                //DeveloperDB.BirthDate = developer.BirthDate;
+               
             }
 
             context.SaveChanges();
@@ -123,40 +119,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View("ProjectProfile",project);
         }
            
-        //    if (!ModelState.IsValid)
-        //    {
-        //        var viewModel = new ProjectFormViewModel
-        //        {
-        //            //ProgrammingLanguages = programmingLanguages,
-                    
-        //            //ProjectCategories =categories,
-        //            Project = project
-        //        };
-
-        //        return View("ProjectForm", viewModel);
-
-        //    }
-           
-
-        //    if (project.ID == 0)
-        //    {
-        //        project.DateCreated = DateTime.Now;
-        //        context.Projects.Add(project);
-
-        //    }
-        //    else
-        //    {
-        //        var projectDB = context.Projects.Single(p => p.ID == project.ID);
-        //        projectDB.Title = project.Title;
-        //        projectDB.Description = project.Description;
-                
-                
-        //    }
-
-        //    context.SaveChanges();
-
-        //    return View("Profile", project.ID);
-        //}
+       
 
         public void UpdateProjectProgrammingLanguages(Project project, int[] programmingLanguage)
         {

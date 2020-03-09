@@ -201,6 +201,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interface\INewsFeed.cs" />
     <Compile Include="Migrations\202002271721541_Initial.cs" />
     <Compile Include="Migrations\202002271721541_Initial.Designer.cs">
       <DependentUpon>202002271721541_Initial.cs</DependentUpon>
@@ -228,6 +229,10 @@
     <Compile Include="Migrations\202003081227496_dateCreatedInFollowAndDeveloper.cs" />
     <Compile Include="Migrations\202003081227496_dateCreatedInFollowAndDeveloper.Designer.cs">
       <DependentUpon>202003081227496_dateCreatedInFollowAndDeveloper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs" />
+    <Compile Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.Designer.cs">
+      <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1013,6 +1018,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003081227496_dateCreatedInFollowAndDeveloper.resx">
       <DependentUpon>202003081227496_dateCreatedInFollowAndDeveloper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.resx">
+      <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
