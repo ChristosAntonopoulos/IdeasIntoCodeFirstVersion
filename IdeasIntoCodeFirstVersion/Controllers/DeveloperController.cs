@@ -40,7 +40,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             var viewModel = new DeveloperFormViewModel()
             {
-                ProgrammingLanguages = programmingLanguages
+                //ProgrammingLanguages = programmingLanguages
             };
 
             return View("DeveloperForm", viewModel);
@@ -53,9 +53,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         {
             if (!ModelState.IsValid)
             {
+                PopulateDeveloperProgrammingLanguages(developer, programmingLanguage);
                 var viewModel = new DeveloperFormViewModel
                 {
-                    ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
+                    //ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
                     Developer = developer
 
                 };

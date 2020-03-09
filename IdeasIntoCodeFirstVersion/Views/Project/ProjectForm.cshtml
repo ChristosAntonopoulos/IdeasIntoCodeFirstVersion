@@ -29,32 +29,40 @@
                 @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Project.Active)
-                    @Html.ValidationMessageFor(model => model.Project.Active, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
         <div class="form-group">
             @Html.HiddenFor(p => p.Project.AdminID)
         </div>
 
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Programming Languages</label>
+                    <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="form-control" />
+                </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Programming Languages</label>
-            <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="form-control" />
-        </div>
+                <div class="form-group ">
+                    <ul class="col-md-offset-2 col-md-10" id="selectedprogramminglanguages">
+                    </ul>
+                </div>
 
-        <div class="form-group " >
-            <ul class="col-md-offset-2 col-md-10" id="selectedprogramminglanguages">
-               
-            </ul>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Categories</label>
+                    <input id="selectpcategories" name="category" type="text" value="" class="form-control" />
+                </div>
+
+                <div class="form-group ">
+                    <ul class="col-md-offset-2 col-md-10" id="selectedcategories">
+                    </ul>
+                </div>
+
+            </div>
+
+
         </div>
+        
 
         <div class="form-group">
            
@@ -81,6 +89,29 @@
                  }
         $(document).ready(function () {
 
+            var projectCategories = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/categories'
+            });
+
+            $('#selectpcategories').typeahead({
+                minLength: 1,
+                highlight: true
+            },
+                {
+                    name: 'projectcategories',
+                    display: 'name',
+                    source: projectCategories
+                }).on("typeahead:select", function (e, projectcategory) {
+
+                    $("#selectedcategories").append("<li class='list-group-item'><input type='hidden' name='category' value='"
+                        + projectcategory.id + "' /> " + projectcategory.name +
+                        '<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"> X</button></li>')
+
+                });
+
+            
             var programmingLanguages = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
