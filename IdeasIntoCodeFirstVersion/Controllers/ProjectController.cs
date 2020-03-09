@@ -30,6 +30,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var project = context.Projects.Include(p => p.Team.TeamMembers)
                 .Include(p=>p.Admin)
                 .Include(p=>p.ProgrammingLanguages)
+                .Include(p => p.Comments.Select(c => c.Developer))
                 .Include(p=>p.ProjectCategories).Single(p=>p.ID==ID);
             
             return View(project);

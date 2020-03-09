@@ -43,7 +43,7 @@
                     {
                         <div class="col-md-1 column">
                             <img class="rounded-circle" src="images/logo.jpg" style="width: 50px;">
-                            <small >@member.Name</small>
+                            <small>@member.Name</small>
                         </div>
                     }
                 </div>
@@ -102,47 +102,116 @@
         </div>
 
     </div>
+
 </div>
+<div class="row ">
+    <div class="col-md-4">
+        <h2>Comments</h2>
+    </div>
+    <div id="comments">
+        <div class="row">
+            <div class="col-12">
+                <form class="comment-form" method="post" action="">
+                    <textarea id="commentText" class="comment-area col-md-12" name="user_comment" placeholder="Write your comment here"></textarea>
+                </form>
+                <button id="submitComment" type="submit" class="btn  btn-primary">Post</button>
+            </div>
+        </div>
+
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
+
+                    </div>
+                    <div class="col-md-10">
+                        <p><strong>@comment.Developer.FullName</strong></p>
+                        <p>@comment.Text</p>
+                        <p class="text-secondary text-center">@comment.DateAdded</p>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+   
+
+@section Scripts
+{
+    <script>
+        
+  //append does not work must be fixed
+        $(document).ready(function () {
+            $("#submitComment").click( function () {
+                var newComment = $("#commentText").val();
+                $.ajax({
+                    url: '@Url.Action("AddComment","Comment")',
+                    method: "post",
+                    data: { currentProjectID: 1, commentText: newComment, currentUserID: 1 }
+                })
+                    .done(function () {
+                        var text = $("#commentText").val();
+                        $("#comments").append('<div class="card-body"> <div class="row"><div class="col-md-2">< img src = "https://image.ibb.co/jw55Ex/def_face.jpg" class= "img img-rounded img-fluid" /> '
+                            + ' </div> <div class="col-md-10"> <p><strong>' + 'mpamphs sougias' + '</strong></p><p>' + text
+                            +'</p><p class="text-secondary text-center">'+ '@DateTime.Now' + '</p> </div> </div> </div>')
+                        $("#commentText").val('');
+                    });
+            });
+        });
+    </script>
+}
 
 
-    <style type="text/css">
-        .jumbotron{
-            background-color:white;
-            background-image:url("../project.jpg");
-        }
-        body{
-            background-color:black;
-        }
-        h3{
-            font-weight: bold;
-            text-decoration: underline;
-            color:lightslategrey;
-        }
-        h4{
-            font-size:x-large;
-            text-align:center;
-        }
-        small{
-            color:dimgray;
-            font-size:small;
-        }
-        p{
-            color:dimgray;
-            font-size:20px;
-        }
-        .panel{
-            background-color:grey;
-        }
-        #category{
-            background-color:lightgray;
-            text-align:center;
-            font-size:16px;
-        }
-        #language{
-            background-color:lightgray;
-            text-align:center;
-            font-size:16px;
-        }
-    </style>
+<style type="text/css">
+    .jumbotron {
+        background-color: white;
+        background-image: url("../project.jpg");
+    }
+
+    body {
+        background-color: black;
+    }
+
+    h3 {
+        font-weight: bold;
+        text-decoration: underline;
+        color: lightslategrey;
+    }
+
+    h4 {
+        font-size: x-large;
+        text-align: center;
+    }
+
+    small {
+        color: dimgray;
+        font-size: small;
+    }
+
+    p {
+        color: dimgray;
+        font-size: 20px;
+    }
+
+    .panel {
+        background-color: grey;
+    }
+
+    #category {
+        background-color: lightgray;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    #language {
+        background-color: lightgray;
+        text-align: center;
+        font-size: 16px;
+    }
+</style>
 
 
