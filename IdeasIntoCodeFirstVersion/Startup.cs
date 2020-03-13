@@ -8,7 +8,9 @@ namespace IdeasIntoCodeFirstVersion
     {
         public void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
             ConfigureAuth(app);
+
         }
     }
 }

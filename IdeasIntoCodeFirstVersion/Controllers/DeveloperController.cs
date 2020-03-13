@@ -33,7 +33,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
 
         // Developer/new
-
+        [Authorize]
         public ActionResult New()
         {
             var programmingLanguages = context.ProgrammingLanguages.ToList();
@@ -46,10 +46,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View("DeveloperForm", viewModel);
         }
 
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Developer developer, string[] programmingLanguage)
+         public ActionResult Save(Developer developer, string[] programmingLanguage)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +71,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 {
                     PopulateDeveloperProgrammingLanguages(developer, programmingLanguage);
                 }
-                             
+
+                var currentUserId = User.Identity.GetUserId();
+                developer.User = context.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
+
                 context.Developers.Add(developer);
 
 
@@ -162,6 +165,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         // GET: Instructor/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -180,6 +184,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         // POST: Instructor/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             var developer = context.Developers.Find(id);

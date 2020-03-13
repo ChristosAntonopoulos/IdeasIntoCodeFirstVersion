@@ -9,7 +9,9 @@ namespace IdeasIntoCodeFirstVersion
         public static void RegisterBundles(BundleCollection bundles)
         {
             
-            bundles.Add(new ScriptBundle("~/bundles/lib").Include(                        
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
+                         "~/Scripts/jquery.signalR-2.2.2.js",
+                         "~/Scripts/jquery.signalR-2.2.2.min.js",
                           "~/Scripts/typeahead.bundle.js",
                           "~/Scripts/jquery-{version}.js",
                           "~/Scripts/bootstrap.js",

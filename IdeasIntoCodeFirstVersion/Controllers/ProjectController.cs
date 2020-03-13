@@ -7,6 +7,7 @@ using System.Data.Entity;
 using IdeasIntoCodeFirstVersion.Models;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using System.Net;
+using Microsoft.AspNet.Identity;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -34,7 +35,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             
             return View(project);
         }
-
+        [Authorize]
         public ActionResult New(int ID)
         {
             
@@ -49,7 +50,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View("ProjectForm", viewModel);
         }
 
-
+        [Authorize]
         [HttpPost]
         public ActionResult Save(Project project,int[] programmingLanguage,string[] category)
         {
@@ -81,6 +82,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
                 context.Projects.Add(project);
 
+                var newsFeedHub = new NewsFeedTickerHub();
+
+                var userID = User.Identity.GetUserId();
+
+                var applicationUsersToUpdateNewsFeed = context.Developers.Where(d => d.Followers.Select(f => f.Followee == context.Developers.Where(dev => dev.User.Id == userID).FirstOrDefault()).FirstOrDefault()).Select(developer=>developer.User).ToList();
+
+                newsFeedHub.SendNotification(applicationUsersToUpdateNewsFeed, project);
 
             }
             else
@@ -118,9 +126,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             return View("ProjectProfile",project);
         }
-           
-       
 
+
+      
         public void UpdateProjectProgrammingLanguages(Project project, int[] programmingLanguage)
         {
 
@@ -191,7 +199,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             }
         }
-
+        [Authorize]
         public ActionResult Edit(int ID)
         {
             var project = context.Projects.SingleOrDefault(p => p.ID == ID);
@@ -217,6 +225,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         // GET: Instructor/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -235,6 +244,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         // POST: Instructor/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             var project = context.Projects.Find(id);
