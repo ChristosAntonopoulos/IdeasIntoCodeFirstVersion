@@ -26,6 +26,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View();
         }
 
+        [Authorize]
        public ActionResult NewsFeed(int id)
         {
             var newsFeedList = new List<INewsFeed>();

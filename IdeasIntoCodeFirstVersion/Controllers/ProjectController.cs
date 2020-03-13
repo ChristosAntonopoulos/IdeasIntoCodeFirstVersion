@@ -7,6 +7,7 @@ using System.Data.Entity;
 using IdeasIntoCodeFirstVersion.Models;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using System.Net;
+using Microsoft.AspNet.Identity;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -35,21 +36,24 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View(project);
         }
 
-        public ActionResult New(int ID)
+        [Authorize]
+        public ActionResult New()
         {
-            
+            var userID = User.Identity.GetUserId();
             var viewModel = new ProjectFormViewModel()
             {
                 //ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
                 //ProjectCategories = context.ProjectCategories.ToList(),
-                Project=new Project { AdminID=ID}
+                
+                
+                Project=new Project { AdminID=context.Developers.Where(d=>d.User.Id== userID).SingleOrDefault().ID }
 
             };
 
             return View("ProjectForm", viewModel);
         }
 
-
+        [Authorize]
         [HttpPost]
         public ActionResult Save(Project project,int[] programmingLanguage,string[] category)
         {
@@ -118,10 +122,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             return View("ProjectProfile",project);
         }
-           
-       
 
-        public void UpdateProjectProgrammingLanguages(Project project, int[] programmingLanguage)
+
+        
+        private void UpdateProjectProgrammingLanguages(Project project, int[] programmingLanguage)
         {
 
             foreach (var language in context.ProgrammingLanguages)
@@ -145,7 +149,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }           
         }
 
-        public void UpdateProjectCategories(Project project, string[] category)
+        private void UpdateProjectCategories(Project project, string[] category)
         {
             foreach (var categoryDB in context.ProjectCategories)
             {
@@ -170,7 +174,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
         }
 
-        public void PopulateProejectCategories(Project project, string[] category)
+        private void PopulateProejectCategories(Project project, string[] category)
         {
 
             var categoriesDB = context.ProjectCategories.ToList();
@@ -181,7 +185,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
         }
 
-        public void PopulateProjectProgrammingLanguages(Project project, int[] programmingLanguage)
+        private void PopulateProjectProgrammingLanguages(Project project, int[] programmingLanguage)
         {
 
             var programminglanguagesDb = context.ProgrammingLanguages.ToList();
@@ -192,6 +196,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Edit(int ID)
         {
             var project = context.Projects.SingleOrDefault(p => p.ID == ID);
@@ -217,6 +222,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         // GET: Instructor/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -233,6 +239,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         // POST: Instructor/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

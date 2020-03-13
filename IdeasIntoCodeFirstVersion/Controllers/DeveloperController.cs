@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
+using Microsoft.AspNet.Identity;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -33,7 +34,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
 
         // Developer/new
-
+        [Authorize]
         public ActionResult New()
         {
             var programmingLanguages = context.ProgrammingLanguages.ToList();
@@ -46,7 +47,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View("DeveloperForm", viewModel);
         }
 
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Developer developer, string[] programmingLanguage)
@@ -71,7 +72,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 {
                     PopulateDeveloperProgrammingLanguages(developer, programmingLanguage);
                 }
-                             
+
+                var userID = User.Identity.GetUserId();
+                developer.User = context.Users.Single(u => u.Id == userID);
+
                 context.Developers.Add(developer);
 
 
@@ -104,7 +108,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View("DeveloperProfile", developer.ID);
         }
 
-        public void UpdateDeveloperProgrammingLanguages(Developer developer, string[] programmingLanguage)
+        private void UpdateDeveloperProgrammingLanguages(Developer developer, string[] programmingLanguage)
         {
 
             foreach (var language in context.ProgrammingLanguages)
@@ -129,10 +133,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             }
         }
-           
 
 
-        public void PopulateDeveloperProgrammingLanguages(Developer developer, string[] programmingLanguage)
+        
+        private void PopulateDeveloperProgrammingLanguages(Developer developer, string[] programmingLanguage)
         {
 
             var programminglanguagesDb = context.ProgrammingLanguages.ToList();
@@ -143,6 +147,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Edit(int ID)
         {
             var Developer = context.Developers.SingleOrDefault(p => p.ID == ID);
@@ -162,6 +167,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         // GET: Instructor/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -178,6 +184,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         // POST: Instructor/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
