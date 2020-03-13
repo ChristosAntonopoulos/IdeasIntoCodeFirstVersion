@@ -10,6 +10,7 @@
 {
     @Html.AntiForgeryToken()
 
+<<<<<<< Updated upstream
 <div class="form-horizontal">
     <h4>Project</h4>
     <hr />
@@ -52,6 +53,51 @@
         </ul>
 
     </div>
+=======
+
+    <h4>Project</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.HiddenFor(p => p.Project.AdminID)
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Programming Languages</label>
+        <div class="col-md-8">
+            <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="typeahead form-control" />
+            <ul class="col-md-offset-2 col-md-10 list-group" id="selectedprogramminglanguages">
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Categories</label>
+        <div class="col-md-10">
+            <input id="selectpcategories" name="category" type="text" value="" class="form-control" />
+            <ul class="col-md-offset-2 col-md-10" id="selectedcategories">
+            </ul>
+        </div>
+    </div>
+
+>>>>>>> Stashed changes
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -59,18 +105,26 @@
                 <tr id="ProgrammingList">
                 </tr>
 
+<<<<<<< Updated upstream
             </table>
         </div>
+=======
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-danger" />
+>>>>>>> Stashed changes
     </div>
 
 
 
 
+<<<<<<< Updated upstream
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-danger" />
         </div>
     </div>
+=======
+>>>>>>> Stashed changes
 
 
 
@@ -80,9 +134,17 @@
         }
 
 
+<<<<<<< Updated upstream
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
+=======
+    <script>
+        function removeParentElement() {
+            event.target.parentElement.remove()
+        }
+        $(document).ready(function () {
+>>>>>>> Stashed changes
 
         <script type="text/javascript">
 
@@ -99,6 +161,7 @@
                 });
     };
 
+<<<<<<< Updated upstream
     function ShowSelectedProgrammingLanguage() {
                 $.ajax({
                     url: '@Url.Action("ShowSelectedProgrammingLanguage", "ProgrammingLanguage")',
@@ -118,3 +181,39 @@
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")
         }
+=======
+
+            var programmingLanguages = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/programminglanguages'
+            });
+
+            $('#selectprogramminglanguages').typeahead({
+                minLength: 1,
+                highlight: true
+            },
+                {
+                    name: 'programmingLanguages',
+                    display: 'name',
+                    source: programmingLanguages
+                }).on("typeahead:select", function (e, programminglanguage) {
+
+                    $("#selectedprogramminglanguages").append("<li class='list-group-item d-flex justify-content-between align-items-center'><input type='hidden' name='programmingLanguage' value='"
+                        + programminglanguage.id + "' /> " + programminglanguage.name +
+                        '<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"></button></li>')
+                });
+        })
+
+      
+
+        $('input:text').click(
+        function(){
+        $(this).val('');
+        });
+
+    </script>
+
+}
+
+>>>>>>> Stashed changes
