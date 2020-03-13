@@ -58,6 +58,8 @@ namespace IdeasIntoCodeFirstVersion.Models
         
         public ICollection<Follow> Following { get; set; }
 
+        public string Picture { get; set; }
+
         public Developer()
         {
             ProjectsOwned = new List<Project>();
