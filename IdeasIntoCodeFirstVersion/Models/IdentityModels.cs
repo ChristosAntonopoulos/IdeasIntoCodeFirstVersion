@@ -26,6 +26,8 @@ namespace IdeasIntoCodeFirstVersion.Models
 
         public DbSet<Project> Projects { get; set; }
 
+        public DbSet<Follow> Follows { get; set; }
+
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
         public DbSet<ProjectCategory> ProjectCategories { get; set; }
         public ApplicationDbContext()

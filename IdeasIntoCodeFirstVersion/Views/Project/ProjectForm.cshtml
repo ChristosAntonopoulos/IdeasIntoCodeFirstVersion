@@ -4,7 +4,7 @@
     ViewBag.Title = "ProjectForm";
 }
 
-<h2>ProjectForm</h2>
+<h2>@Model.Title</h2>
 
 @using (Html.BeginForm("Save", "Project"))
 {
@@ -23,34 +23,28 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Project.Active)
-                @Html.ValidationMessageFor(model => model.Project.Active, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
+        <div class="form-group">
+            @Html.HiddenFor(p => p.Project.AdminID)
+        </div>
 
-    <div class="form-group">
-        @Html.HiddenFor(p => p.Project.AdminID)
-    </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Programming Languages</label>
+                    <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="form-control" />
+                </div>
 
-
-    <div>
-        @Html.TextBox("SearchString", "", new { @id = "search", @class = "form-control mr-sm-2 dropdown-toggle", @autocomplete = "off", onkeydown = "Search()", data_toggle = "dropdown" })
-
-        <ul id="searchresult" class="dropdown-menu" aria-labeledby="searchDropdown">
-        </ul>
+                <div class="form-group ">
+                    <ul class="col-md-offset-2 col-md-10" id="selectedprogramminglanguages">
+                    </ul>
+                </div>
 
     </div>
 =======
@@ -115,7 +109,8 @@
     </div>
 
 
-
+        </div>
+        
 
 <<<<<<< Updated upstream
     <div class="form-group">
@@ -128,10 +123,10 @@
 
 
 
-</div>
+    </div>
 
 
-        }
+}
 
 
 <<<<<<< Updated upstream
@@ -146,20 +141,37 @@
         $(document).ready(function () {
 >>>>>>> Stashed changes
 
-        <script type="text/javascript">
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 
 
-    function Search() {
-                $.ajax({
-                    url: '@Url.Action("FindProgrammingLanguageList", "ProgrammingLanguage")',
-                    type: 'GET',
-                    cache: false,
-                    data: { searchString: $('#search').val() }
-                }).done(function (result) {
-                    $('#searchresult').html(result);
+    <script>
+        function removeParentElement() {
+                    event.target.parentElement.remove()
+                 }
+        $(document).ready(function () {
+
+            var projectCategories = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/categories'
+            });
+
+            $('#selectpcategories').typeahead({
+                minLength: 1,
+                highlight: true
+            },
+                {
+                    name: 'projectcategories',
+                    display: 'name',
+                    source: projectCategories
+                }).on("typeahead:select", function (e, projectcategory) {
+
+                    $("#selectedcategories").append("<li class='list-group-item'><input type='hidden' name='category' value='"
+                        + projectcategory.id + "' /> " + projectcategory.name +
+                        '<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"> X</button></li>')
 
                 });
-    };
 
 <<<<<<< Updated upstream
     function ShowSelectedProgrammingLanguage() {
@@ -174,8 +186,10 @@
                 });
         };
 
+                });
 
-        </script>
+        })
+    </script>
 
 
         @section Scripts {

@@ -15,5 +15,11 @@ namespace IdeasIntoCodeFirstVersion.Models
         public  Project Project { get; set; }
 
         public ICollection<Developer> TeamMembers { get; set; }
+
+        public Team()
+        {
+            TeamMembers = new List<Developer>();
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IdeasIntoCodeFirstVersion.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Models
 {
-    public class Project
+    public class Project:INewsFeed
     {
 
         public int ID { get; set; }
@@ -27,13 +28,22 @@ namespace IdeasIntoCodeFirstVersion.Models
         public  Developer Admin { get; set; }
        
         public Team Team { get; set; }
-
+        
+        public DateTime TimeStamp { get; set; }
 
         public ICollection<ProjectCategory> ProjectCategories { get; set; }
 
         public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+
+        public Project()
+        {
+            ProjectCategories = new List<ProjectCategory>();
+            ProgrammingLanguages = new List<ProgrammingLanguage>();
+            Comments = new List<Comment>();
+        }
 
 
 
