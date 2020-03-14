@@ -10,6 +10,6 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
     {
         public IEnumerable<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
-        public Developer Developer { get; set; }
+        public Developer Developer { get; set; }    
     }
 }
