@@ -7,19 +7,14 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Models
 {
-    public class Team
+    public class TeamDeveloper
     {
         [Key]
-        [ForeignKey("Project")]
+        [Column(Order = 1)]
         public int ProjectID { get; set; }
-        public  Project Project { get; set; }
-        
-        public ICollection<Developer> TeamMembers { get; set; }
 
-        public Team()
-        {
-            TeamMembers = new List<Developer>();
-        }
-
+        [Key]
+        [Column(Order = 2)]
+        public int DeveloperID { get; set; }
     }
 }

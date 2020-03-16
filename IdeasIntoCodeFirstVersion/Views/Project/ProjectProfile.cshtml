@@ -10,7 +10,7 @@
         <div class="jumbotron text-center">
             <div class="container">
                 <h2 class="mb-4 text-center">@Model.Title</h2>
-                <a href="#" class="btn btn-primary text-center">Join</a>
+                <button data-project-id="@Model.ID" class="btn btn-default btn-sm js-toggle-join">Join</button>
             </div>
         </div>
         <div class="row">
@@ -164,6 +164,22 @@
                         $("#commentText").val('');
                     });
             });
+
+             $(".js-toggle-join").click(function (e) {
+                var button = $(e.target);
+                $.post("/api/projects", { ProjectID: button.attr("data-project-id") })
+                    .done(function () {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Join");
+                    })
+                    .fail(function () {
+                        alert("Something failed");
+                    });
+            });
+          
+
         });
     </script>
 }
