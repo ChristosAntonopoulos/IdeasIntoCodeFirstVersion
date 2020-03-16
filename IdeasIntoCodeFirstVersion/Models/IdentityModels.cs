@@ -55,6 +55,11 @@ namespace IdeasIntoCodeFirstVersion.Models
                 .WithRequired(d => d.Followee)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Developer>()
+                .Property(d=>d.BirthDate)
+                .HasColumnType("datetime2");
+
+
 
 
             base.OnModelCreating(modelBuilder);

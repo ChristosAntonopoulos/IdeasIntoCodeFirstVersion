@@ -61,9 +61,16 @@
             <div class="col-md-8">
                 <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="typeahead form-control" />
                 <ul class="col-md-offset-2 col-md-10 list-group" id="selectedprogramminglanguages">
+                    @foreach (var programmingLanguage in Model.Developer.ProgrammingLanguages)
+                    {
+                        <li class='list-group-item d-flex justify-content-between align-items-center'><input type='hidden' name='programmingLanguage' value=@programmingLanguage.ID /> 
+                        @programmingLanguage.Name<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"></button></li>
+                    }
                 </ul>
             </div>
         </div>
+
+        @Html.HiddenFor(model=>model.Developer.ID)
 
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-danger" />

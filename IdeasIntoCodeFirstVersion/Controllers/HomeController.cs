@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using System.Data.Entity;
 using IdeasIntoCodeFirstVersion.Interface;
+using Microsoft.AspNet.Identity;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -23,6 +24,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
         public ActionResult Index()
         {
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    var currentUserID=User.Identity.GetUserId();
+
+            //    return RedirectToAction("DeveloperProfile",1);
+
+            //}
             return View();
         }
 
