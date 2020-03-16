@@ -10,6 +10,7 @@ namespace IdeasIntoCodeFirstVersion.Models
 {
     public class Developer
     {
+
         public int ID { get; set; }
 
         public string FullName
@@ -37,6 +38,7 @@ namespace IdeasIntoCodeFirstVersion.Models
         
         public DateTime DateCreated { get; set; }
 
+        
         public ApplicationUser User { get; set; }
 
         public List<ProgrammingLanguage> ProgrammingLanguages { get; set; }

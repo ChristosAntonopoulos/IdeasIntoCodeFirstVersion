@@ -34,6 +34,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 .Include(p=>p.ProjectCategories)
                 .Include(p=>p.Comments).Single(p=>p.ID==ID);
             
+
             return View(project);
         }
 

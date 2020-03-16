@@ -7,10 +7,11 @@
 
     <!-- Page Content  -->
     <div id="content" class="col-md-12">
-        <div class="jumbotron text-center">
-            <div class="container">
+        <div class="text-center">
+            <div>
                 <h2 class="mb-4 text-center">@Model.Title</h2>
-                <button data-project-id="@Model.ID" class="btn btn-default btn-sm js-toggle-join">Join</button>
+                
+                <button data-project-id="@Model.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
             </div>
         </div>
         <div class="row">
@@ -172,7 +173,7 @@
                         button
                             .removeClass("btn-default")
                             .addClass("btn-info")
-                            .text("Join");
+                            .text("Joined");
                     })
                     .fail(function () {
                         alert("Something failed");

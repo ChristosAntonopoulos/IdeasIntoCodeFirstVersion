@@ -39,32 +39,28 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         
         public IHttpActionResult Join(JoinDto joinDto)
         {
-            //var userId = User.Identity.GetUserId();
-            var developers = context.Developers;
-            bool exist = true;
-            var teams = context.Teams.Include(t => t.TeamMembers);
-            foreach (var team in teams)
-            {
-                foreach (var developer in developers)
-                {
-                   exist= team.TeamMembers.Any(t => t.ID == developer.ID);
-                }
-                
-            }
-            var exists = context.Projects.Any(p=>p.ID == joinDto.ProjectID);
+            var userId = User.Identity.GetUserId();
+            var developer = context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
 
-            if (exists && exist)
-                return BadRequest("The attendance already exists");
+            
+            var exists = context.Projects.Include(p => p.Team.TeamMembers)
+                .Any(d => d.Team.TeamMembers.Any(t => t.ID == developer.ID) &&
+                  d.ID == joinDto.ProjectID);
+          
+            
+
+            if (exists)
+                return BadRequest("The join already exists");
+            
+           
+            var project = context.Projects
+                .Include(p => p.Team.TeamMembers)
+                .Where(p=>p.ID==joinDto.ProjectID).SingleOrDefault();
+
+            project.Team.TeamMembers.Add(developer);
+            
 
 
-
-            var join = new Team
-            {
-                ProjectID = joinDto.ProjectID
-                //TeamMembers
-            };
-
-            context.Teams.Add(join);
             context.SaveChanges();
             return Ok();
         }

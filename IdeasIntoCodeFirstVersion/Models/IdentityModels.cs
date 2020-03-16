@@ -29,7 +29,7 @@ namespace IdeasIntoCodeFirstVersion.Models
         public DbSet<Follow> Follows { get; set; }
 
         public DbSet<Team> Teams { get; set; }
-        public DbSet<TeamDeveloper> TeamDevelopers{ get; set; }
+        //public DbSet<TeamDeveloper> TeamDevelopers{ get; set; }
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
         public DbSet<ProjectCategory> ProjectCategories { get; set; }
         public ApplicationDbContext()
