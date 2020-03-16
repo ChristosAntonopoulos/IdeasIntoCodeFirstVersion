@@ -31,6 +31,7 @@ namespace IdeasIntoCodeFirstVersion
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/typeahead.css",
+                       "~/Content/style.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
         }

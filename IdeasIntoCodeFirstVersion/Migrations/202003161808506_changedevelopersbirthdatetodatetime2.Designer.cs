@@ -7,13 +7,13 @@ namespace IdeasIntoCodeFirstVersion.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class FixDataBase : IMigrationMetadata
+    public sealed partial class changedevelopersbirthdatetodatetime2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FixDataBase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(changedevelopersbirthdatetodatetime2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003141945099_FixDataBase"; }
+            get { return "202003161808506_changedevelopersbirthdatetodatetime2"; }
         }
         
         string IMigrationMetadata.Source

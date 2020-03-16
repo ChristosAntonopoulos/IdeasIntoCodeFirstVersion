@@ -235,9 +235,9 @@
     <Compile Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.Designer.cs">
       <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003141945099_FixDataBase.cs" />
-    <Compile Include="Migrations\202003141945099_FixDataBase.Designer.cs">
-      <DependentUpon>202003141945099_FixDataBase.cs</DependentUpon>
+    <Compile Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.cs" />
+    <Compile Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.Designer.cs">
+      <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -572,6 +572,12 @@
     <Content Include="Content\DataTables\media\images\sort_desc.png" />
     <Content Include="Content\DataTables\media\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Images\homepage.jpg" />
+    <Content Include="Content\Images\homepagev2.png" />
+    <Content Include="Content\Images\homepagev3.jpg" />
+    <Content Include="Content\Images\profpicegw.jpg" />
+    <Content Include="Content\Images\userpic.png" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -993,6 +999,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\NewsFeed.cshtml" />
+    <Content Include="Views\Developer\DeveloperProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1028,8 +1035,8 @@
     <EmbeddedResource Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.resx">
       <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003141945099_FixDataBase.resx">
-      <DependentUpon>202003141945099_FixDataBase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.resx">
+      <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
