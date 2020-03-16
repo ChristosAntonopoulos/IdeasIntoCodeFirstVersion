@@ -84,44 +84,4 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<<<<<<< Updated upstream
-=======
-
-
-<script>
-    $(document).ready(function () {
-
-         var programmingLanguages = new Bloodhound({
-                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                  queryTokenizer: Bloodhound.tokenizers.whitespace,
-             prefetch: '/api/programminglanguages'
-                 });
-
-            $('#selectprogramminglanguages').typeahead({
-                minLength: 1,
-                highlight: true
-            },
-                {
-                    name: 'programmingLanguages',
-                    display: 'name',
-                    source: programmingLanguages
-                }).on("typeahead:select", function (e, programminglanguage) {
-
-                    $("#selectedprogramminglanguages").append("<li class='list-group-item d-flex justify-content-between align-items-center'><input type='hidden' name='programmingLanguage' value='"
-                        + programminglanguage.id + "' /> " + programminglanguage.name +
-                        '<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"></button></li>')
-                });
-        })
-
-      
-
-        $('input:text').click(
-        function(){
-        $(this).val('');
-        });
-
-    
-</script>
-
->>>>>>> Stashed changes
 }
