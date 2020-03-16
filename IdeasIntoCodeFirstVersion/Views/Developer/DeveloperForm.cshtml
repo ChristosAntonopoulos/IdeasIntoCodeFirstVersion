@@ -55,13 +55,7 @@
                 @Html.ValidationMessageFor(model => model.Developer.GitHub, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-2" >Programming Languages</label>
-            <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="form-control" />
-        </div>
 
-<<<<<<< Updated upstream
-=======
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Programming Languages</label>
             <div class="col-md-8">
@@ -71,7 +65,6 @@
             </div>
         </div>
 
->>>>>>> Stashed changes
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-danger" />
         </div>
@@ -84,4 +77,41 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        $(document).ready(function () {
+
+            var programmingLanguages = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/programminglanguages'
+            });
+
+            $('#selectprogramminglanguages').typeahead({
+                minLength: 1,
+                highlight: true
+            },
+                {
+                    name: 'programmingLanguages',
+                    display: 'name',
+                    source: programmingLanguages
+                }).on("typeahead:select", function (e, programminglanguage) {
+
+                    $("#selectedprogramminglanguages").append("<li class='list-group-item d-flex justify-content-between align-items-center'><input type='hidden' name='programmingLanguage' value='"
+                        + programminglanguage.id + "' /> " + programminglanguage.name +
+                        '<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"></button></li>')
+                });
+        })
+
+
+
+        $('input:text').click(
+            function () {
+                $(this).val('');
+            });
+
+
+    </script>
+
 }

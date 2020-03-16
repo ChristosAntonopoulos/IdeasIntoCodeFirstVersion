@@ -10,44 +10,6 @@
 {
     @Html.AntiForgeryToken()
 
-<<<<<<< Updated upstream
-<div class="form-horizontal">
-    <h4>Project</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.ProjectID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.HiddenFor(p => p.Project.AdminID)
-        </div>
-
-        <div class="row">
-            <div class="col-6">
-                <div class="form-group">
-                    <label class="control-label col-md-2">Programming Languages</label>
-                    <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="form-control" />
-                </div>
-
-                <div class="form-group ">
-                    <ul class="col-md-offset-2 col-md-10" id="selectedprogramminglanguages">
-                    </ul>
-                </div>
-
-    </div>
-=======
 
     <h4>Project</h4>
     <hr />
@@ -91,55 +53,20 @@
         </div>
     </div>
 
->>>>>>> Stashed changes
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <table>
-                <tr id="ProgrammingList">
-                </tr>
 
-<<<<<<< Updated upstream
-            </table>
-        </div>
-=======
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-danger" />
->>>>>>> Stashed changes
     </div>
 
 
-        </div>
-        
-
-<<<<<<< Updated upstream
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-danger" />
-        </div>
-    </div>
-=======
->>>>>>> Stashed changes
 
 
-
-    </div>
 
 
 }
 
 
-<<<<<<< Updated upstream
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-=======
-    <script>
-        function removeParentElement() {
-            event.target.parentElement.remove()
-        }
-        $(document).ready(function () {
->>>>>>> Stashed changes
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -147,8 +74,8 @@
 
     <script>
         function removeParentElement() {
-                    event.target.parentElement.remove()
-                 }
+            event.target.parentElement.remove()
+        }
         $(document).ready(function () {
 
             var projectCategories = new Bloodhound({
@@ -173,29 +100,6 @@
 
                 });
 
-<<<<<<< Updated upstream
-    function ShowSelectedProgrammingLanguage() {
-                $.ajax({
-                    url: '@Url.Action("ShowSelectedProgrammingLanguage", "ProgrammingLanguage")',
-                    type: 'GET',
-                    cache: false,
-                    data: { }
-                }).done(function (result) {
-                    $('#ProgrammingList').html(result);
-
-                });
-        };
-
-                });
-
-        })
-    </script>
-
-
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
-=======
 
             var programmingLanguages = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -219,15 +123,14 @@
                 });
         })
 
-      
+
 
         $('input:text').click(
-        function(){
-        $(this).val('');
-        });
+            function () {
+                $(this).val('');
+            });
 
     </script>
 
 }
 
->>>>>>> Stashed changes
