@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,15 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
         // Post: Comment
         [HttpPost]
-        public void AddComment(int currentProjectID, string commentText, int currentUserID)
+        public void AddComment(int currentProjectID, string commentText)
         {
+            var userId = User.Identity.GetUserId();
+            var developer = context.Developers.Single(d => d.User.Id == userId);
             var comment = new Comment()
             {
                 Text = commentText,
                 ProjectID = currentProjectID,
-                DeveloperID = currentUserID,
+                DeveloperID = developer.ID,
                 TimeStamp = DateTime.Now
             };
             context.Comments.Add(comment);

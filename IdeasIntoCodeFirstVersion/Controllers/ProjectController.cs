@@ -33,9 +33,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 .Include(p=>p.ProgrammingLanguages)
                 .Include(p=>p.ProjectCategories)
                 .Include(p=>p.Comments).Single(p=>p.ID==ID);
-            
 
-            return View(project);
+            var userId = User.Identity.GetUserId();
+            var developer = context.Developers.Single(d => d.User.Id == userId);
+
+            var viewModel = new ProjectWithDeveloperViewModel
+            {
+                Project = project,
+                Developer = developer
+            };
+            return View(viewModel);
         }
 
         [Authorize]
