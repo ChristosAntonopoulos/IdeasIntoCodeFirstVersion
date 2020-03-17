@@ -238,6 +238,10 @@
     <Compile Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.Designer.cs">
       <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003141945099_FixDataBase.cs" />
+    <Compile Include="Migrations\202003141945099_FixDataBase.Designer.cs">
+      <DependentUpon>202003141945099_FixDataBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.cs" />
     <Compile Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.Designer.cs">
       <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
@@ -1037,6 +1041,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.resx">
       <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003141945099_FixDataBase.resx">
+      <DependentUpon>202003141945099_FixDataBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.resx">
       <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
