@@ -1,4 +1,4 @@
-﻿@model IdeasIntoCodeFirstVersion.ViewModels.ProjectWithDeveloperViewModel
+﻿@model IdeasIntoCodeFirstVersion.ViewModels.ProjectViewModel
 @{
     ViewBag.Title = "ProjectProfile";
 }
@@ -8,11 +8,23 @@
 
     <!-- Page Content  -->
     <div id="content" class="col-md-12">
-        <div class="jumbotron text-center">
-            <div class="container">
-                <h2 class="mb-4 text-center">@Model.Title</h2>
-                
-                <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
+        <div class="text-center">
+            <div>
+                <h2 class="mb-4 text-center">@Model.Project.Title</h2>
+                @if (Model.Action == true)
+                {
+                    <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
+                }
+                @if (Model.Action == false)
+                {
+                    <button data-project-id="@Model.Project.ID" class="btn btn-info  btn-sm js-toggle-join" disabled="disabled">Joined</button>
+                }
+                @if (Model.Action == null)
+                {
+                    <button  class="btn btn-info  btn-sm" disabled="disabled">Edit</button>
+
+                }
+
             </div>
         </div>
         <div class="row">
@@ -90,11 +102,12 @@
                 @if (Model.Project.Active)
                 {
                     <button class="btn btn-default btn-success">Active</button>
-                }
-                else
-                {
+                    }
+                    else
+                    {
                     <button class="btn btn-default btn-secondary" disabled="disabled">Inactive</button>
-                }
+                    }
+                
             </div>
 
             @*<div class="col-md-3">
