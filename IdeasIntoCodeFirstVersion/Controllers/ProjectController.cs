@@ -35,22 +35,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 .Include(p=>p.Admin)
                 .Include(p=>p.ProgrammingLanguages)
                 .Include(p=>p.ProjectCategories)
-                .Include(p=>p.Comments).Single(p=>p.ID==ID);
+                .Include(p=>p.Comments).Single(p=>p.ID==ID);      
 
-            var userId = User.Identity.GetUserId();
-            var developer = context.Developers.Single(d => d.User.Id == userId);
-
-            var viewModel = new ProjectWithDeveloperViewModel
-            {
-                Project = project,
-                Developer = developer
-            };
-            return View(viewModel);
-            
-            
             var viewModel = new ProjectViewModel()
             {
-                Project = project
+                Project = project,
+                 Developer = developer
             };
 
             if (developer.ID!=project.AdminID)

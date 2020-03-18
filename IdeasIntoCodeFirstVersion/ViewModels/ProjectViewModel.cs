@@ -10,6 +10,7 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
     {
         public Project Project { get; set; }
         public bool? Action { get; set; }
-        
+        public Developer Developer { get; set; }
+
     }
 }

@@ -260,7 +260,6 @@
     <Compile Include="ViewModels\ProjectFormViewModel.cs" />
     <Compile Include="ViewModels\DeveloperFormViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
-    <Compile Include="ViewModels\ProjectWithDeveloperViewModel.cs" />
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1005,6 +1004,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\NewsFeed.cshtml" />
     <Content Include="Views\Developer\DeveloperProfile.cshtml" />
+    <Content Include="Views\Shared\_IndexLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
