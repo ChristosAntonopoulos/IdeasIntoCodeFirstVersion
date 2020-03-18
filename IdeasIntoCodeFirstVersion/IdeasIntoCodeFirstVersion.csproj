@@ -214,17 +214,9 @@
     <Compile Include="Migrations\202002271808157_PopulateCategoriesProgrammingLanguages.Designer.cs">
       <DependentUpon>202002271808157_PopulateCategoriesProgrammingLanguages.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002271808484_PopulateDb.cs" />
-    <Compile Include="Migrations\202002271808484_PopulateDb.Designer.cs">
-      <DependentUpon>202002271808484_PopulateDb.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202002271827480_AddFollowToModel.cs" />
     <Compile Include="Migrations\202002271827480_AddFollowToModel.Designer.cs">
       <DependentUpon>202002271827480_AddFollowToModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002271856152_PopulateCommendMessages.cs" />
-    <Compile Include="Migrations\202002271856152_PopulateCommendMessages.Designer.cs">
-      <DependentUpon>202002271856152_PopulateCommendMessages.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202003081153574_datecreatedFieldIntoProject.cs" />
     <Compile Include="Migrations\202003081153574_datecreatedFieldIntoProject.Designer.cs">
@@ -238,9 +230,17 @@
     <Compile Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.Designer.cs">
       <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003141945099_FixDataBase.cs" />
+    <Compile Include="Migrations\202003141945099_FixDataBase.Designer.cs">
+      <DependentUpon>202003141945099_FixDataBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.cs" />
     <Compile Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.Designer.cs">
       <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171713413_PopulateDB.cs" />
+    <Compile Include="Migrations\202003171713413_PopulateDB.Designer.cs">
+      <DependentUpon>202003171713413_PopulateDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1020,14 +1020,8 @@
     <EmbeddedResource Include="Migrations\202002271808157_PopulateCategoriesProgrammingLanguages.resx">
       <DependentUpon>202002271808157_PopulateCategoriesProgrammingLanguages.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002271808484_PopulateDb.resx">
-      <DependentUpon>202002271808484_PopulateDb.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002271827480_AddFollowToModel.resx">
       <DependentUpon>202002271827480_AddFollowToModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002271856152_PopulateCommendMessages.resx">
-      <DependentUpon>202002271856152_PopulateCommendMessages.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003081153574_datecreatedFieldIntoProject.resx">
       <DependentUpon>202003081153574_datecreatedFieldIntoProject.cs</DependentUpon>
@@ -1038,8 +1032,14 @@
     <EmbeddedResource Include="Migrations\202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.resx">
       <DependentUpon>202003091635171_ChangeDatesOfCommentProjectandFollowToTimeStampAndAddINewsFeed.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003141945099_FixDataBase.resx">
+      <DependentUpon>202003141945099_FixDataBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.resx">
       <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171713413_PopulateDB.resx">
+      <DependentUpon>202003171713413_PopulateDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

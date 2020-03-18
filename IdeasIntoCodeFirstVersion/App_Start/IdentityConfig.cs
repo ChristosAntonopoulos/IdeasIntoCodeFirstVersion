@@ -50,14 +50,14 @@ namespace IdeasIntoCodeFirstVersion
                 RequireUniqueEmail = true
             };
 
-            // Configure validation logic for passwords
+            // Configure validation logic for passwords 
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
+                RequiredLength = 3,
+                //RequireNonLetterOrDigit = true,
+                //RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                //RequireUppercase = true,
             };
 
             // Configure user lockout defaults
