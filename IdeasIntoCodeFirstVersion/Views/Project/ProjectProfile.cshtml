@@ -1,4 +1,4 @@
-﻿@model IdeasIntoCodeFirstVersion.Models.Project
+﻿@model IdeasIntoCodeFirstVersion.ViewModels.ProjectWithDeveloperViewModel
 @{
     ViewBag.Title = "ProjectProfile";
 }
@@ -12,7 +12,7 @@
             <div class="container">
                 <h2 class="mb-4 text-center">@Model.Title</h2>
                 
-                <button data-project-id="@Model.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
+                <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
             </div>
         </div>
         <div class="row">
@@ -20,7 +20,7 @@
                 <h3>Description:</h3>
             </div>
             <div class="col-md-10">
-                <p>@Model.Description</p>
+                <p>@Model.Project.Description</p>
             </div>
         </div>
 
@@ -31,7 +31,7 @@
             <div class="col-md-10">
 
                 <img class="rounded-circle" src="images/logo.jpg" style="width: 50px;">
-                <small>@Model.Admin.Name</small>
+                <small>@Model.Project.Admin.Name</small>
             </div>
         </div>
 
@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-10">
                 <div class="row">
-                    @foreach (var member in Model.Team.TeamMembers)
+                    @foreach (var member in Model.Project.Team.TeamMembers)
                     {
                         <div class="col-md-1 column">
                             <img class="rounded-circle" src="images/logo.jpg" style="width: 50px;">
@@ -58,7 +58,7 @@
                 <div class="panel">
                     <div class="panel-heading"><h4>Programming Languages</h4></div>
                     <div class="panel-body">
-                        @foreach (var progLanguages in Model.ProgrammingLanguages)
+                        @foreach (var progLanguages in Model.Project.ProgrammingLanguages)
                         {
                             <a href="#" class="list-group-item text-danger" id="language">@progLanguages.Name</a>
                         }
@@ -72,7 +72,7 @@
                 <div class="panel">
                     <div class="panel-heading"><h4>Categories</h4></div>
                     <div class="panel-body">
-                        @foreach (var category in Model.ProjectCategories)
+                        @foreach (var category in Model.Project.ProjectCategories)
                         {
                             <a href="#" class="list-group-item text-danger" id="category">@category.Name</a>
                         }
@@ -87,7 +87,7 @@
                 <h3> Status:</h3>
             </div>
             <div class="col-md-3">
-                @if (Model.Active)
+                @if (Model.Project.Active)
                 {
                     <button class="btn btn-default btn-success">Active</button>
                 }
@@ -116,10 +116,10 @@
                     <form class="comment-form" method="post" action="">
                         <textarea id="commentText" class="comment-area col-md-12" name="user_comment" placeholder="Write your comment here"></textarea>
                     </form>
-                    <button id="submitComment" type="submit" class="btn  btn-primary">Post</button>
+                    <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.FullName" id="submitComment" type="submit" class="btn  btn-primary">Post</button>
                 </div>
             </div>
-            @foreach (var comment in Model.Comments)
+            @foreach (var comment in Model.Project.Comments)
             {
                 <div class="card-body">
                     <div class="row">
@@ -151,19 +151,25 @@
 
   //append does not work must be fixed
         $(document).ready(function () {
-            $("#submitComment").click( function () {
+            $("#submitComment").click(function (e) {
+                var button = $(e.target);
+                var commenter = button.attr("data-developer-id");
                 var newComment = $("#commentText").val();
                 $.ajax({
                     url: '@Url.Action("AddComment","Comment")',
                     method: "post",
-                    data: { currentProjectID: 1, commentText: newComment, currentUserID: 1 }
+                    data: { currentProjectID: button.attr("data-project-id"), commentText: newComment}
                 })
                     .done(function () {
+                        
                         var text = $("#commentText").val();
                         $("#comments").append('<div class="card-body"> <div class="row"><div class="col-md-2">< img src = "https://image.ibb.co/jw55Ex/def_face.jpg" class= "img img-rounded img-fluid" /> '
-                            + ' </div> <div class="col-md-10"> <p><strong>' + 'mpamphs sougias' + '</strong></p><p>' + text
+                            + ' </div> <div class="col-md-10"> <p><strong>' + commenter + '</strong></p><p>' + text
                             +'</p><p class="text-secondary text-center">'+ '@DateTime.Now' + '</p> </div> </div> </div>')
                         $("#commentText").val('');
+                    })
+                    .fail(function () {
+                          alert("Something failed");
                     });
             });
 

@@ -31,7 +31,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             var following = new Follow()
             {
                 FolloweeID = followingDto.FolloweeID,
-                FollowerID = developer.ID
+                FollowerID = developer.ID,
+                TimeStamp = DateTime.Now
+                
             };
 
             context.Follows.Add(following);

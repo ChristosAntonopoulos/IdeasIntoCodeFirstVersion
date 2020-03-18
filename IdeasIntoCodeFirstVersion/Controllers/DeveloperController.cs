@@ -27,7 +27,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult DeveloperProfile(int ID)
         {
             
-            var Developer = context.Developers.Include(u => u.ProgrammingLanguages).Include(d=>d.ProjectsOwned).SingleOrDefault(u => u.ID == ID);
+            var Developer = context.Developers
+                .Include(u => u.ProgrammingLanguages)
+                .Include(d=>d.ProjectsOwned)
+                .Include(d => d.Followers)
+                .SingleOrDefault(u => u.ID == ID);
 
             return View(Developer);
         }
