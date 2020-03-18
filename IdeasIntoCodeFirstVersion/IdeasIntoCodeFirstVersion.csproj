@@ -259,8 +259,8 @@
     <Compile Include="ViewModels\NewsFeedViewModel.cs" />
     <Compile Include="ViewModels\ProjectFormViewModel.cs" />
     <Compile Include="ViewModels\DeveloperFormViewModel.cs" />
-    <Compile Include="ViewModels\ProjectWithDeveloperViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\ProjectWithDeveloperViewModel.cs" />
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
