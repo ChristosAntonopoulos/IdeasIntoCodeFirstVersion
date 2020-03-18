@@ -238,9 +238,9 @@
     <Compile Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.Designer.cs">
       <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003171713413_PopulateDB.cs" />
-    <Compile Include="Migrations\202003171713413_PopulateDB.Designer.cs">
-      <DependentUpon>202003171713413_PopulateDB.cs</DependentUpon>
+    <Compile Include="Migrations\202003180857303_PopulateDB.cs" />
+    <Compile Include="Migrations\202003180857303_PopulateDB.Designer.cs">
+      <DependentUpon>202003180857303_PopulateDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1039,8 +1039,8 @@
     <EmbeddedResource Include="Migrations\202003161808506_changedevelopersbirthdatetodatetime2.resx">
       <DependentUpon>202003161808506_changedevelopersbirthdatetodatetime2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003171713413_PopulateDB.resx">
-      <DependentUpon>202003171713413_PopulateDB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003180857303_PopulateDB.resx">
+      <DependentUpon>202003180857303_PopulateDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

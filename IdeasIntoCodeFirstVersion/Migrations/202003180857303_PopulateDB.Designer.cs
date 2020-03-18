@@ -13,7 +13,7 @@ namespace IdeasIntoCodeFirstVersion.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202003171713413_PopulateDB"; }
+            get { return "202003180857303_PopulateDB"; }
         }
         
         string IMigrationMetadata.Source

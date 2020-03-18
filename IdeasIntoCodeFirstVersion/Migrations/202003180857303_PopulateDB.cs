@@ -2,7 +2,7 @@ namespace IdeasIntoCodeFirstVersion.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-
+    
     public partial class PopulateDB : DbMigration
     {
         public override void Up()
@@ -118,10 +118,9 @@ namespace IdeasIntoCodeFirstVersion.Migrations
                     INSERT [dbo].[ProjectCategoryProjects] ([ProjectCategory_ID], [Project_ID]) VALUES (3, 5)
                     INSERT [dbo].[ProjectCategoryProjects] ([ProjectCategory_ID], [Project_ID]) VALUES (1, 6)
                     "
-                );
-
+               );
         }
-
+        
         public override void Down()
         {
         }
