@@ -28,6 +28,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult ProjectProfile(int ID)
         {
+            var userId = User.Identity.GetUserId();
+            var developer =context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
+
             var project = context.Projects.Include(p => p.Team.TeamMembers)
                 .Include(p=>p.Admin)
                 .Include(p=>p.ProgrammingLanguages)
@@ -42,6 +45,26 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 Project = project,
                 Developer = developer
             };
+            return View(viewModel);
+            
+            
+            var viewModel = new ProjectViewModel()
+            {
+                Project = project
+            };
+
+            if (developer.ID!=project.AdminID)
+            {
+                viewModel.Action = true;
+            }
+            foreach (var member in project.Team.TeamMembers)
+            {
+                if(member.ID==developer.ID && developer.ID != project.AdminID)
+                {
+                    viewModel.Action = false;
+                }
+            }
+
             return View(viewModel);
         }
 
