@@ -26,14 +26,33 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult DeveloperProfile(int ID)
         {
-            
-            var Developer = context.Developers
+            var userId = User.Identity.GetUserId();
+
+            Developer connectedDeveloper = null;//Αυτη η γραμμη μαζι με την if που την συνοδευει 
+            if (userId != null)                //χρειαστηκε επειδη αυτην τη στιγμη στην βαση μου υπαρχουν παραπανω απο ενας Developers χωρις να εχουν User 
+                connectedDeveloper = context.Developers.SingleOrDefault(d => d.User.Id == userId);
+            var developer = context.Developers
                 .Include(u => u.ProgrammingLanguages)
                 .Include(d=>d.ProjectsOwned)
                 .Include(d => d.Followers)
+                .Include(d => d.User)
                 .SingleOrDefault(u => u.ID == ID);
-
-            return View(Developer);
+            var viewModel = new DeveloperProfileViewModel
+            {
+                DeveloperOfProfile = developer,
+                NegativeToShowActionButtons = true,
+                ConnectedDeveloperAlreadyFollowsProfileDeveloper = false
+            };
+            if (connectedDeveloper != null)
+            {
+                if (developer.ID != connectedDeveloper.ID)
+                    viewModel.NegativeToShowActionButtons = false;
+                
+                var testFollow = new Follow() { FollowerID = connectedDeveloper.ID, FolloweeID = developer.ID };
+                if (developer.Followers.Contains(developer.Followers.SingleOrDefault(f => f.FollowerID == connectedDeveloper.ID)))
+                    viewModel.ConnectedDeveloperAlreadyFollowsProfileDeveloper = true;
+            }
+            return View(viewModel);
         }
 
 
