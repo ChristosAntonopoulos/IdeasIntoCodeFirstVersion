@@ -35,10 +35,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         [Authorize]
-       public ActionResult NewsFeed(int id)
+       public ActionResult NewsFeed()
         {
+            var userId = User.Identity.GetUserId();
+            var developerid = context.Developers.Where(d => d.User.Id == userId).Select(d => d.ID).SingleOrDefault();
             var newsFeedList = new List<INewsFeed>();
-            var follows = context.Follows.Where(f=>f.FollowerID==id).Select(f => f.FolloweeID).ToList();
+            var follows = context.Follows.Where(f=>f.FollowerID== developerid).Select(f => f.FolloweeID).ToList();
             var comments = context.Comments.Where(c=> follows.Contains(c.DeveloperID)).OrderBy(c=>c.TimeStamp).Include(c=>c.Developer).Include(c=>c.Project).Include(c => c.Project.Admin).Take(10).ToList();
             var followers = context.Follows.Where(f => follows.Contains(f.FollowerID)).OrderBy(f => f.TimeStamp).Include(f=>f.Followee).Include(f => f.Follower).Take(10).ToList();
             //var projects = context.Projects.Where(p => follows.Contains(p.AdminID)).OrderBy(p => p.TimeStamp).Take(10);
