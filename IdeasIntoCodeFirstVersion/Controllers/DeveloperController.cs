@@ -35,6 +35,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 .Include(u => u.ProgrammingLanguages)
                 .Include(d=>d.ProjectsOwned)
                 .Include(d => d.Followers)
+                .Include(d => d.Following)
                 .Include(d => d.User)
                 .SingleOrDefault(u => u.ID == ID);
             var viewModel = new DeveloperProfileViewModel
