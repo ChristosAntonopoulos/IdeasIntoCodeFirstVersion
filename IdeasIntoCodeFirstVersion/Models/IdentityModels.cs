@@ -27,6 +27,7 @@ namespace IdeasIntoCodeFirstVersion.Models
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<Follow> Follows { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public DbSet<Team> Teams { get; set; }
         //public DbSet<TeamDeveloper> TeamDevelopers{ get; set; }
@@ -48,6 +49,11 @@ namespace IdeasIntoCodeFirstVersion.Models
             modelBuilder.Entity<Message>()
                 .HasRequired(m => m.Receiver)
                 .WithMany(m => m.RecievedMessages)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Message>()
+                .HasRequired(m => m.Sender)
+                .WithMany(m => m.SendMessages)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Developer>()

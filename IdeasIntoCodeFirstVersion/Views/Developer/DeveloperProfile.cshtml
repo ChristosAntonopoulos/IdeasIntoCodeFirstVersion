@@ -41,12 +41,13 @@
                             <div class="p-4">
                                 @if (!Model.NegativeToShowActionButtons)
                                 {
-                                    <button type="button" class="btn btn-primary">
-                                        <i class="fas fa-envelope"></i>
-                                        Message
-                                    </button>
+                                    <a href="@Url.Action("SendMessage", "Message", new {receiverID = Model.DeveloperOfProfile.ID })">Message</a>
+                                    @*<button  type="button" class="btn btn-primary">
+                                            <i class="fas fa-envelope"></i>
+                                            Message
+                                        </button>*@
                                 }
-                               
+
                             </div>
 
                         </div>
@@ -220,7 +221,8 @@
                     .fail(function () {
                         alert("Follow failed")
                     });
-            })
+            });
+
         })
     </script>
 }

@@ -27,5 +27,22 @@ namespace IdeasIntoCodeFirstVersion.Models
         public Developer Receiver { get; set; }
         public DateTime DatePosted { get; set; }
 
+        private Message()
+        {
+
+        }
+
+        public Message(string subject, string text, Developer sender, Developer receiver)
+        {
+            Subject = subject;
+            Text = text;
+            Sender = sender;
+            SenderID = sender.ID;
+            Receiver = Receiver;
+            ReceiverID = receiver.ID;
+            DatePosted = DateTime.Now;
+        }
     }
+
+    
 }

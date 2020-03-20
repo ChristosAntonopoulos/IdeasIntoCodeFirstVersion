@@ -75,6 +75,11 @@ namespace IdeasIntoCodeFirstVersion.Models
 
         }
 
+        public void SendMessage(Message message)
+        {
+            SendMessages.Add(message);
+        }
+
 
     }
 }
