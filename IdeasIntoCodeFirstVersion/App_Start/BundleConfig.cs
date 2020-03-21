@@ -14,6 +14,7 @@ namespace IdeasIntoCodeFirstVersion
                           "~/Scripts/typeahead.bundle.js",
                           "~/Scripts/jquery-{version}.js",
                           "~/Scripts/bootstrap.js",
+                          "~/Scripts/bootstrap.bundle.js",
                           "~/Scripts/bootbox.js",
                           "~/Scripts/datatables/jquery.datatables.js",
                            "~/Scripts/underscore.min.js",
@@ -31,6 +32,7 @@ namespace IdeasIntoCodeFirstVersion
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                          "~/Scripts/popper.js",
                         "~/Scripts/popper.min.js",
+                        "~/Scripts/bootstrap.bundle.js",
                          "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(                       
