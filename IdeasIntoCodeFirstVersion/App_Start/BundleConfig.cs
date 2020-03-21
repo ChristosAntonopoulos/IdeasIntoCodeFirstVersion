@@ -9,14 +9,14 @@ namespace IdeasIntoCodeFirstVersion
         public static void RegisterBundles(BundleCollection bundles)
         {
             
-            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
-                       
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(                       
                          "~/Scripts/jquery.signalR-2.4.1.js", 
                           "~/Scripts/typeahead.bundle.js",
                           "~/Scripts/jquery-{version}.js",
                           "~/Scripts/bootstrap.js",
                           "~/Scripts/bootbox.js",
                           "~/Scripts/datatables/jquery.datatables.js",
+                           "~/Scripts/underscore.min.js",
                           "~/Scripts/datatables/datatables.bootstrap.js"                          
                           ));
 
@@ -28,13 +28,16 @@ namespace IdeasIntoCodeFirstVersion
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(                    
-                      "~/Scripts/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                         "~/Scripts/popper.js",
+                        "~/Scripts/popper.min.js",
+                         "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(                       
                       "~/Content/typeahead.css",
                        "~/Content/style.css",
                       "~/Content/bootstrap.css",
+                       "~/Content/animate.css",
                       "~/Content/site.css"));
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
@@ -35,6 +36,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 TimeStamp = DateTime.Now
                 
             };
+
+            var notification = new Notification() { Developer = developer, TimeStamp = DateTime.Now, Type = NotificationType.Followed };
+            context.DeveloperNotifications.Add(new DeveloperNotification() { DeveloperID = followingDto.FolloweeID, Notification = notification, Developer = developer });
+            
 
             context.Follows.Add(following);
             context.SaveChanges();

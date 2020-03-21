@@ -106,6 +106,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 project.TimeStamp = DateTime.Now;
 
                 context.Projects.Add(project);
+                var newsFeedHub = new NewsFeedTickerHub();
+
+                var userID = User.Identity.GetUserId();
+
+                var applicationUsersToUpdateNewsFeed = context.Developers.Where(d => d.Followers.Select(f => f.Followee == context.Developers.Where(dev => dev.User.Id == userID).FirstOrDefault()).FirstOrDefault()).Select(developer => developer.User).ToList();
+
+                newsFeedHub.SendNotification(applicationUsersToUpdateNewsFeed, project);
+
+
+
 
 
             }

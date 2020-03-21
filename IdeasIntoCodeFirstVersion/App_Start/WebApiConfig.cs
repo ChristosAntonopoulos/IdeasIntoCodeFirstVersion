@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace IdeasIntoCodeFirstVersion
 {
@@ -14,6 +15,8 @@ namespace IdeasIntoCodeFirstVersion
             var setting = config.Formatters.JsonFormatter.SerializerSettings;
             setting.ContractResolver = new CamelCasePropertyNamesContractResolver();
             setting.Formatting = Formatting.Indented;
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             config.MapHttpAttributeRoutes();
 

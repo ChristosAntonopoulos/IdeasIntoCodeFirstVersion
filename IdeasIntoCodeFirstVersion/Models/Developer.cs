@@ -41,7 +41,7 @@ namespace IdeasIntoCodeFirstVersion.Models
         
         public ApplicationUser User { get; set; }
 
-        public List<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+        public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
         public  ICollection<Project> ProjectsOwned { get; set; }
         public ICollection<Team> TeamParicipating { get; set; }
@@ -54,8 +54,10 @@ namespace IdeasIntoCodeFirstVersion.Models
        [ForeignKey("ReceiverID")]
        public ICollection<Message> RecievedMessages { get; set; }
 
-        
-       public ICollection<Follow> Followers { get; set; }
+        public ICollection<DeveloperNotification> DeveloperNotifications { get; set; }
+
+
+        public ICollection<Follow> Followers { get; set; }
 
         
         public ICollection<Follow> Following { get; set; }

@@ -195,6 +195,7 @@
     <Compile Include="Controllers\Api\DevelopersController.cs" />
     <Compile Include="Controllers\Api\FollowingsController.cs" />
     <Compile Include="Controllers\Api\MessagesController.cs" />
+    <Compile Include="Controllers\Api\NotificationsController.cs" />
     <Compile Include="Controllers\Api\ProgrammingLanguagesController.cs" />
     <Compile Include="Controllers\Api\ProjectsController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
@@ -255,13 +256,20 @@
     <Compile Include="Migrations\202003201454108_FixMessagesFK.Designer.cs">
       <DependentUpon>202003201454108_FixMessagesFK.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003211029332_AddNotifications.cs" />
+    <Compile Include="Migrations\202003211029332_AddNotifications.Designer.cs">
+      <DependentUpon>202003211029332_AddNotifications.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\DeveloperNotification.cs" />
     <Compile Include="Models\Follow.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\ProgrammingLanguage.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectCategory.cs" />
@@ -280,6 +288,8 @@
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -971,6 +981,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1025,6 +1037,7 @@
     <Content Include="Views\Developer\DeveloperProfile.cshtml" />
     <Content Include="Views\Shared\_IndexLayout.cshtml" />
     <Content Include="Views\Message\SendMessage.cshtml" />
+    <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1065,6 +1078,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003201454108_FixMessagesFK.resx">
       <DependentUpon>202003201454108_FixMessagesFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003211029332_AddNotifications.resx">
+      <DependentUpon>202003211029332_AddNotifications.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

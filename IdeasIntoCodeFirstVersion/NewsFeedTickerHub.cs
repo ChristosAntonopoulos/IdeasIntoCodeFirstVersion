@@ -17,21 +17,9 @@ namespace IdeasIntoCodeFirstVersion
 
 
 
-        public override Task OnConnected()
+        public void Connect(string userid)
         {
-            string userName = Context.User.Identity.Name;
-            string connectionId = Context.ConnectionId;
-
-            var user = Users.GetOrAdd(userName, _ => new UserHub
-            {
-                UserName = userName,
-                ConnectionID = connectionId
-            });
-            if (user.ConnectionID != null)
-            {
-                Clients.Caller.userConnected(userName);
-            }
-            return base.OnConnected();
+            //Clients.User.Context
         }
 
         public void SendNotification(List<ApplicationUser> applicationUsers,INewsFeed newsFeed)

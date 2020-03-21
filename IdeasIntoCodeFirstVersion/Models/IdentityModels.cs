@@ -22,12 +22,17 @@ namespace IdeasIntoCodeFirstVersion.Models
     {
         public DbSet<Developer> Developers { get; set; }
 
+      
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<DeveloperNotification> DeveloperNotifications { get; set; }
+
+        public DbSet<Notification> Notifications { get; set; }
 
         public DbSet<Team> Teams { get; set; }
         //public DbSet<TeamDeveloper> TeamDevelopers{ get; set; }
@@ -64,6 +69,8 @@ namespace IdeasIntoCodeFirstVersion.Models
             modelBuilder.Entity<Developer>()
                 .Property(d=>d.BirthDate)
                 .HasColumnType("datetime2");
+
+           
 
 
 
