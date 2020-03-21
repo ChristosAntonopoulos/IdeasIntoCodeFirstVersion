@@ -78,8 +78,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 
-                developers = developers.Where(s => s.LastName.Contains(searchString)
-                || s.Name.Contains(searchString));
+                developers = developers.Where(s => s.User.LastName.Contains(searchString)
+                || s.User.Name.Contains(searchString));
 
                 projects = projects.Where(p => p.Title.Contains(searchString));
             }

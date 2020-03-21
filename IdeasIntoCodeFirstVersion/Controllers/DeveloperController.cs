@@ -59,11 +59,26 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
 
         // Developer/new
+       
         [Authorize]
-        public ActionResult New()
-        { 
+        public ActionResult New(string ID)
+        {
+            //var currentUserID = User.Identity.GetUserId();
+            //var Developer = context.Developers.Include(d => d.ProgrammingLanguages).SingleOrDefault(p => p.User.Id == currentUserID);
 
-            return View("DeveloperForm");
+            if (ID == null)
+                return HttpNotFound();
+            var viewModel = new DeveloperFormViewModel()
+            {
+                Developer = new Developer { UserID = ID, DateCreated = DateTime.Now },
+                ProgrammingLanguages = context.ProgrammingLanguages.ToList()
+            };
+
+
+
+            return View("Form", viewModel);
+
+
         }
 
         [Authorize]
@@ -118,10 +133,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                     }
                     
                 }
-                DeveloperDB.Name = developer.Name;
-                DeveloperDB.LastName = developer.LastName;
+                DeveloperDB.User.Name = developer.User.Name;
+                DeveloperDB.User.LastName = developer.User.LastName;
                 DeveloperDB.GitHub = developer.GitHub;
-                DeveloperDB.Email = developer.Email;
+                DeveloperDB.User.Email = developer.User.Email;
                 DeveloperDB.BirthDate = developer.BirthDate;
             }
 

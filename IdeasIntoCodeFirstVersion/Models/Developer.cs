@@ -13,32 +13,18 @@ namespace IdeasIntoCodeFirstVersion.Models
 
         public int ID { get; set; }
 
-        public string FullName
-        {
-            get
-            {
-                return LastName + " " + Name;
-            }
-        }
-
-        [Required]
-        public string LastName { get; set; }
-
-        [Required]
-        public string Name { get; set; }
+       
 
         [Required]
         [Display(Name = "Date Of Birth")]
         public DateTime BirthDate { get; set; }
-        [Required]
-        [Display(Name="E-mail")]
-        [EmailAddress]
-        public string Email { get; set; }        
+          
         public string GitHub { get; set; }   
         
         public DateTime DateCreated { get; set; }
 
-        
+        [Display(Name = "User ID")]
+        public string UserID { get; set; }
         public ApplicationUser User { get; set; }
 
         public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }

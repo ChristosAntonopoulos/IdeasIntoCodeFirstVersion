@@ -1,0 +1,30 @@
+﻿@model IdeasIntoCodeFirstVersion.ViewModels.DeveloperFormViewModel
+@{
+    ViewBag.Title = "DeveloperForm";
+}
+<h2>Form</h2>
+@using (Html.BeginForm("Save", "Developer"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "Please Fix the following errors")
+
+    <div class="form-group">
+        @Html.LabelFor(s => s.Developer.GitHub)
+        @Html.TextBoxFor(s => s.Developer.GitHub, new { @class = "form-control" })
+        @Html.ValidationMessageFor(s => s.Developer.GitHub)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(s => s.Developer.BirthDate)
+        @Html.TextBoxFor(s => s.Developer.BirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(s => s.Developer.BirthDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(s => s.ProgrammingLanguagesID)
+        @Html.DropDownListFor(s => s.ProgrammingLanguagesID, new SelectList(Model.ProgrammingLanguages, "Id", "Name"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(s => s.ProgrammingLanguagesID)
+    </div>
+    @Html.HiddenFor(s => s.Developer.ID)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")}

@@ -260,8 +260,13 @@
     <Compile Include="Migrations\202003211029332_AddNotifications.Designer.cs">
       <DependentUpon>202003211029332_AddNotifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003211145024_MoveNamaFullnameLastNameToApplicationUser.cs" />
+    <Compile Include="Migrations\202003211145024_MoveNamaFullnameLastNameToApplicationUser.Designer.cs">
+      <DependentUpon>202003211145024_MoveNamaFullnameLastNameToApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DeveloperNotification.cs" />
     <Compile Include="Models\Follow.cs" />
@@ -1038,6 +1043,7 @@
     <Content Include="Views\Shared\_IndexLayout.cshtml" />
     <Content Include="Views\Message\SendMessage.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="Views\Developer\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1081,6 +1087,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003211029332_AddNotifications.resx">
       <DependentUpon>202003211029332_AddNotifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003211145024_MoveNamaFullnameLastNameToApplicationUser.resx">
+      <DependentUpon>202003211145024_MoveNamaFullnameLastNameToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

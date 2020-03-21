@@ -65,6 +65,12 @@ namespace IdeasIntoCodeFirstVersion.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

@@ -18,8 +18,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private ApplicationDbContext context;
+
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -79,7 +82,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    var user = context.Users.SingleOrDefault(u => u.Email == model.Email);
+                    var userId = user.Id;
+                    var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
+
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("DeveloperProfile", "Developer", new { ID = developer.ID });
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -151,21 +159,24 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, LastName = model.LastName };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    
+                    //var dev = context.Developers.Where(d => d.User==user).SingleOrDefault();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href="" + callbackUrl + "">here</a>");
+                    //UserManager.AddToRole(user.Id, "User");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("New", "Developer", new { ID = user.Id });
                 }
+
                 AddErrors(result);
             }
 

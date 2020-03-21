@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <img src="~/Content/Images/profpicegw.jpg" alt="" class="img-fluid rounded-circle w-60 mb-3">
 
-                        <h4>@Model.DeveloperOfProfile.FullName</h4>
+                        <h4>@Model.DeveloperOfProfile.User.FullName</h4>
 
                         <div class="d-flex justify-content-center">
                             <div class="p-4">
@@ -101,7 +101,7 @@
                                 <i class="far fa-envelope-open"></i>
                                 E-mail:
                             </th>
-                            <td>@Model.DeveloperOfProfile.Email</td>
+                            <td>@Model.DeveloperOfProfile.User.Email</td>
                         </tr>
                         <tr>
                             <th scope="row">
