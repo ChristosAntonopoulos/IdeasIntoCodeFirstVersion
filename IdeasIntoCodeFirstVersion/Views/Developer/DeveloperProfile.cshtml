@@ -18,7 +18,7 @@
 
                         <div class="d-flex justify-content-center">
                             <div class="p-4">
-                                @if (!Model.NegativeToShowActionButtons)
+                                @if (Model.ShowActionButtons)
                                 {
                                     if (Model.ConnectedDeveloperAlreadyFollowsProfileDeveloper)
                                     {
@@ -39,7 +39,7 @@
                                 }
                             </div>
                             <div class="p-4">
-                                @if (!Model.NegativeToShowActionButtons)
+                                @if (Model.ShowActionButtons)
                                 {
                                     <a href="@Url.Action("SendMessage", "Message", new {receiverID = Model.DeveloperOfProfile.ID })">Message</a>
                                     @*<button  type="button" class="btn btn-primary">
