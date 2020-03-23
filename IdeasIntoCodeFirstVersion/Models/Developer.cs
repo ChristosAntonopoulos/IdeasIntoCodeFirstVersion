@@ -11,9 +11,7 @@ namespace IdeasIntoCodeFirstVersion.Models
     public class Developer
     {
 
-        public int ID { get; set; }
-
-       
+        public int ID { get; set; }       
 
         [Required]
         [Display(Name = "Date Of Birth")]

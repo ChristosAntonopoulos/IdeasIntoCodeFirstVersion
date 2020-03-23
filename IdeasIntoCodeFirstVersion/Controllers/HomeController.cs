@@ -41,8 +41,23 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var developerid = context.Developers.Where(d => d.User.Id == userId).Select(d => d.ID).SingleOrDefault();
             var newsFeedList = new List<INewsFeed>();
             var follows = context.Follows.Where(f=>f.FollowerID== developerid).Select(f => f.FolloweeID).ToList();
-            var comments = context.Comments.Where(c=> follows.Contains(c.DeveloperID)).OrderBy(c=>c.TimeStamp).Include(c=>c.Developer).Include(c=>c.Project).Include(c => c.Project.Admin).Take(10).ToList();
-            var followers = context.Follows.Where(f => follows.Contains(f.FollowerID)).OrderBy(f => f.TimeStamp).Include(f=>f.Followee).Include(f => f.Follower).Take(10).ToList();
+            var comments = context.Comments.Where(c=> follows.Contains(c.DeveloperID))
+                .OrderBy(c=>c.TimeStamp)
+                .Include(c=>c.Developer)
+                .Include(c=>c.Developer.User)
+                .Include(c=>c.Project)
+                .Include(c => c.Project.Admin)
+                .Take(10).ToList();
+
+            var followers = context.Follows
+                .Where(f => follows
+                .Contains(f.FollowerID))
+                .OrderBy(f => f.TimeStamp)
+                .Include(f=>f.Followee)
+                .Include(f=>f.Followee.User)
+                .Include(f => f.Follower)
+                .Include(f => f.Follower.User)
+                .Take(10).ToList();
             //var projects = context.Projects.Where(p => follows.Contains(p.AdminID)).OrderBy(p => p.TimeStamp).Take(10);
 
             //var comments = from s in context.Comments
@@ -51,7 +66,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             //               select s;
             newsFeedList.AddRange(comments);
             newsFeedList.AddRange(followers);
-            newsFeedList.AddRange(context.Projects.OrderBy(p => p.TimeStamp).Include(c => c.Admin).Take(10).ToList());
+            newsFeedList.AddRange(context.Projects.OrderBy(p => p.TimeStamp).Include(c => c.Admin).Include(p=>p.Admin.User).Take(10).ToList());
 
 
 

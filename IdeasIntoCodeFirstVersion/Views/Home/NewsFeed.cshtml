@@ -40,7 +40,7 @@
                             <div class="media">
                                 <div class="media-body">
                                     <small class="float-right text-navy">@(item.TimeStamp)</small>
-                                    <strong>@((item as Follow).Follower.FullName)</strong> started following <strong>@((item as Follow).Followee.FullName)</strong>
+                                    <strong>@((item as Follow).Follower.User.FullName)</strong> started following <strong>@((item as Follow).Followee.User.FullName)</strong>
                                     <br>
                                     <small class="text-muted">Today 7:51 pm</small>
                                     <br>
@@ -54,10 +54,10 @@
                         else if (item.GetType() == typeof(Project))
                         {
                             <div class="media">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Project).Admin.FullName)">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Project).Admin.User.FullName)">
                                 <div class="media-body">
                                     <small class="float-right text-navy">30m ago</small>
-                                    <strong>@((item as Project).Admin.FullName)</strong> created  <strong>@((item as Project).Admin.Name)</strong>
+                                    <strong>@((item as Project).Admin.User.FullName)</strong> created  <strong>@((item as Project).Admin.User.Name)</strong>
                                     <br>
                                     <small class="text-muted">Today 7:21 pm</small>
 
@@ -77,10 +77,10 @@
                         else
                         {
                             <div class="media">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Comment).Project.Admin.FullName)">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Comment).Project.Admin.User.FullName)">
                                 <div class="media-body">
                                     <small class="float-right text-navy">30m ago</small>
-                                    <strong>@((item as Comment).Developer.FullName)</strong> commented at   <strong>@((item as Comment).Project.Title)</strong>
+                                    <strong>@((item as Comment).Developer.User.FullName)</strong> commented at   <strong>@((item as Comment).Project.Title)</strong>
                                     <br>
                                     <small class="text-muted">Today 7:21 pm</small>
 

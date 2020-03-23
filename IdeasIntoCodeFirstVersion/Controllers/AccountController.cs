@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IdeasIntoCodeFirstVersion.Models;
+using System.Data.Entity.Validation;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -173,8 +174,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href="" + callbackUrl + "">here</a>");
                     //UserManager.AddToRole(user.Id, "User");
+                    context.Developers.Add(new Developer { UserID = user.Id, DateCreated = DateTime.Now, BirthDate = DateTime.Now });
+                    context.SaveChanges();
 
-                    return RedirectToAction("New", "Developer", new { ID = user.Id });
+                    return RedirectToAction("DeveloperProfile", "Developer", new { });
                 }
 
                 AddErrors(result);
