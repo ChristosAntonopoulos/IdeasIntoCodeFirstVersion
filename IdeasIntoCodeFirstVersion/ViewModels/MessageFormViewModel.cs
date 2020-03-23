@@ -23,8 +23,10 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
         [Required]
         public int ReceiverID { get; set; }
         public Developer Receiver { get; set; }
+        public string ReceiverUserID { get; set; }
 
         [Required]
         public DateTime DatePosted { get; set; }
+        public IEnumerable<ApplicationUser> Followers { get; set; }
     }
 }

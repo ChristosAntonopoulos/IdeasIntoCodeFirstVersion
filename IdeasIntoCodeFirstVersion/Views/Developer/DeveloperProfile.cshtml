@@ -16,7 +16,17 @@
 
                         <h4>@Model.DeveloperOfProfile.User.FullName</h4>
 
+
                         <div class="d-flex justify-content-center">
+                            <div class="p-4">
+                                @if (Model.NegativeToShowActionButtons)
+                                {
+                                    <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">New Message</a>
+                                    <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Send"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Send Messages</a>
+                                    <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Received"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Received Messages</a>
+                                   
+                                }
+                            </div>
                             <div class="p-4">
                                 @if (!Model.NegativeToShowActionButtons)
                                 {
@@ -41,7 +51,7 @@
                             <div class="p-4">
                                 @if (!Model.NegativeToShowActionButtons)
                                 {
-                                    <a href="@Url.Action("SendMessage", "Message", new {receiverID = Model.DeveloperOfProfile.ID })">Message</a>
+                                    <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })">Message</a>
                                     @*<button  type="button" class="btn btn-primary">
                                             <i class="fas fa-envelope"></i>
                                             Message
@@ -49,6 +59,7 @@
                                 }
 
                             </div>
+
 
                         </div>
                     </div>

@@ -285,6 +285,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DeveloperProfileViewModel.cs" />
+    <Compile Include="ViewModels\GetMessagesViewModel.cs" />
     <Compile Include="ViewModels\MessageFormViewModel.cs" />
     <Compile Include="ViewModels\NewsFeedViewModel.cs" />
     <Compile Include="ViewModels\ProjectFormViewModel.cs" />
@@ -1044,6 +1045,7 @@
     <Content Include="Views\Message\SendMessage.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\Developer\Form.cshtml" />
+    <Content Include="Views\Message\GetMessages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
