@@ -29,10 +29,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var userId = User.Identity.GetUserId(); 
             if (ID == null)
             {
-
-                RedirectToAction("DeveloperProfile", ID=context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault()); 
-                   
-            }            
+                RedirectToAction("DeveloperProfile", ID=context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault());                   
+            }          
                
             var developer = context.Developers
                 .Include(u => u.ProgrammingLanguages)
