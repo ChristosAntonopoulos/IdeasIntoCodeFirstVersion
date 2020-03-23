@@ -24,16 +24,17 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
 
-        public ActionResult DeveloperProfile(int ID)
+        public ActionResult DeveloperProfile(int? ID)
         {
-            var userId = User.Identity.GetUserId();
-
-            Developer connectedDeveloper = null;//Αυτη η γραμμη μαζι με την if που την συνοδευει 
-            if (userId != null)                //χρειαστηκε επειδη αυτην τη στιγμη στην βαση μου υπαρχουν παραπανω απο ενας Developers χωρις να εχουν User 
-                connectedDeveloper = context.Developers.SingleOrDefault(d => d.User.Id == userId);
+            var userId = User.Identity.GetUserId(); 
+            if (ID == null)
+            {
+                RedirectToAction("DeveloperProfile", ID=context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault());                   
+            }          
+               
             var developer = context.Developers
                 .Include(u => u.ProgrammingLanguages)
-                .Include(d=>d.ProjectsOwned)
+                .Include(d => d.ProjectsOwned)
                 .Include(d => d.Followers)
                 .Include(d => d.Following)
                 .Include(d => d.User)
@@ -41,18 +42,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var viewModel = new DeveloperProfileViewModel
             {
                 DeveloperOfProfile = developer,
-                NegativeToShowActionButtons = true,
-                ConnectedDeveloperAlreadyFollowsProfileDeveloper = false
+                ConnectedDeveloperAlreadyFollowsProfileDeveloper = context.Follows.Any(f=>f.Follower.UserID==userId && f.Followee.ID==ID),
+                ShowActionButtons = !(developer.UserID==userId)
             };
-            if (connectedDeveloper != null)
-            {
-                if (developer.ID != connectedDeveloper.ID)
-                    viewModel.NegativeToShowActionButtons = false;
-                
-                var testFollow = new Follow() { FollowerID = connectedDeveloper.ID, FolloweeID = developer.ID };
-                if (developer.Followers.Contains(developer.Followers.SingleOrDefault(f => f.FollowerID == connectedDeveloper.ID)))
-                    viewModel.ConnectedDeveloperAlreadyFollowsProfileDeveloper = true;
-            }
+          
             return View(viewModel);
         }
 
@@ -60,26 +53,26 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         // Developer/new
        
-        [Authorize]
-        public ActionResult New(string ID)
-        {
-            //var currentUserID = User.Identity.GetUserId();
-            //var Developer = context.Developers.Include(d => d.ProgrammingLanguages).SingleOrDefault(p => p.User.Id == currentUserID);
+        //[Authorize]
+        //public ActionResult New(string ID)
+        //{
+        //    //var currentUserID = User.Identity.GetUserId();
+        //    //var Developer = context.Developers.Include(d => d.ProgrammingLanguages).SingleOrDefault(p => p.User.Id == currentUserID);
 
-            if (ID == null)
-                return HttpNotFound();
-            var viewModel = new DeveloperFormViewModel()
-            {
-                Developer = new Developer { UserID = ID, DateCreated = DateTime.Now },
-                ProgrammingLanguages = context.ProgrammingLanguages.ToList()
-            };
-
-
-
-            return View("Form", viewModel);
+        //    if (ID == null)
+        //        return HttpNotFound();
+        //    var viewModel = new DeveloperFormViewModel()
+        //    {
+        //        Developer = new Developer { UserID = ID, DateCreated = DateTime.Now },
+        //        ProgrammingLanguages = context.ProgrammingLanguages.ToList()
+        //    };
 
 
-        }
+
+        //    return View("Form", viewModel);
+
+
+        //}
 
         [Authorize]
         [HttpPost]
@@ -91,10 +84,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             {
                 PopulateDeveloperProgrammingLanguages(developer, programmingLanguage);
                 var viewModel = new DeveloperFormViewModel
-                {
-                    
+                {                    
                     Developer = developer
-
                 };
 
                 return View("DeveloperForm", viewModel);

@@ -12,14 +12,15 @@ namespace IdeasIntoCodeFirstVersion
     //[HubName("NewsFeedTickerMini")]
     public class NewsFeedTickerHub : Hub
     {
-        private static readonly ConcurrentDictionary<string, UserHub> Users =
-        new ConcurrentDictionary<string, UserHub>(StringComparer.InvariantCultureIgnoreCase);
+        private static readonly ConcurrentDictionary<string, string> Users =
+        new ConcurrentDictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
 
 
         public void Connect(string userid)
         {
-            //Clients.User.Context
+
+            Users.GetOrAdd(userid, Context.ConnectionId);
         }
 
         public void SendNotification(List<ApplicationUser> applicationUsers,INewsFeed newsFeed)
@@ -29,12 +30,12 @@ namespace IdeasIntoCodeFirstVersion
                 
                 foreach (var applicationUser in applicationUsers)
                 {
-                    UserHub receiver;
-                    if (Users.TryGetValue(applicationUser.Id, out receiver))
+                    string receiverConnectionString;
+                    if (Users.TryGetValue(applicationUser.Id, out receiverConnectionString))
                     {
-                        var cid = receiver.ConnectionID;
-                        var context = GlobalHost.ConnectionManager.GetHubContext<NewsFeedTickerHub>();
-                        context.Clients.Client(cid).broadcaastNotif(newsFeed);
+                        var cid = receiverConnectionString;
+                        //var context = GlobalHost.ConnectionManager.GetHubContext<NewsFeedTickerHub>();
+                        Clients.Client(cid).broadcaastNotif(newsFeed);
                     }
 
                 }

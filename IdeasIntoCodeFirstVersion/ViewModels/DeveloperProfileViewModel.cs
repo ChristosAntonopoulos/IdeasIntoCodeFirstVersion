@@ -9,7 +9,7 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
     public class DeveloperProfileViewModel
     {
         public Developer DeveloperOfProfile { get; set; }
-        public bool NegativeToShowActionButtons { get; set; }
+        public bool ShowActionButtons { get; set; } = true;
         public bool ConnectedDeveloperAlreadyFollowsProfileDeveloper { get; set; }
     }
 }

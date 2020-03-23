@@ -1,129 +1,469 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/Site.css")
+    @*@Styles.Render("~/Content/Site.css")*@
     @Scripts.Render("~/bundles/modernizr")
+
+    
+
+
+
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark fixed-top" id="main-nav">
-        <div class="container">
-            <a href="index.html" class="navbar-brand">IDEAS into CODING</a>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav ml-auto">
-                    <li>@Html.ActionLink("Home", "Index", "Home", "", new { @class = "nav-link" })</li>
-                    <li class="nav-item">
-                        <a href="#explore-head-section" class="nav-link">About Us</a>
-                    </li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div type="button" class="sidebar-header text-center" id="sidebarCollapse">
+                <h3>Ideas into Coading</h3>
+                <strong>IiC</strong>
             </div>
-        </div>
-    </nav>
 
-    <div class="row">
+            <div class="card" id="proPic">
 
-        <div class="wrapper col-md-2">
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <h3>EIKONA</h3>
+                <div class="card-body">
+                    <img src="profpic.jpg" alt=""
+                         class="img-fluid rounded-circle w-60">
+                    <div class="d-flex justify-content-center">
+                    </div>
                 </div>
+            </div>
 
-                <ul class="list-unstyled components">
-                    <li>
-                        <a href="#">Profile</a>
-                    </li>
-                    <li>
-                        <a href="#">Projects</a>
-                    </li>
-                    <li>
-                        <a href="#">Message</a>
-                    </li>
-                    <li>
-                        <a href="#">GitHub</a>
-                    </li>
-                </ul>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="@Url.Action("Developer", "DeveloperProfile")">
+                        <i class="fas fa-user-circle"></i>
+                        My Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="#prjectsSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="far fa-lightbulb"></i>
+                        Projects
+                    </a>
+                    <ul class="collapse list-unstyled" id="prjectsSubMenu">
+                        <li>
+                            <a href="#">Project 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Project 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Humanity</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#messageSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="far fa-comment-dots"></i>
+                        Message
+                    </a>
+                    <ul class="collapse list-unstyled" id="messageSubMenu">
+                        <li>
+                            <a href="#">Message 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Message 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Message 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        About Us
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Log Off
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                        <a class="navbar-brand mr-auto" href="@Url.Action("Index", "Home")"><i class="fas fa-home fa-2x"></i></a>
+
+
+                        <form class="form-inline mr-auto my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search..."
+                                   aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+
+                        <ul class="navbar-nav mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-globe fa-2x"></i></a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+
+                </div>
             </nav>
 
-        </div>
 
-        <div class="col-md-10">
             @RenderBody()
+
+
         </div>
     </div>
 
 
-    <footer id="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center py-4">
-                    <h3>OtiNaNaiTeam</h3>
-                    <p>
-                        Copyright &copy;
-                        <span id="year"></span>
-                    </p>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+        }
+
+        p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            font-weight: 300;
+            line-height: 1.7em;
+            color: #999;
+        }
+
+        a,
+        a:hover,
+        a:focus {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .navbar {
+            padding: 15px 10px;
+            background: #fff;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-btn {
+            box-shadow: none;
+            outline: none !important;
+            border: none;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px dashed #ddd;
+            margin: 40px 0;
+        }
+
+        i,
+        span {
+            display: inline-block;
+        }
+
+
+        /* ---------------------------------------------------
+            SIDEBAR STYLE
+        ----------------------------------------------------- */
+
+        .wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #7386D5;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        #proPic {
+            background: #7386D5;
+        }
+
+        #sidebar.active {
+            min-width: 80px;
+            max-width: 80px;
+            text-align: center;
+        }
+
+            #sidebar.active .sidebar-header h3,
+            #sidebar.active .CTAs {
+                display: none;
+            }
+
+            #sidebar.active .sidebar-header strong {
+                display: block;
+            }
+
+        #sidebar ul li a {
+            text-align: left;
+        }
+
+        #sidebar.active ul li a {
+            padding: 20px 10px;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+            #sidebar.active ul li a i {
+                margin-right: 0;
+                display: block;
+                font-size: 1.8em;
+                margin-bottom: 5px;
+            }
+
+        #sidebar.active ul ul a {
+            padding: 10px !important;
+        }
+
+        #sidebar.active .dropdown-toggle::after {
+            top: auto;
+            bottom: 10px;
+            right: 50%;
+            -webkit-transform: translateX(50%);
+            -ms-transform: translateX(50%);
+            transform: translateX(50%);
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #6d7fcc;
+        }
+
+            #sidebar .sidebar-header strong {
+                display: none;
+                font-size: 1.8em;
+            }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+            border-bottom: 1px solid #47748b;
+        }
+
+        #sidebar ul li a {
+            padding: 10px;
+            font-size: 1.1em;
+            display: block;
+        }
+
+            #sidebar ul li a:hover {
+                color: #7386D5;
+                background: #fff;
+            }
+
+            #sidebar ul li a i {
+                margin-right: 10px;
+            }
+
+        #sidebar ul li.active > a,
+        a[aria-expanded="true"] {
+            color: #fff;
+            background: #6d7fcc;
+        }
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        ul ul a {
+            font-size: 0.9em !important;
+            padding-left: 30px !important;
+            background: #6d7fcc;
+        }
+
+        ul.CTAs {
+            padding: 20px;
+        }
+
+            ul.CTAs a {
+                text-align: center;
+                font-size: 0.9em !important;
+                display: block;
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
+
+        a.download {
+            background: #fff;
+            color: #7386D5;
+        }
+
+        a.article,
+        a.article:hover {
+            background: #6d7fcc !important;
+            color: #fff !important;
+        }
+
+        #content {
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+    </style>
+
+
+    @*<nav class="navbar navbar-expand-sm navbar-dark fixed-top" id="main-nav">
+            <div class="container">
+                <a href="index.html" class="navbar-brand">IDEAS into CODING</a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li>@Html.ActionLink("Home", "Index", "Home", "", new { @class = "nav-link" })</li>
+                        <li class="nav-item">
+                            <a href="#explore-head-section" class="nav-link">About Us</a>
+                        </li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
-        </div>
-    </footer>
+        </nav>
+
+        <div class="row">
+
+            <div class="wrapper col-md-2">
+                <nav id="sidebar">
+                    <div class="sidebar-header">
+                        <h3>EIKONA</h3>
+                    </div>
+
+                    <ul class="list-unstyled components">
+                        <li>
+                            <a href="#">Profile</a>
+                        </li>
+                        <li>
+                            <a href="#">Projects</a>
+                        </li>
+                        <li>
+                            <a href="#">Message</a>
+                        </li>
+                        <li>
+                            <a href="#">GitHub</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
+        </div>*@
 
 
+        <footer id="main-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center py-4">
+                        <h3>OtiNaNaiTeam</h3>
+                        <p>
+                            Copyright &copy;
+                            <span id="year"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    <script src="https://kit.fontawesome.com/7297f9c199.js" crossorigin="anonymous"></script>
     @Scripts.Render("~/bundles/lib")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")   
     @RenderSection("scripts", required: false)
+
     <script type="text/x-template" id="notifications-template">
-        <%
-        
-        _.each(notifications, function(notification) {
-        if (notification.type == 0) { %>
-        <li><%= notification.developer.fullName %> has followed you </li>
-        <% };
-        if (notification.type == 1) { %>
-        <li><%= notification.developer.fullName %> has messaged you</li>
-        <% };
-        if (notification.type == 2) { %>
-        <li><%= notification.developer.fullName %> has petittioned to join you project with name <%= notification.project.title %></li>
-        <% };
-        })
-        %>
-    </script>
-    <script>
-        $(document).ready(function () {
-            $.getJSON("/api/notifications", function (notifications) {
-                //if (notifications.length == 0)
-                //    return;
+            <%
+            _.each(notifications, function(notification) {
+            _.each(notifications, function(notification) {
+            if (notification.type == 0) { %>
+            <li><%= notification.developer.fullName %> has followed you </li>
+            <% };
+            if (notification.type == 1) { %>
+            <li><%= notification.developer.fullName %> has messaged you</li>
+            <% };
+            if (notification.type == 2) { %>
+            <li><%= notification.developer.fullName %> has petittioned to join you project with name <%= notification.project.title %></li>
+            <% }
+            })
+            %>
+        </script>
+        <script>
+            $(document).ready(function () {
 
-                $(".js-notifications-count")
-                    .text(notifications.length)
-                    .removeClass("hide")
-                    .addClass("animated bounceInDown");
+                 $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                 });
 
-                $(".notifications").popover({
-                    html: true,
-                    title: "Notifications",
-                    content: function () {
-                        var compiled = _.template($("#notifications-template").html());
-                        var html = compiled({ notifications: notifications })
+                $.getJSON("/api/notifications", function (notifications) {
+                    //if (notifications.length == 0)
+                    //    return;
 
-                        return html;
-                    },
-                    placement: "bottom"
-                })
+                    $(".js-notifications-count")
+                        .text(notifications.length)
+                        .removeClass("hide")
+                        .addClass("animated bounceInDown");
+
+                    $(".notifications").popover({
+                        html: true,
+                        title: "Notifications",
+                        content: function () {
+                            var compiled = _.template($("#notifications-template").html());
+                            var html = compiled({ notifications: notifications })
+
+                            return html;
+                        },
+                        placement: "bottom"
+                    })
+                });
+
+
+
             });
-
-
-
-        });
-    </script>
+        </script>
 
 
 
