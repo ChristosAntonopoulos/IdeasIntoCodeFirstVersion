@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    
     @Styles.Render("~/Content/css")
     @*@Styles.Render("~/Content/Site.css")*@
     @Scripts.Render("~/bundles/modernizr")
@@ -441,6 +442,26 @@
                 $.getJSON("/api/notifications", function (notifications) {
                     //if (notifications.length == 0)
                     //    return;
+        <%
+        
+        _.each(notifications, function(notification) {
+        if (notification.type == 0) { %>
+        <li><%= notification.developer.fullName %> has followed you </li>
+        <% };
+        if (notification.type == 1) { %>
+        <li><%= notification.developer.fullName %> has messaged you</li>
+        <% };
+        if (notification.type == 2) { %>
+        <li><%= notification.developer.fullName %> has petittioned to join you project with name <%= notification.project.title %></li>
+        <% };
+        })
+        %>
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/notifications", function (notifications) {
+                //if (notifications.length == 0)
+                //    return;
 
                     $(".js-notifications-count")
                         .text(notifications.length)
