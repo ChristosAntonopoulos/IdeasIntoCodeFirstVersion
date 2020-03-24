@@ -84,20 +84,18 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult Data(string searchString)
         {
-
-            var developers = from d in context.Developers
-                             select d;
-            var projects = from p in context.Projects
-                           select p;
+            var developers = context.Developers.Include(d => d.User);
+            var projects = context.Projects.AsQueryable();
+            
             
             if (!string.IsNullOrEmpty(searchString))
             {
-                
                 developers = developers.Where(s => s.User.LastName.Contains(searchString)
                 || s.User.Name.Contains(searchString));
-
+                
                 projects = projects.Where(p => p.Title.Contains(searchString));
             }
+           
             var viewmodel = new SearchResultViewModel()
             {
                 Developers = developers.ToList(),

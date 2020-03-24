@@ -6,12 +6,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    
     @Styles.Render("~/Content/css")
     @*@Styles.Render("~/Content/Site.css")*@
     @Scripts.Render("~/bundles/modernizr")
 
-    
+
 
 
 
@@ -116,15 +115,16 @@
 
                         <a class="navbar-brand mr-auto" href="@Url.Action("Index", "Home")"><i class="fas fa-home fa-2x"></i></a>
 
-
-                        <form class="form-inline mr-auto my-2 my-lg-0">
+                        @using (Html.BeginForm("Data", "Home"))
+                         {
+                            <div class="form-inline mr-auto my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search..."
-                                   aria-label="Search">
+                                   aria-label="Search" >
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
-                        </form>
-
+                        </div>
+                        }
                         <ul class="navbar-nav mt-2 mt-lg-0">
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="fas fa-globe fa-2x"></i></a>
@@ -151,7 +151,7 @@
             background: #fafafa;
         }
 
-        p {
+                        p {
             font-family: 'Poppins', sans-serif;
             font-size: 1.1em;
             font-weight: 300;
@@ -258,7 +258,7 @@
             right: 50%;
             -webkit-transform: translateX(50%);
             -ms-transform: translateX(50%);
-            transform: translateX(50%);
+                        transform: translateX(50%);
         }
 
         #sidebar .sidebar-header {
@@ -320,14 +320,14 @@
         }
 
             ul.CTAs a {
-                text-align: center;
-                font-size: 0.9em !important;
-                display: block;
-                border-radius: 5px;
-                margin-bottom: 5px;
-            }
+                            text-align: center;
+                            font-size: 0.9em !important;
+                            display: block;
+                            border-radius: 5px;
+                            margin-bottom: 5px;
+                        }
 
-        a.download {
+                        a.download {
             background: #fff;
             color: #7386D5;
         }
@@ -397,53 +397,28 @@
         </div>*@
 
 
-        <footer id="main-footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center py-4">
-                        <h3>OtiNaNaiTeam</h3>
-                        <p>
-                            Copyright &copy;
-                            <span id="year"></span>
-                        </p>
-                    </div>
+    <footer id="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center py-4">
+                    <h3>OtiNaNaiTeam</h3>
+                    <p>
+                        Copyright &copy;
+                        <span id="year"></span>
+                    </p>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
     <script src="https://kit.fontawesome.com/7297f9c199.js" crossorigin="anonymous"></script>
     @Scripts.Render("~/bundles/lib")
-    @Scripts.Render("~/bundles/bootstrap")   
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
     <script type="text/x-template" id="notifications-template">
-            <%
-            _.each(notifications, function(notification) {
-            _.each(notifications, function(notification) {
-            if (notification.type == 0) { %>
-            <li><%= notification.developer.fullName %> has followed you </li>
-            <% };
-            if (notification.type == 1) { %>
-            <li><%= notification.developer.fullName %> has messaged you</li>
-            <% };
-            if (notification.type == 2) { %>
-            <li><%= notification.developer.fullName %> has petittioned to join you project with name <%= notification.project.title %></li>
-            <% }
-            })
-            %>
-        </script>
-        <script>
-            $(document).ready(function () {
-
-                 $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar').toggleClass('active');
-                 });
-
-                $.getJSON("/api/notifications", function (notifications) {
-                    //if (notifications.length == 0)
-                    //    return;
         <%
-        
+        _.each(notifications, function(notification) {
         _.each(notifications, function(notification) {
         if (notification.type == 0) { %>
         <li><%= notification.developer.fullName %> has followed you </li>
@@ -453,38 +428,43 @@
         <% };
         if (notification.type == 2) { %>
         <li><%= notification.developer.fullName %> has petittioned to join you project with name <%= notification.project.title %></li>
-        <% };
+        <% }
         })
         %>
     </script>
     <script>
         $(document).ready(function () {
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+
             $.getJSON("/api/notifications", function (notifications) {
                 //if (notifications.length == 0)
                 //    return;
 
-                    $(".js-notifications-count")
-                        .text(notifications.length)
-                        .removeClass("hide")
-                        .addClass("animated bounceInDown");
+                $(".js-notifications-count")
+                    .text(notifications.length)
+                    .removeClass("hide")
+                    .addClass("animated bounceInDown");
 
-                    $(".notifications").popover({
-                        html: true,
-                        title: "Notifications",
-                        content: function () {
-                            var compiled = _.template($("#notifications-template").html());
-                            var html = compiled({ notifications: notifications })
+                $(".notifications").popover({
+                    html: true,
+                    title: "Notifications",
+                    content: function () {
+                        var compiled = _.template($("#notifications-template").html());
+                        var html = compiled({ notifications: notifications })
 
-                            return html;
-                        },
-                        placement: "bottom"
-                    })
-                });
-
-
-
+                        return html;
+                    },
+                    placement: "bottom"
+                })
             });
-        </script>
+
+
+
+        });
+    </script>
 
 
 

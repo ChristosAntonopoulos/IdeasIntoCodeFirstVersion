@@ -8,13 +8,13 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
 {
     public class SearchResultViewModel
     {
-        public List<Developer> Developers { get; set; }
+        public IEnumerable<Developer> Developers { get; set; }
 
-        public List<Project> Projects { get; set; }
-
-        
+        public IEnumerable<Project> Projects { get; set; }
 
         
+
+
 
 
     }

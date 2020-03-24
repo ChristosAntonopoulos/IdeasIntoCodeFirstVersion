@@ -46,7 +46,10 @@ namespace IdeasIntoCodeFirstVersion.Models
         }
 
 
-
+        public Project(int AdminId)
+        {
+            AdminID = AdminId;
+        }
 
     }
 }

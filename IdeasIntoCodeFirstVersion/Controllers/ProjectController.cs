@@ -30,18 +30,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         {
             var userId = User.Identity.GetUserId();
             var developer =context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
-
-            var project = context.Projects.Include(p => p.Team.TeamMembers)
-                .Include(p=>p.Admin)
-                .Include(p=>p.ProgrammingLanguages)
-                .Include(p=>p.ProjectCategories)
-                .Include(p=>p.Comments).Single(p=>p.ID==ID);      
-
-            var viewModel = new ProjectViewModel()
-            {
-                Project = project,
-                 Developer = developer
-            };
+            //allagh
+            var project = GetProject(ID);
+            
+            //allagh
+            var viewModel=new ProjectViewModel(developer, project);
+            
 
             if (developer.ID!=project.AdminID)
             {
@@ -58,21 +52,38 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View(viewModel);
         }
 
+        //allagh
+        private Project GetProject(int ID)
+        {
+            var project = context.Projects.Include(p => p.Team.TeamMembers)
+              .Include(p => p.Admin)
+              .Include(p => p.ProgrammingLanguages)
+              .Include(p => p.ProjectCategories)
+              .Include(p => p.Comments).Single(p => p.ID == ID);
+            return project;
+        }
+
         [Authorize]
         public ActionResult New()
         {
             var userID = User.Identity.GetUserId();
-            var viewModel = new ProjectFormViewModel()
-            {
-                //ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
-                //ProjectCategories = context.ProjectCategories.ToList(),
-                
-                
-                Project=new Project { AdminID=context.Developers.Where(d=>d.User.Id== userID).SingleOrDefault().ID }
+            var viewModel = new ProjectFormViewModel(new Project(GetAdminId(userID)));
+            //{
+            //    //ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
+            //    //ProjectCategories = context.ProjectCategories.ToList(),
 
-            };
+            //    Project = new Project(GetAdminId(userID))
+            //    //Project=new Project { AdminID=GetAdminId(userID) }
+
+            //};
 
             return View("ProjectForm", viewModel);
+        }
+
+        private int GetAdminId(string userID)
+        {
+            var AdminID = context.Developers.Where(d => d.User.Id == userID).SingleOrDefault().ID;
+            return AdminID;
         }
 
         [Authorize]
@@ -84,12 +95,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             {
                 PopulateProjectProgrammingLanguages(project, programmingLanguage);
                 PopulateProejectCategories(project, category);
-                var viewModel = new ProjectFormViewModel
-                {
-                    //ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
-                    Project = project
+                //allagh
+                var viewModel = new ProjectFormViewModel(project);
+                //{
+                //    //ProgrammingLanguages = context.ProgrammingLanguages.ToList(),
+                //    Project = project
 
-                };
+                //};
 
                 return View("ProjectForm", viewModel);
 
@@ -110,9 +122,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
                 var userID = User.Identity.GetUserId();
 
-                var applicationUsersToUpdateNewsFeed = context.Developers.Where(d => d.Followers.Select(f => f.Followee == context.Developers.Where(dev => dev.User.Id == userID).FirstOrDefault()).FirstOrDefault()).Select(developer => developer.User).ToList();
-
-                newsFeedHub.SendNotification(applicationUsersToUpdateNewsFeed, project);
+                //var applicationUsersToUpdateNewsFeed = GetUsersToUpdate(userID);
+                //allagh
+                newsFeedHub.SendNotification(GetUsersToUpdate(userID), project);
 
 
 
@@ -121,8 +133,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
             else
             {
-
-                var projectDB = context.Projects.Include(p => p.ProgrammingLanguages).Include(p=>p.ProjectCategories).Single(u => u.ID == project.ID);
+                //factory pattern???
+                //var projectDB = context.Projects.Include(p => p.ProgrammingLanguages).Include(p=>p.ProjectCategories).Single(u => u.ID == project.ID);
+                var projectDB = GetProject(project.ID);
                 if (programmingLanguage != null)
                 {
                     if (projectDB.ProgrammingLanguages.Count() == 0)
@@ -155,8 +168,15 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View("ProjectProfile",project);
         }
 
-
-        
+        //allagh
+        private List<ApplicationUser> GetUsersToUpdate(string userID)
+        {
+            var applicationUsersToUpdateNewsFeed=context.Developers
+                    .Where(d => d.Followers.Select(f => f.Followee == context.Developers
+                    .Where(dev => dev.User.Id == userID).FirstOrDefault()).FirstOrDefault())
+                    .Select(developer => developer.User).ToList();
+            return applicationUsersToUpdateNewsFeed;
+        }        
         private void UpdateProjectProgrammingLanguages(Project project, int[] programmingLanguage)
         {
 
@@ -240,14 +260,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             var projectCategories = context.ProjectCategories.ToList();
 
-
-            var viewModel = new ProjectFormViewModel()
-            {
-                ProgrammingLanguages = programmingLanguages,
-                ProjectCategories = projectCategories,
-                Project = project
-
-            };
+            //allagh
+            var viewModel = new ProjectFormViewModel(project, projectCategories, programmingLanguages);
+          
 
 
             return View("ViewerForm", viewModel);
