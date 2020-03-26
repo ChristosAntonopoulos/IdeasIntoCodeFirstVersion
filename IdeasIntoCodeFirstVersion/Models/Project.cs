@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Interface;
+using IdeasIntoCodeFirstVersion.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -49,6 +50,17 @@ namespace IdeasIntoCodeFirstVersion.Models
         public Project(int AdminId)
         {
             AdminID = AdminId;
+        }
+
+        public void ModifyInActive(Developer developer,ProjectViewModel viewModel)
+        {
+            foreach (var member in this.Team.TeamMembers)
+            {
+                if (member.ID == developer.ID && developer.ID != this.AdminID)
+                {
+                    viewModel.IsNoActive();
+                }
+            }
         }
 
     }

@@ -22,5 +22,15 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
             Developer = developer;
             Project = project;
         }
+
+        public void IsNoActive()
+        {
+            Action = false;
+        }
+        public void IsActive()
+        {
+            Action = true;
+        }
+
     }
 }

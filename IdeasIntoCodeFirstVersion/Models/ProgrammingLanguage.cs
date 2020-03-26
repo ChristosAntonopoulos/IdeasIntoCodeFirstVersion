@@ -23,8 +23,7 @@ namespace IdeasIntoCodeFirstVersion.Models
             Projects = new List<Project>();
             Developers = new List<Developer>();
         }
-             
-
+           
         
 
         
