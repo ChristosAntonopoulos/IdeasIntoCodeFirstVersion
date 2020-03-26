@@ -31,5 +31,20 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
                 return ID != 0 ? "Edit Project" : "New Project";
             }
         }
+
+        public ProjectFormViewModel()
+        {
+
+        }
+        public ProjectFormViewModel(Project project,List<ProjectCategory> projectCategories,List<ProgrammingLanguage> programmingLanguages)
+        {
+            ProgrammingLanguages = programmingLanguages;
+            Project = project;
+            ProjectCategories = projectCategories;
+        }
+        public ProjectFormViewModel(Project project)
+        {
+            Project = project;
+        }
     }
 }

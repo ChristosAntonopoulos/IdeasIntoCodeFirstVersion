@@ -8,7 +8,8 @@
         @foreach (var developer in Model.Developers)
         {
     <ul>
-        @Html.ActionLink(developer.FullName, "DeveloperProfile", "Developer", new { id = developer.ID }, null)
+        
+        @Html.ActionLink(developer.User.FullName, "DeveloperProfile", "Developer", new { id = developer.ID }, null)
     </ul>
         }
     

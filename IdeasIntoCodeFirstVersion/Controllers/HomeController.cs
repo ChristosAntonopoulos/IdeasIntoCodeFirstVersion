@@ -24,13 +24,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
         public ActionResult Index()
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    var currentUserID=User.Identity.GetUserId();
-
-            //    return RedirectToAction("DeveloperProfile",1);
-
-            //}
+            
             return View();
         }
 
@@ -58,12 +52,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 .Include(f => f.Follower)
                 .Include(f => f.Follower.User)
                 .Take(10).ToList();
-            //var projects = context.Projects.Where(p => follows.Contains(p.AdminID)).OrderBy(p => p.TimeStamp).Take(10);
-
-            //var comments = from s in context.Comments
-            //               join sa in context.Follows on s.DeveloperID equals sa.FolloweeID
-            //               where sa.FollowerID == id
-            //               select s;
+            
             newsFeedList.AddRange(comments);
             newsFeedList.AddRange(followers);
             newsFeedList.AddRange(context.Projects.OrderBy(p => p.TimeStamp).Include(c => c.Admin).Include(p=>p.Admin.User).Take(10).ToList());
@@ -84,25 +73,20 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult Data(string searchString)
         {
-
-            var developers = from d in context.Developers
-                             select d;
-            var projects = from p in context.Projects
-                           select p;
+            var developers = context.Developers.Include(d => d.User);
+            var projects = context.Projects.AsQueryable();
+            
             
             if (!string.IsNullOrEmpty(searchString))
             {
-                
                 developers = developers.Where(s => s.User.LastName.Contains(searchString)
                 || s.User.Name.Contains(searchString));
-
+                
                 projects = projects.Where(p => p.Title.Contains(searchString));
             }
-            var viewmodel = new SearchResultViewModel()
-            {
-                Developers = developers.ToList(),
-                Projects = projects.ToList()
-            };
+
+            var viewmodel = new SearchResultViewModel(developers, projects);
+            
 
             return View(viewmodel);
         }
