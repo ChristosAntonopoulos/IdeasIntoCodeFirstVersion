@@ -27,6 +27,8 @@ namespace IdeasIntoCodeFirstVersion.Models
         public Developer Receiver { get; set; }
         public DateTime DatePosted { get; set; }
 
+        public bool IsRead { get; set; }
+
         private Message()
         {
 
@@ -41,6 +43,11 @@ namespace IdeasIntoCodeFirstVersion.Models
             Receiver = Receiver;
             ReceiverID = receiver.ID;
             DatePosted = DateTime.Now;
+        }
+
+        public static void MarkAsRead(Message message)
+        {
+            message.IsRead = true;
         }
     }
 
