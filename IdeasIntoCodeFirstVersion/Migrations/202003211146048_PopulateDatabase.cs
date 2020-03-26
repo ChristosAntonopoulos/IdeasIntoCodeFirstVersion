@@ -22,13 +22,13 @@ INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [Se
 
 SET IDENTITY_INSERT [dbo].[Developers] ON 
 
-INSERT [dbo].[Developers] ([ID],  [BirthDate], [GitHub], [User_Id], [DateCreated], [Picture]) VALUES (1,  CAST(N'1994-01-01T00:00:00.0000000' AS DateTime2), N'test1git', NULL, CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [User_Id], [DateCreated], [Picture]) VALUES (2,  CAST(N'1993-02-02T00:00:00.0000000' AS DateTime2),  N'test2git', NULL, CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [User_Id], [DateCreated], [Picture]) VALUES (3, CAST(N'1993-03-03T00:00:00.0000000' AS DateTime2), N'test3git', NULL, CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [User_Id], [DateCreated], [Picture]) VALUES (14,  CAST(N'1990-10-01T00:00:00.0000000' AS DateTime2), N'botgithub', N'9b8c9eb2-2d78-4765-a2bd-3c2c891e839c', CAST(N'2020-03-16T20:16:01.520' AS DateTime), NULL)
-INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [User_Id], [DateCreated], [Picture]) VALUES (19, CAST(N'1993-10-25T00:00:00.0000000' AS DateTime2),  N'domgithub', N'c8b92021-4913-4a83-a79f-4d56ef1a12bc', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Developers] ([ID],  [BirthDate], [GitHub], [User_Id], [DateCreated], [Picture]) VALUES (21,  CAST(N'1995-10-10T00:00:00.0000000' AS DateTime2),  N'filgithub', N'389338c6-302e-4840-88b9-b6029fb00d47', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [User_Id], [DateCreated], [Picture]) VALUES (22,  CAST(N'1965-01-01T00:00:00.0000000' AS DateTime2),  N'teogithub', N'7a9325dc-2e5d-4400-bfb5-2fb59e4a48a2', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Developers] ([ID],  [BirthDate], [GitHub], [UserID], [DateCreated], [Picture]) VALUES (1,  CAST(N'1994-01-01T00:00:00.0000000' AS DateTime2), N'test1git', NULL, CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [UserID], [DateCreated], [Picture]) VALUES (2,  CAST(N'1993-02-02T00:00:00.0000000' AS DateTime2),  N'test2git', NULL, CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [UserID], [DateCreated], [Picture]) VALUES (3, CAST(N'1993-03-03T00:00:00.0000000' AS DateTime2), N'test3git', NULL, CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [UserID], [DateCreated], [Picture]) VALUES (14,  CAST(N'1990-10-01T00:00:00.0000000' AS DateTime2), N'botgithub', N'9b8c9eb2-2d78-4765-a2bd-3c2c891e839c', CAST(N'2020-03-16T20:16:01.520' AS DateTime), NULL)
+INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [UserID], [DateCreated], [Picture]) VALUES (19, CAST(N'1993-10-25T00:00:00.0000000' AS DateTime2),  N'domgithub', N'c8b92021-4913-4a83-a79f-4d56ef1a12bc', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Developers] ([ID],  [BirthDate], [GitHub], [UserID], [DateCreated], [Picture]) VALUES (21,  CAST(N'1995-10-10T00:00:00.0000000' AS DateTime2),  N'filgithub', N'389338c6-302e-4840-88b9-b6029fb00d47', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Developers] ([ID],  [BirthDate],  [GitHub], [UserID], [DateCreated], [Picture]) VALUES (22,  CAST(N'1965-01-01T00:00:00.0000000' AS DateTime2),  N'teogithub', N'7a9325dc-2e5d-4400-bfb5-2fb59e4a48a2', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL)
 
 SET IDENTITY_INSERT [dbo].[Developers] OFF
 INSERT [dbo].[Follows] ([FollowerID], [FolloweeID], [TimeStamp]) VALUES (1, 2, CAST(N'1900-01-01T00:00:00.000' AS DateTime))
@@ -101,20 +101,20 @@ INSERT [dbo].[TeamDevelopers] ([Team_ProjectID], [Developer_ID]) VALUES (6, 21)
 INSERT [dbo].[TeamDevelopers] ([Team_ProjectID], [Developer_ID]) VALUES (5, 22)
 INSERT [dbo].[TeamDevelopers] ([Team_ProjectID], [Developer_ID]) VALUES (6, 22)
 
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (3, 1)
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 1)
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (7, 1)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (3, 1)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 1)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (7, 1)
 
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 2)
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (7, 2)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 2)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (7, 2)
 
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 3)
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (6, 3)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 3)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (6, 3)
 
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (6, 4)
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (3, 5)
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 5)
-INSERT [dbo].[ProjectProgrammingLanguages] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (6, 5)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (6, 4)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (3, 5)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (5, 5)
+INSERT [dbo].[ProgrammingLanguageProjects] ([Project_ID], [ProgrammingLanguage_ID]) VALUES (6, 5)
 
 
 
