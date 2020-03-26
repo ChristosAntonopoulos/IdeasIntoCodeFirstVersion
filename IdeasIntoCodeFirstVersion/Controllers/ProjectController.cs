@@ -41,6 +41,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             {
                 viewModel.Action = true;
             }
+            //team model? .where
             foreach (var member in project.Team.TeamMembers)
             {
                 if(member.ID==developer.ID && developer.ID != project.AdminID)

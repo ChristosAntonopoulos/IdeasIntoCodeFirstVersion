@@ -12,8 +12,16 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
 
         public IEnumerable<Project> Projects { get; set; }
 
-        
 
+        public SearchResultViewModel()
+        {
+
+        }
+        public SearchResultViewModel(IQueryable<Developer> developers,IQueryable<Project> projects)
+        {
+            Developers = developers.ToList();
+            Projects = projects.ToList();
+        }
 
 
 
