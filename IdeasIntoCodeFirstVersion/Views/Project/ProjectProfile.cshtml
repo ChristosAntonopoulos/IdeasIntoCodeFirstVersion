@@ -43,7 +43,7 @@
             <div class="col-md-10">
 
                 <img class="rounded-circle" src="images/logo.jpg" style="width: 50px;">
-                <small>@Model.Project.Admin.Name</small>
+                <small>@Model.Project.Admin.User.Name</small>
             </div>
         </div>
 
@@ -57,7 +57,7 @@
                     {
                         <div class="col-md-1 column">
                             <img class="rounded-circle" src="images/logo.jpg" style="width: 50px;">
-                            <small>@member.Name</small>
+                            <small>@member.User.Name</small>
                         </div>
                     }
                 </div>
@@ -129,7 +129,7 @@
                     <form class="comment-form" method="post" action="">
                         <textarea id="commentText" class="comment-area col-md-12" name="user_comment" placeholder="Write your comment here"></textarea>
                     </form>
-                    <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.FullName" id="submitComment" type="submit" class="btn  btn-primary">Post</button>
+                    <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.User.FullName" id="submitComment" type="submit" class="btn  btn-primary">Post</button>
                 </div>
             </div>
             @foreach (var comment in Model.Project.Comments)
@@ -141,7 +141,7 @@
 
                         </div>
                         <div class="col-md-10">
-                            <p><strong>@comment.Developer.FullName</strong></p>
+                            <p><strong>@comment.Developer.User.FullName</strong></p>
                             <p>@comment.Text</p>
                             <p class="text-secondary text-center">@comment.TimeStamp</p>
 

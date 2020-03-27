@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 
 <!DOCTYPE html>
 <html>
@@ -36,46 +36,26 @@
             </div>
 
 
-            <ul class="list-unstyled components">
+            <ul id="navbar" class="list-unstyled components">
                 <li class="active">
-                    <a href="@Url.Action("Developer", "DeveloperProfile")">
+                    <a href="@Url.Action("DeveloperProfile", "Developer")">
                         <i class="fas fa-user-circle"></i>
                         My Profile
                     </a>
                 </li>
-                <li>
-                    <a href="#prjectsSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <li class="projects">
+                    <a id="project" href="@Url.Action("MyProject","Project")" data-toggle="collapse" aria-expanded="false">
                         <i class="far fa-lightbulb"></i>
-                        Projects
+                        <span class="js-projects">Projects</span>
                     </a>
-                    <ul class="collapse list-unstyled" id="prjectsSubMenu">
-                        <li>
-                            <a href="#">Project 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Project 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Humanity</a>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
-                    <a href="#messageSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a href="@Url.Action("","")" data-toggle="collapse" aria-expanded="false">
                         <i class="far fa-comment-dots"></i>
                         Message
                     </a>
-                    <ul class="collapse list-unstyled" id="messageSubMenu">
-                        <li>
-                            <a href="#">Message 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Message 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Message 3</a>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
                     <a href="#">
@@ -84,18 +64,24 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="@Url.Action("AboutUs","Home")">
                         <i class="fas fa-paper-plane"></i>
                         About Us
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:document.getElementById('logoutForm').submit()">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Log Off
-                    </a>
-                </li>
-            </ul>
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Log Off
+                            </a>
+                        </li>
+                    }
+                }
+                </ul>
         </nav>
 
         <!-- Page Content  -->
@@ -116,14 +102,14 @@
                         <a class="navbar-brand mr-auto" href="@Url.Action("Index", "Home")"><i class="fas fa-home fa-2x"></i></a>
 
                         @using (Html.BeginForm("Data", "Home"))
-                         {
+                        {
                             <div class="form-inline mr-auto my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search..."
-                                   aria-label="Search" name="searchString">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search..."
+                                       aria-label="Search" name="searchString">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         }
                         <ul class="navbar-nav mt-2 mt-lg-0">
                             <li class="nav-item">
@@ -151,7 +137,7 @@
             background: #fafafa;
         }
 
-                        p {
+        p {
             font-family: 'Poppins', sans-serif;
             font-size: 1.1em;
             font-weight: 300;
@@ -258,7 +244,7 @@
             right: 50%;
             -webkit-transform: translateX(50%);
             -ms-transform: translateX(50%);
-                        transform: translateX(50%);
+            transform: translateX(50%);
         }
 
         #sidebar .sidebar-header {
@@ -320,14 +306,14 @@
         }
 
             ul.CTAs a {
-                            text-align: center;
-                            font-size: 0.9em !important;
-                            display: block;
-                            border-radius: 5px;
-                            margin-bottom: 5px;
-                        }
+                text-align: center;
+                font-size: 0.9em !important;
+                display: block;
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
 
-                        a.download {
+        a.download {
             background: #fff;
             color: #7386D5;
         }
@@ -460,6 +446,7 @@
                     placement: "bottom"
                 })
             });
+
 
 
 

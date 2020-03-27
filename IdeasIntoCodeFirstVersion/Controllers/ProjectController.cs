@@ -69,11 +69,25 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return project;
         }
 
+        public ActionResult MyProject()
+        {
+            var userId = User.Identity.GetUserId();
+            var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
+            var projectsOwned = context.Projects
+                                .Where(p=>p.AdminID==developer.ID).ToList();
+            var projectsParticipating = context.Teams
+                            .Include(t => t.TeamMembers.Where(d => d.ID == developer.ID))
+                            .Select(t => t.Project).ToList();
+
+            var viewmodel = new MyProjectViewModel(projectsOwned, projectsParticipating);
+            
+            return View(viewmodel);
+        }
         // GET: Project
         public ActionResult ProjectProfile(int ID)
         {
             var userId = User.Identity.GetUserId();
-            var developer =context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
+            var developer =context.Developers.Where(d => d.User.Id == userId).Include(d=>d.User).SingleOrDefault();
            
             var project = GetProject(ID);
             
