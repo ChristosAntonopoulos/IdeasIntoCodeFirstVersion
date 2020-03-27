@@ -260,9 +260,9 @@
     <Compile Include="Migrations\202003211145024_MoveNamaFullnameLastNameToApplicationUser.Designer.cs">
       <DependentUpon>202003211145024_MoveNamaFullnameLastNameToApplicationUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003211146048_PopulateDatabase.cs" />
-    <Compile Include="Migrations\202003211146048_PopulateDatabase.Designer.cs">
-      <DependentUpon>202003211146048_PopulateDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.cs" />
+    <Compile Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.Designer.cs">
+      <DependentUpon>202003271759314_AddPictureAndDescriptionToDeveloper.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1091,8 +1091,8 @@
     <EmbeddedResource Include="Migrations\202003211145024_MoveNamaFullnameLastNameToApplicationUser.resx">
       <DependentUpon>202003211145024_MoveNamaFullnameLastNameToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003211146048_PopulateDatabase.resx">
-      <DependentUpon>202003211146048_PopulateDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.resx">
+      <DependentUpon>202003271759314_AddPictureAndDescriptionToDeveloper.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

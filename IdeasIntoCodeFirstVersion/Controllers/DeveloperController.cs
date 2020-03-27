@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -30,8 +31,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             if (ID == null)
             {
                 RedirectToAction("DeveloperProfile", ID=context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault());                   
-            }          
-               
+            } 
             var developer = context.Developers
                 .Include(u => u.ProgrammingLanguages)
                 .Include(d => d.ProjectsOwned)
@@ -51,35 +51,29 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
+        public ActionResult Edit()
+        {
+            var currentUserID = User.Identity.GetUserId();
+            var Developer = context.Developers
+                .Include(d => d.ProgrammingLanguages)
+                .Include(d => d.User)
+                .SingleOrDefault(p => p.User.Id == currentUserID);
+            if (Developer == null)
+                return HttpNotFound();
+            var viewModel = new DeveloperFormViewModel()
+            {
+                Developer = Developer
+            };
 
+            return View("DeveloperForm", viewModel);
+        }
 
-        // Developer/new
-       
-        //[Authorize]
-        //public ActionResult New(string ID)
-        //{
-        //    //var currentUserID = User.Identity.GetUserId();
-        //    //var Developer = context.Developers.Include(d => d.ProgrammingLanguages).SingleOrDefault(p => p.User.Id == currentUserID);
-
-        //    if (ID == null)
-        //        return HttpNotFound();
-        //    var viewModel = new DeveloperFormViewModel()
-        //    {
-        //        Developer = new Developer { UserID = ID, DateCreated = DateTime.Now },
-        //        ProgrammingLanguages = context.ProgrammingLanguages.ToList()
-        //    };
-
-
-
-        //    return View("Form", viewModel);
-
-
-        //}
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Developer developer, string[] programmingLanguage)
+        public ActionResult Edit(Developer developer, string[] programmingLanguage)
         {
             var userID = User.Identity.GetUserId();
             if (!ModelState.IsValid)
@@ -89,52 +83,34 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 {                    
                     Developer = developer
                 };
-
                 return View("DeveloperForm", viewModel);
-
             }
-
-            if (developer.ID == 0)
+            var DeveloperDB = context.Developers.Include(d=>d.User).Include(d => d.ProgrammingLanguages).Single(u => u.User.Id == userID);
+            if (programmingLanguage != null)
             {
-                if (programmingLanguage!=null)
+                if (DeveloperDB.ProgrammingLanguages.Count() == 0)
                 {
-                    PopulateDeveloperProgrammingLanguages(developer, programmingLanguage);
+                    PopulateDeveloperProgrammingLanguages(DeveloperDB, programmingLanguage);
                 }
-
-               
-                developer.User = context.Users.Single(u => u.Id == userID);
-                developer.DateCreated = DateTime.Now;
-                
-
-                context.Developers.Add(developer);
-
-
+                else
+                {
+                    UpdateDeveloperProgrammingLanguages(DeveloperDB, programmingLanguage);
+                }
             }
-            else
+            var fileName = Path.GetFileName(developer.ProfilePicture.FileName);
+            var rondom = Guid.NewGuid() + fileName;
+            DeveloperDB.Picture = Path.Combine(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID), rondom);
+            if (!Directory.Exists(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID)))
             {
-               
-                var DeveloperDB = context.Developers.Include(d=>d.ProgrammingLanguages).Single(u => u.ID == developer.ID);
-                if (programmingLanguage != null)
-                {
-                    if (DeveloperDB.ProgrammingLanguages.Count()==0)
-                    {
-                        PopulateDeveloperProgrammingLanguages(DeveloperDB, programmingLanguage);
-                    }
-                    else
-                    {
-                        UpdateDeveloperProgrammingLanguages(DeveloperDB, programmingLanguage);
-                    }
-                    
-                }
-                DeveloperDB.User.Name = developer.User.Name;
-                DeveloperDB.User.LastName = developer.User.LastName;
-                DeveloperDB.GitHub = developer.GitHub;
-                DeveloperDB.User.Email = developer.User.Email;
-                DeveloperDB.BirthDate = developer.BirthDate;
+                Directory.CreateDirectory(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID));
             }
-
+            developer.ProfilePicture.SaveAs(DeveloperDB.Picture);           
+            DeveloperDB.User.Name = developer.User.Name;
+            DeveloperDB.User.LastName = developer.User.LastName;
+            DeveloperDB.GitHub = developer.GitHub;
+            DeveloperDB.User.Email = developer.User.Email;
+            DeveloperDB.BirthDate = developer.BirthDate;
             context.SaveChanges();
-
             var developerID = context.Developers.Where(d => d.User.Id == userID).Select(d => d.ID).SingleOrDefault();
             return RedirectToAction("DeveloperProfile",new { id = developerID });
         }
@@ -160,16 +136,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                         developer.ProgrammingLanguages.Remove(language);
                     }
                 }
-            
-
             }
         }
-
-
         
         private void PopulateDeveloperProgrammingLanguages(Developer developer, string[] programmingLanguage)
         {
-
             var programminglanguagesDb = context.ProgrammingLanguages.ToList();
             foreach (var programmingLanguageID in programmingLanguage)
             {
@@ -178,54 +149,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             }
         }
 
-        [Authorize]
-        public ActionResult Edit()
-        {
-            var currentUserID = User.Identity.GetUserId();
-            var Developer = context.Developers.Include(d=>d.ProgrammingLanguages).SingleOrDefault(p => p.User.Id== currentUserID);
+       
 
-            if (Developer == null)
-                return HttpNotFound();
-
-
-            var viewModel = new DeveloperFormViewModel()
-            {
-              
-                Developer = Developer
-
-            };
-
-            return View("DeveloperForm", viewModel);
-        }
-
-        // GET: Instructor/Delete/5
-        //[Authorize]
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    var developer = context.Developers.Find(id);
-
-        //    if (developer == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(developer);
-        //}
-
-        //// POST: Instructor/Delete/5
-        //[Authorize]
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    var developer = context.Developers.Find(id);
-        //    context.Developers.Remove(developer);
-        //    context.SaveChanges();
-        //    return RedirectToAction("Index","Home");
-        //}
+       
 
     }
 }

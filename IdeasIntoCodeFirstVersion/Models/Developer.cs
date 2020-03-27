@@ -47,6 +47,10 @@ namespace IdeasIntoCodeFirstVersion.Models
         public ICollection<Follow> Following { get; set; }
 
         public string Picture { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase ProfilePicture { get; set; }
+
+        public string Description { get; set; }
 
         public Developer()
         {
