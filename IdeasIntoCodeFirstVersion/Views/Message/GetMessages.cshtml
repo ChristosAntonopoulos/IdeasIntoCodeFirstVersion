@@ -10,10 +10,19 @@
         <div class="list-group" id="list-tab" role="tablist">
             @for (int i = 0; i < Model.Messages.ToList().Count; i++)
             {
-                <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home-@i" role="tab" aria-controls="home">@Model.Messages.ToList()[i].Sender.User.FullName send to  @Model.Messages.ToList()[i].Receiver.User.FullName a message with subject @Model.Messages.ToList()[i].Subject</a>
+                if (!Model.Messages.ToList()[i].IsRead && Model.WhatMessagesToGet == "Received")
+                {
+                    <a data-message-id="@Model.Messages.ToList()[i].ID" class="list-group-item list-group-item-action list-group-item-dark js-message-read" id="list-home-list" data-toggle="list" href="#list-home-@i" role="tab" aria-controls="home">@Model.Messages.ToList()[i].Sender.User.FullName send to  @Model.Messages.ToList()[i].Receiver.User.FullName a message with subject @Model.Messages.ToList()[i].Subject</a>
+
+                }
+                else
+                {
+                    <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home-@i" role="tab" aria-controls="home">@Model.Messages.ToList()[i].Sender.User.FullName send to  @Model.Messages.ToList()[i].Receiver.User.FullName a message with subject @Model.Messages.ToList()[i].Subject</a>
+
+                }
 
             }
-            
+
         </div>
     </div>
     <div class="col-8">
@@ -22,10 +31,31 @@
             {
                 <div class="tab-pane fade" id="list-home-@i" role="tabpanel" aria-labelledby="list-home-list@i">@Model.Messages.ToList()[i].Text</div>
             }
-           
+
         </div>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".js-message-read").click(function (e) {
+                var button = $(e.target);
+                $.post("/message/markasread", { messageID: button.attr("data-message-id") })
+                    .done(function () {
+                        button
+                            .removeClass("list-group-item-dark")
+                            .addClass("btn-success")
+                            
+                    })
+                    .fail(function () {
+                        alert("show message failed")
+                    });
+            });
+
+        })
+    </script>
+}
 
 
 

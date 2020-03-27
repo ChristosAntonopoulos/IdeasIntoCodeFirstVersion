@@ -18,6 +18,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             context = new ApplicationDbContext();
         }
 
+        public void MarkAsRead(int messageID)
+        {
+            var message = context.Messages.Single(m => m.ID == messageID);
+            Message.MarkAsRead(message);
+            context.SaveChanges();
+        }
+
        public ActionResult GetMessages(string whatMessagesToGet)
         {
             var userId = User.Identity.GetUserId();
