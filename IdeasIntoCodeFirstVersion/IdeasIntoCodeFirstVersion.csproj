@@ -268,6 +268,10 @@
     <Compile Include="Migrations\202003261233176_AddIsReadPropToMessage.Designer.cs">
       <DependentUpon>202003261233176_AddIsReadPropToMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003281433093_MessageIsRead.cs" />
+    <Compile Include="Migrations\202003281433093_MessageIsRead.Designer.cs">
+      <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -1103,6 +1107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003261233176_AddIsReadPropToMessage.resx">
       <DependentUpon>202003261233176_AddIsReadPropToMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003281433093_MessageIsRead.resx">
+      <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
