@@ -272,6 +272,10 @@
     <Compile Include="Migrations\202003281433093_MessageIsRead.Designer.cs">
       <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003281439172_PopulateDatabase.cs" />
+    <Compile Include="Migrations\202003281439172_PopulateDatabase.Designer.cs">
+      <DependentUpon>202003281439172_PopulateDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -1110,6 +1114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003281433093_MessageIsRead.resx">
       <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003281439172_PopulateDatabase.resx">
+      <DependentUpon>202003281439172_PopulateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

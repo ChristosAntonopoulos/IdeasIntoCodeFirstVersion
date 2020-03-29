@@ -72,15 +72,25 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult MyProject()
         {
             var userId = User.Identity.GetUserId();
-            var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
-            var projectsOwned = context.Projects
-                                .Where(p=>p.AdminID==developer.ID).ToList();
-            var projectsParticipating = context.Teams
-                            .Include(t => t.TeamMembers.Where(d => d.ID == developer.ID))
-                            .Select(t => t.Project).ToList();
+            var developer = context.Developers.Include(d => d.ProjectsOwned)
+           .Include(d => d.TeamParicipating.Select(t => t.Project)).SingleOrDefault(d => d.UserID == userId);
+            var list = new List<Project>();
+            var projectsOwned = developer.ProjectsOwned.ToList();
+            var projectsParticipating = developer.TeamParicipating.Select(t => t.Project).ToList();
+
+            //foreach (var myproject in projectsOwned)
+            //{
+            //    if (projectsParticipating.Contains(myproject))
+            //    {
+            //        projectsParticipating.Remove(myproject);
+            //    }
+            //}
+          
+
+
 
             var viewmodel = new MyProjectViewModel(projectsOwned, projectsParticipating);
-            
+
             return View(viewmodel);
         }
         // GET: Project

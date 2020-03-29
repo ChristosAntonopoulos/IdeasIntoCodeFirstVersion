@@ -9,13 +9,16 @@
 
 @foreach (var myproject in Model.MyProjects)
 {
-    <li>@Html.ActionLink(myproject.Title, "ProjectProfile", "Project", new {  }, null)</li>
-}
+    <li>@Html.ActionLink(myproject.Title, "ProjectProfile", "Project", new { }, null)</li>
 
+}
 <h2>Project  Participating</h2>
 @foreach (var project in Model.ProjectParticipates)
 {
-    <li>@Html.ActionLink(project.Title, "ProjectProfile", "Project", new { }, null)</li>
+     <li>@Html.ActionLink(project.Title, "ProjectProfile", "Project", new { }, null)</li>
+        
+ 
 }
+
 
 
