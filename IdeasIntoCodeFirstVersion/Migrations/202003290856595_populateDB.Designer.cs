@@ -7,13 +7,13 @@ namespace IdeasIntoCodeFirstVersion.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class PopulateDatabase : IMigrationMetadata
+    public sealed partial class populateDB : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(populateDB));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003211146048_PopulateDatabase"; }
+            get { return "202003290856595_populateDB"; }
         }
         
         string IMigrationMetadata.Source

@@ -19,18 +19,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         }
 
         //GET/ API/developers
-        public IHttpActionResult GetDevelopers(/*string searchstring*/)
+        public IHttpActionResult GetDevelopers()
         {
-            //var developersQuery = context.Developers.AsQueryable();
-            //if (!String.IsNullOrWhiteSpace(query))
-            //    developersQuery = developersQuery.Where(d => d.FullName.Contains(query));
-            //var developers = developersQuery.ToList()
-            //    .Select(Mapper.Map<Developer, DeveloperDto>);
-            //var dev = context.Developers.Where(d => d.Name.Contains(searchstring)
-            //  || d.LastName.Contains(searchstring)).Select(Mapper.Map<Developer, DeveloperDto>)
-            //    .ToList();
-            var dev = context.Developers.ToList();
-            return Ok(dev);
+            return Ok(context.Developers.ToList());
         }
     }
 }

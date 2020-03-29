@@ -11,8 +11,5 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
     {
         public ICollection<INewsFeed> NewsFeeds { get; set; }
         
-        //public ICollection<Follow> Followers { get; set; }
-
-        //public List<Comment> Comments { get; set; }
     }
 }

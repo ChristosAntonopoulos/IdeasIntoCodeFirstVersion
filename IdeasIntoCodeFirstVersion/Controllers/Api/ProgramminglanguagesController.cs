@@ -21,9 +21,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
         public IHttpActionResult GetProgrammingLanguages()
         {
-            var programminglanguagesDB = context.ProgrammingLanguages.ToList();
-            var programminglanguages = programminglanguagesDB.Select(Mapper.Map<ProgrammingLanguage,ProgrammingLanguageDto>);
-            return Ok(programminglanguages);
+            return Ok(context.ProgrammingLanguages.ToList().Select(Mapper.Map<ProgrammingLanguage, ProgrammingLanguageDto>));
         }
     }
 }

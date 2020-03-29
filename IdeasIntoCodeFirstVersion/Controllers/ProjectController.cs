@@ -44,6 +44,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                     .Where(d => d.Followers.Select(f => f.Followee == context.Developers
                     .Where(dev => dev.User.Id == userID).FirstOrDefault()).FirstOrDefault())
                     .Select(developer => developer.User).ToList();
+            
             return applicationUsersToUpdateNewsFeed;
         }
 
@@ -61,11 +62,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         private Project GetProject(int ID)
         {
-            var project = context.Projects.Include(p => p.Team.TeamMembers)
+            var project = context.Projects              
+              .Include(p => p.Team.TeamMembers.Select(t=>t.User))
               .Include(p => p.Admin)
               .Include(p => p.ProgrammingLanguages)
               .Include(p => p.ProjectCategories)
-              .Include(p => p.Comments).Single(p => p.ID == ID);
+              .Include(p => p.Comments.Select(c=>c.Developer).Select(c=>c.User)).Single(p => p.ID == ID);
             return project;
         }
 
@@ -73,7 +75,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult ProjectProfile(int ID)
         {
             var userId = User.Identity.GetUserId();
-            var developer =context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
+            var developer =context.Developers.Where(d => d.User.Id == userId).Include(d=>d.User).SingleOrDefault();
            
             var project = GetProject(ID);
             
@@ -252,34 +254,34 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return View("ViewerForm", viewModel);
         }
 
-        // GET: Instructor/Delete/5
-        [Authorize]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var project = GetProjectOnly(id);
+        //// GET: Instructor/Delete/5
+        //[Authorize]
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var project = GetProjectOnly(id);
 
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-            return View(project);
-        }
+        //    if (project == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(project);
+        //}
 
-        // POST: Instructor/Delete/5
-        [Authorize]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            var project = GetProjectOnly(id);
-            context.Projects.Remove(project);
-            context.SaveChanges();
-            return RedirectToAction("ProjectProfile");
-        }
+        //// POST: Instructor/Delete/5
+        //[Authorize]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    var project = GetProjectOnly(id);
+        //    context.Projects.Remove(project);
+        //    context.SaveChanges();
+        //    return RedirectToAction("ProjectProfile");
+        //}
 
     }
 }

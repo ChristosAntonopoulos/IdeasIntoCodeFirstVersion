@@ -4,157 +4,169 @@
 }
 
 
-<div class="wrapper d-flex align-items-stretch">
+    <div class="wrapper d-flex align-items-stretch">
 
-    <!-- Page Content  -->
-    <div id="content" class="col-md-12">
-        <div class="text-center">
-            <div>
-                <h2 class="mb-4 text-center">@Model.Project.Title</h2>
-                @if (Model.Action == true)
-                {
-                    <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
-                }
-                @if (Model.Action == false)
-                {
-                    <button data-project-id="@Model.Project.ID" class="btn btn-info  btn-sm js-toggle-join" disabled="disabled">Joined</button>
-                }
-                @if (Model.Action == null)
-                {
-                    <button  class="btn btn-info  btn-sm" disabled="disabled">Edit</button>
-
-                }
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2 ">
-                <h3>Description:</h3>
-            </div>
-            <div class="col-md-10">
-                <p>@Model.Project.Description</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-2 ">
-                <h3>Project Admin:</h3>
-            </div>
-            <div class="col-md-10">
-
-                <img class="rounded-circle" src="images/logo.jpg" style="width: 50px;">
-                <small>@Model.Project.Admin.User.Name</small>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-2 ">
-                <h3> Team Members:</h3>
-            </div>
-            <div class="col-md-10">
-                <div class="row">
-                    @foreach (var member in Model.Project.Team.TeamMembers)
+        <!-- Page Content  -->
+        <div id="content" class="col-md-12">
+            <div class="text-center">
+                <div>
+                    <h2 class="mb-4 text-center">@Model.Project.Title</h2>
+                    @if (Model.Action == true)
                     {
-                        <div class="col-md-1 column">
-                            <img class="rounded-circle" src="images/logo.jpg" style="width: 50px;">
-                            <small>@member.User.Name</small>
-                        </div>
+                        <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
                     }
-                </div>
+                    @if (Model.Action == false)
+                    {
+                        <button data-project-id="@Model.Project.ID" class="btn btn-info  btn-sm js-toggle-join" disabled="disabled">Joined</button>
+                    }
+                    @if (Model.Action == null)
+                    {
+                        <button class="btn btn-info  btn-sm" disabled="disabled">Edit</button>
 
+                    }
+
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel">
-                    <div class="panel-heading"><h4>Programming Languages</h4></div>
-                    <div class="panel-body">
-                        @foreach (var progLanguages in Model.Project.ProgrammingLanguages)
+            <div class="row">
+                <div class="col-md-2 ">
+                    <h3>Description:</h3>
+                </div>
+                <div class="col-md-10">
+                    <p>@Model.Project.Description</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 ">
+                    <h3>Project Admin:</h3>
+                </div>
+                <div class="col-md-10">
+                    <a href="@Url.Action("DeveloperProfile", "Developer", new { ID=Model.Project.Admin.ID })">
+                        <img class="rounded-circle" src="~/Content/Images/ProfilePicture/@Model.Project.Admin.ID/@Model.Project.Admin.Picture" style="width: 50px;">
+                        <small>@Model.Project.Admin.User.Name</small>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 ">
+                    <h3> Team Members:</h3>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+
+                        @foreach (var member in Model.Project.Team.TeamMembers)
                         {
-                            <a href="#" class="list-group-item text-danger" id="language">@progLanguages.Name</a>
+                            <a href="@Url.Action("DeveloperProfile", "Developer", new { ID=member.ID })">
+                                <div class="col-md-1 column">
+                                    <img class="rounded-circle" src="~/Content/Images/ProfilePicture/@member.ID/@member.Picture" style="width: 50px;">
+                                    <small>@member.User.Name</small>
+                                </div>
+                            </a>
+
+
                         }
+
+
+
 
                     </div>
 
                 </div>
-
             </div>
-            <div class="col-md-6">
-                <div class="panel">
-                    <div class="panel-heading"><h4>Categories</h4></div>
-                    <div class="panel-body">
-                        @foreach (var category in Model.Project.ProjectCategories)
-                        {
-                            <a href="#" class="list-group-item text-danger" id="category">@category.Name</a>
-                        }
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading"><h4>Programming Languages</h4></div>
+                        <div class="panel-body">
+                            @foreach (var progLanguages in Model.Project.ProgrammingLanguages)
+                            {
+                                <a href="#" class="list-group-item text-danger" id="language">@progLanguages.Name</a>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading"><h4>Categories</h4></div>
+                        <div class="panel-body">
+                            @foreach (var category in Model.Project.ProjectCategories)
+                            {
+                                <a href="#" class="list-group-item text-danger" id="category">@category.Name</a>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-2 ">
-                <h3> Status:</h3>
             </div>
-            <div class="col-md-3">
-                @if (Model.Project.Active)
-                {
-                    <button class="btn btn-default btn-success">Active</button>
+            <hr>
+            <div class="row">
+                <div class="col-md-2 ">
+                    <h3> Status:</h3>
+                </div>
+                <div class="col-md-3">
+                    @if (Model.Project.Active)
+                    {
+                        <button class="btn btn-default btn-success">Active</button>
                     }
                     else
                     {
-                    <button class="btn btn-default btn-secondary" disabled="disabled">Inactive</button>
+                        <button class="btn btn-default btn-secondary" disabled="disabled">Inactive</button>
                     }
-                
-            </div>
 
-            @*<div class="col-md-3">
-                    <button class="btn btn-default btn-primary" disabled="disabled">Completed</button>
-                </div>*@
-
-        </div>
-
-    </div>
-</div>
-<hr />
-<hr />
-<div class="row ">
-    <div class="col-md-4">
-        <h2><strong>Comments</strong></h2>
-        <div id="comments">
-            <div class="row">
-                <div class="col-12">
-                    <form class="comment-form" method="post" action="">
-                        <textarea id="commentText" class="comment-area col-md-12" name="user_comment" placeholder="Write your comment here"></textarea>
-                    </form>
-                    <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.User.FullName" id="submitComment" type="submit" class="btn  btn-primary">Post</button>
                 </div>
+
+                @*<div class="col-md-3">
+                <button class="btn btn-default btn-primary" disabled="disabled">Completed</button>
+            </div>*@
+
             </div>
-            @foreach (var comment in Model.Project.Comments)
-            {
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
 
+            <div class="row col-md-10">
+                <div >
+                    <h2><strong>Comments</strong></h2>
+                    <div id="comments">
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="comment-form" method="post" action="">
+                                    <textarea id="commentText" class="comment-area col-md-12" name="user_comment" placeholder="Write your comment here"></textarea>
+                                </form>
+                                <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.User.FullName" id="submitComment" type="submit" class="btn  btn-primary">Post</button>
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <p><strong>@comment.Developer.User.FullName</strong></p>
-                            <p>@comment.Text</p>
-                            <p class="text-secondary text-center">@comment.TimeStamp</p>
+                        @foreach (var comment in Model.Project.Comments)
+                        {
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="~/Content/Images/ProfilePicture/@comment.Developer.ID/@comment.Developer.Picture" class="img img-rounded img-fluid" />
 
-                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p><strong>@comment.Developer.User.FullName</strong></p>
+                                        <p>@comment.Text</p>
+                                        <p class="text-secondary text-center">@comment.TimeStamp</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
                     </div>
                 </div>
-            }
 
+
+            </div>
         </div>
+
+      
+
+
     </div>
-
-
-</div>
 
 
 
@@ -174,7 +186,7 @@
                     data: { currentProjectID: button.attr("data-project-id"), commentText: newComment}
                 })
                     .done(function () {
-                        
+
                         var text = $("#commentText").val();
                         $("#comments").append('<div class="card-body"> <div class="row"><div class="col-md-2">< img src = "https://image.ibb.co/jw55Ex/def_face.jpg" class= "img img-rounded img-fluid" /> '
                             + ' </div> <div class="col-md-10"> <p><strong>' + commenter + '</strong></p><p>' + text
@@ -199,7 +211,7 @@
                         alert("Something failed");
                     });
             });
-          
+
 
         });
     </script>
