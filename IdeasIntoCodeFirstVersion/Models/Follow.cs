@@ -11,13 +11,27 @@ namespace IdeasIntoCodeFirstVersion.Models
     public class Follow:INewsFeed
     {
         [Key, Column(Order = 0)]
-        public int FollowerID { get; set; }
-        public Developer Follower { get; set; }
+        public int FollowerID { get; protected set; }
+        public Developer Follower { get; protected set; }
 
         public DateTime TimeStamp { get; set; }
 
         [Key, Column(Order = 1)]
-        public int FolloweeID { get; set; }
-        public Developer Followee { get; set; }
+        public int FolloweeID { get; protected set; }
+        public Developer Followee { get; protected set; }
+
+        protected Follow()
+        {
+
+        }
+
+        public Follow(int followerID,int followeeID)
+        {
+            FollowerID = followerID;
+            FolloweeID = followeeID;
+            TimeStamp = DateTime.Now;
+
+
+        }
     }
 }

@@ -21,18 +21,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             context = new ApplicationDbContext();
         }
         //GET/ API/projects
-        public IHttpActionResult GetProjects(/*string searchstring*/)
+        public IHttpActionResult GetProjects()
         {
-            //var projectsQuery = context.Projects.AsQueryable();
-            //if (!String.IsNullOrWhiteSpace(query))
-            //    projectsQuery = projectsQuery.Where(p => p.Title.Contains(query));
-            //var projects = projectsQuery.ToList()
-            //    .Select(Mapper.Map<Project, ProjectDto>);
-            //var projects = context.Projects.Where(d => d.Title.Contains(searchstring)).Select(Mapper.Map<Project, ProjectDto>)
-            // .ToList();
-
-            var projects = context.Projects.ToList();
-            return Ok(projects);
+            return Ok(context.Projects.ToList());
         }
 
         [HttpPost]
@@ -45,22 +36,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             
             var exists = context.Projects.Include(p => p.Team.TeamMembers)
                 .Any(d => d.Team.TeamMembers.Any(t => t.ID == developer.ID) &&
-                  d.ID == joinDto.ProjectID);
-          
-            
+                  d.ID == joinDto.ProjectID);   
 
             if (exists)
-                return BadRequest("The join already exists");
-            
+                return BadRequest("The join already exists");           
            
             var project = context.Projects
                 .Include(p => p.Team.TeamMembers)
                 .Where(p=>p.ID==joinDto.ProjectID).SingleOrDefault();
 
-            project.Team.TeamMembers.Add(developer);
-            
-
-
+            project.Team.TeamMembers.Add(developer);     
             context.SaveChanges();
             return Ok();
         }

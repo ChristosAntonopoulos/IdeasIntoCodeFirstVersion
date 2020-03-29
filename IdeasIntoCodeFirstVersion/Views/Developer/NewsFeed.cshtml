@@ -54,10 +54,10 @@
                         else if (item.GetType() == typeof(Project))
                         {
                             <div class="media">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Project).Admin.User.FullName)">
+                                <img src="~/Content/Images/ProfilePicture/@((item as Project).Admin.ID)/@((item as Project).Admin.Picture)" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Project).Admin.User.FullName)">
                                 <div class="media-body">
                                     <small class="float-right text-navy">30m ago</small>
-                                    <strong>@((item as Project).Admin.User.FullName)</strong> created  <strong>@((item as Project).Admin.User.Name)</strong>
+                                    <strong>@((item as Project).Admin.User.FullName)</strong> created  <strong>@((item as Project).Title)</strong>
                                     <br>
                                     <small class="text-muted">Today 7:21 pm</small>
 
@@ -77,7 +77,7 @@
                         else
                         {
                             <div class="media">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Comment).Project.Admin.User.FullName)">
+                                <img src="~/Content/Images/ProfilePicture/@((item as Comment).Developer.ID)/@((item as Comment).Developer.Picture)" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Comment).Project.Admin.User.FullName)">
                                 <div class="media-body">
                                     <small class="float-right text-navy">30m ago</small>
                                     <strong>@((item as Comment).Developer.User.FullName)</strong> commented at   <strong>@((item as Comment).Project.Title)</strong>

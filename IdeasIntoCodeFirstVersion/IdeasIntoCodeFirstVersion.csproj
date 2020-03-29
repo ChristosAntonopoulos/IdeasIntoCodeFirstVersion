@@ -260,13 +260,17 @@
     <Compile Include="Migrations\202003211145024_MoveNamaFullnameLastNameToApplicationUser.Designer.cs">
       <DependentUpon>202003211145024_MoveNamaFullnameLastNameToApplicationUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003211146048_PopulateDatabase.cs" />
-    <Compile Include="Migrations\202003211146048_PopulateDatabase.Designer.cs">
-      <DependentUpon>202003211146048_PopulateDatabase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202003261233176_AddIsReadPropToMessage.cs" />
     <Compile Include="Migrations\202003261233176_AddIsReadPropToMessage.Designer.cs">
       <DependentUpon>202003261233176_AddIsReadPropToMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.cs" />
+    <Compile Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.Designer.cs">
+      <DependentUpon>202003271759314_AddPictureAndDescriptionToDeveloper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003290856595_populateDB.cs" />
+    <Compile Include="Migrations\202003290856595_populateDB.Designer.cs">
+      <DependentUpon>202003290856595_populateDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -288,12 +292,12 @@
     <Compile Include="NewsFeedTickerHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DeveloperFormViewModel.cs" />
     <Compile Include="ViewModels\DeveloperProfileViewModel.cs" />
     <Compile Include="ViewModels\GetMessagesViewModel.cs" />
     <Compile Include="ViewModels\MessageFormViewModel.cs" />
     <Compile Include="ViewModels\NewsFeedViewModel.cs" />
     <Compile Include="ViewModels\ProjectFormViewModel.cs" />
-    <Compile Include="ViewModels\DeveloperFormViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
   </ItemGroup>
@@ -616,6 +620,10 @@
     <Content Include="Content\Images\homepage.jpg" />
     <Content Include="Content\Images\homepagev2.png" />
     <Content Include="Content\Images\homepagev3.jpg" />
+    <Content Include="Content\Images\ProfilePicture\1\1075605a-6f18-4f8c-bdc0-ff6620554bb1DeathNote.png" />
+    <Content Include="Content\Images\ProfilePicture\2\23840363-5f32-4b60-9e27-7a6b73a0e93dbike.jpg" />
+    <Content Include="Content\Images\ProfilePicture\3\0c46e504-d2b9-4b7d-b1c6-b5041d899991Pao13.jfif" />
+    <Content Include="Content\Images\ProfilePicture\4\74469f9b-9f28-4b5d-a49b-c1d8e27520afDnd.jfif" />
     <Content Include="Content\Images\profpicegw.jpg" />
     <Content Include="Content\Images\userpic.png" />
     <Content Include="Content\style.css" />
@@ -1032,8 +1040,6 @@
     <Content Include="Views\Project\ProjectProfile.cshtml" />
     <Content Include="Views\Developer\DeveloperForm.cshtml" />
     <Content Include="Views\Home\Data.cshtml" />
-    <Content Include="Views\Shared\_AddProgrammingLanguages.cshtml" />
-    <Content Include="Views\Shared\_ProgrammingLanguageSearchResult.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -1044,12 +1050,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Home\NewsFeed.cshtml" />
+    <Content Include="Views\Developer\NewsFeed.cshtml" />
     <Content Include="Views\Developer\DeveloperProfile.cshtml" />
     <Content Include="Views\Shared\_IndexLayout.cshtml" />
     <Content Include="Views\Message\SendMessage.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
-    <Content Include="Views\Developer\Form.cshtml" />
     <Content Include="Views\Message\GetMessages.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1095,11 +1100,14 @@
     <EmbeddedResource Include="Migrations\202003211145024_MoveNamaFullnameLastNameToApplicationUser.resx">
       <DependentUpon>202003211145024_MoveNamaFullnameLastNameToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003211146048_PopulateDatabase.resx">
-      <DependentUpon>202003211146048_PopulateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003261233176_AddIsReadPropToMessage.resx">
       <DependentUpon>202003261233176_AddIsReadPropToMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.resx">
+      <DependentUpon>202003271759314_AddPictureAndDescriptionToDeveloper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003290856595_populateDB.resx">
+      <DependentUpon>202003290856595_populateDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

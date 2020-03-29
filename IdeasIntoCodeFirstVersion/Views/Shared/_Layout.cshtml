@@ -17,141 +17,152 @@
 
 </head>
 <body>
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div type="button" class="sidebar-header text-center" id="sidebarCollapse">
-                <h3>Ideas into Coading</h3>
-                <strong>IiC</strong>
-            </div>
-
-            <div class="card" id="proPic">
-
-                <div class="card-body">
-                    <img src="profpic.jpg" alt=""
-                         class="img-fluid rounded-circle w-60">
-                    <div class="d-flex justify-content-center">
-                    </div>
-                </div>
-            </div>
-
-
-            <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="@Url.Action("Developer","DeveloperProfile")">
-                        <i class="fas fa-user-circle"></i>
-                        My Profile
-                    </a>
-                </li>
-                <li>
-                    <a href="#prjectsSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="far fa-lightbulb"></i>
-                        Projects
-                    </a>
-                    <ul class="collapse list-unstyled" id="prjectsSubMenu">
-                        <li>
-                            <a href="#">Project 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Project 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Humanity</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#messageSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="far fa-comment-dots"></i>
-                        Message
-                    </a>
-                    <ul class="collapse list-unstyled" id="messageSubMenu">
-                        <li>
-                            <a href="#">Message 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Message 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Message 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fab fa-github"></i>
-                        GitHub
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-paper-plane"></i>
-                        About Us
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:document.getElementById('logoutForm').submit()">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Log Off
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                        <a class="navbar-brand mr-auto" href="@Url.Action("Index", "Home")"><i class="fas fa-home fa-2x"></i></a>
-
-                        @using (Html.BeginForm("Data", "Home"))
-                         {
-                            <div class="form-inline mr-auto my-2 my-lg-0">
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <a class="navbar-brand mr-auto" href="#"><strong>Ideas into Coading</strong></a>
+                    @using (Html.BeginForm("Data", "Home"))
+                    {
+                        <div class="form-inline mr-auto my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search..."
                                    aria-label="Search" name="searchString">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        }
-                        <ul class="navbar-nav mt-2 mt-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fas fa-globe fa-2x"></i></a>
-                            </li>
-                        </ul>
+                    }
 
-                    </div>
+
+                    @{
+                        Html.RenderPartial("_LoginPartial");
+                    }
 
 
                 </div>
-            </nav>
+            </div>
+        </nav>
+
+        <div class="row">
+            @if (Request.IsAuthenticated)
+            {
+
+                <nav id="sidebar" class="col-2">
+                    <!-- <div type="button" class="sidebar-header text-center" id="sidebarCollapse">
+                <h3>Ideas into Coading</h3>
+                <strong>IiC</strong>
+            </div> -->
+
+                    <div class="card" id="proPic">
+
+                        <div class="card-body">
+                            <img src="~/Content/Images/profpicegw.jpg" alt="" class="img-fluid rounded-circle w-60">
+                            <div class="d-flex justify-content-center">
+                            </div>
+                        </div>
+                    </div>
 
 
-            @RenderBody()
+                    <ul class="list-unstyled components">
+                        <li class="active">
+                            <a href="@Url.Action("DeveloperProfile", "Developer")">
+                                <i class="fas fa-user-circle"></i>
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#prjectsSubMenu" data-toggle="collapse" aria-expanded="false"
+                               @*class="dropdown-toggle"*@>
+                                <i class="far fa-lightbulb"></i>
+                                Projects
+                            </a>
+                            <ul class="collapse list-unstyled" id="prjectsSubMenu">
+                                @*<li>
+                                    <a href="#">Project 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Project 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Humanity</a>
+                                </li>*@
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#messageSubMenu" data-toggle="collapse" aria-expanded="false"
+                               @*class="dropdown-toggle"*@>
+                                <i class="far fa-comment-dots"></i>
+                                Message
+                            </a>
+                            <ul class="collapse list-unstyled" id="messageSubMenu">
+                                @*<li>
+                                    <a href="#">Message 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Message 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Message 3</a>
+                                </li>*@
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-github"></i>
+                                GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AboutUs", "Home")">
+                                <i class="fas fa-paper-plane"></i>
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()">
+                                    <i class="fas fa-sign-out-alt nav-link"></i>
+                                    Log Off
+                                </a>
+                            }
+
+                        </li>
+                    </ul>
+                </nav>
+             }
+
+                <div class="wrapper"></div>
+                <div class="col-10 container" id="content">
+                    @RenderBody()
+
+                </div>
+
+            </div>
+
+    </div>   
+   
 
 
-        </div>
-    </div>
+
+    
 
 
     <style>
+
+
         body {
             font-family: 'Poppins', sans-serif;
             background: #fafafa;
         }
 
-                        p {
+        p {
             font-family: 'Poppins', sans-serif;
             font-size: 1.1em;
             font-weight: 300;
@@ -172,7 +183,7 @@
             background: #fff;
             border: none;
             border-radius: 0;
-            margin-bottom: 40px;
+            /* margin-bottom: 40px; */
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
 
@@ -202,6 +213,7 @@
         .wrapper {
             display: flex;
             align-items: stretch;
+            height: 100%;
         }
 
         #sidebar {
@@ -209,7 +221,7 @@
             max-width: 250px;
             background: #7386D5;
             color: #fff;
-            transition: all 0.3s;
+            transition: all 0.5s;
         }
 
         #proPic {
@@ -258,7 +270,7 @@
             right: 50%;
             -webkit-transform: translateX(50%);
             -ms-transform: translateX(50%);
-                        transform: translateX(50%);
+            transform: translateX(50%);
         }
 
         #sidebar .sidebar-header {
@@ -320,17 +332,13 @@
         }
 
             ul.CTAs a {
-                            text-align: center;
-                            font-size: 0.9em !important;
-                            display: block;
-                            border-radius: 5px;
-                            margin-bottom: 5px;
-                        }
+                text-align: center;
+                font-size: 0.9em !important;
+                display: block;
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
 
-                        a.download {
-            background: #fff;
-            color: #7386D5;
-        }
 
         a.article,
         a.article:hover {
@@ -347,69 +355,7 @@
     </style>
 
 
-    @*<nav class="navbar navbar-expand-sm navbar-dark fixed-top" id="main-nav">
-            <div class="container">
-                <a href="index.html" class="navbar-brand">IDEAS into CODING</a>
-                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto">
-                        <li>@Html.ActionLink("Home", "Index", "Home", "", new { @class = "nav-link" })</li>
-                        <li class="nav-item">
-                            <a href="#explore-head-section" class="nav-link">About Us</a>
-                        </li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </nav>
 
-        <div class="row">
-
-            <div class="wrapper col-md-2">
-                <nav id="sidebar">
-                    <div class="sidebar-header">
-                        <h3>EIKONA</h3>
-                    </div>
-
-                    <ul class="list-unstyled components">
-                        <li>
-                            <a href="#">Profile</a>
-                        </li>
-                        <li>
-                            <a href="#">Projects</a>
-                        </li>
-                        <li>
-                            <a href="#">Message</a>
-                        </li>
-                        <li>
-                            <a href="#">GitHub</a>
-                        </li>
-                    </ul>
-                </nav>
-
-            </div>
-
-            <div class="col-md-10">
-                @RenderBody()
-            </div>
-        </div>*@
-
-
-    <footer id="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center py-4">
-                    <h3>OtiNaNaiTeam</h3>
-                    <p>
-                        Copyright &copy;
-                        <span id="year"></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script src="https://kit.fontawesome.com/7297f9c199.js" crossorigin="anonymous"></script>
     @Scripts.Render("~/bundles/lib")

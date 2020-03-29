@@ -21,9 +21,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
         public IHttpActionResult GetCategories()
         {
-            var categoriesDb = context.ProjectCategories.ToList();
-            var categories = categoriesDb.Select(Mapper.Map<ProjectCategory, ProjectCategoryDto>);
-            return Ok(categories);
+            return Ok(context.ProjectCategories.ToList().Select(Mapper.Map<ProjectCategory, ProjectCategoryDto>));
         }
     }
 }
