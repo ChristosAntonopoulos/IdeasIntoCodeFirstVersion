@@ -12,13 +12,13 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <img src="~/Content/Images/profpicegw.jpg" alt="" class="img-fluid rounded-circle w-60 mb-3">
+                        <img src="~/Content/Images/ProfilePicture/@Model.DeveloperOfProfile.ID/@Model.DeveloperOfProfile.Picture" alt="" class="img-fluid rounded-circle w-60 mb-3">
 
                         <h4>@Model.DeveloperOfProfile.User.FullName</h4>
 
 
                         <div class="d-flex justify-content-center">
-                            <div class="p-4">
+                            @*<div class="p-4">
                                 @if (!Model.ShowActionButtons)
                                 {
                                     <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">New Message</a>
@@ -26,7 +26,7 @@
                                     <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Received"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Received Messages</a>
                                    
                                 }
-                            </div>
+                            </div>*@
                             <div class="p-4">
                                 @if (Model.ShowActionButtons)
                                 {
@@ -103,7 +103,7 @@
                             <th scope="col">
                                 <i class="fab fa-github"></i> GitHub:
                             </th>
-                            <td scope="col">@Model.DeveloperOfProfile.GitHub</td>
+                            <td scope="col"><a href="@Model.DeveloperOfProfile.GitHub">@Model.DeveloperOfProfile.GitHub</a></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -133,8 +133,7 @@
                         Description:
                     </h4>
                     <p class="lead pb-3">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus obcaecati alias rerum
-                        dolore fugiat debitis?
+                        @Model.DeveloperOfProfile.Description
                     </p>
                 </div>
             </div>
@@ -202,7 +201,10 @@
                                 @project.Description
                             </p>
                             <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-warning">See More</button>
+                                
+                                    <button type="button" class="btn btn-warning" onclick="window.location.href='@Url.Action("ProjectProfile", "Project", new { ID = project.ID })'">See More</button>
+                               
+                                
 
                             </div>
                         </div>

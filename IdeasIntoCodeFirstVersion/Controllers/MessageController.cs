@@ -54,7 +54,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
         // GET: Message
-        public ActionResult SendMessage(int developerID)
+        public ActionResult SendMessage(int ID)
         {
             var userId = User.Identity.GetUserId();
             var currentUser = context.Developers
@@ -62,10 +62,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 .Include(d => d.User)
                 .Single(d => d.User.Id == userId);
             var viewModel = new MessageFormViewModel();
-            if (developerID != currentUser.ID)
+            if (ID != currentUser.ID)
             {
-                viewModel.ReceiverID = developerID;
-                viewModel.Receiver = context.Developers.Include(d => d.User).Single(d => d.ID == developerID);
+                viewModel.ReceiverID = ID;
+                viewModel.Receiver = context.Developers.Include(d => d.User).Single(d => d.ID == ID);
             }
             else
             {

@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity;
 using System.IO;
+using IdeasIntoCodeFirstVersion.Interface;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -22,6 +23,39 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         protected override void Dispose(bool disposing)
         {
             context.Dispose();
+        }
+
+        [Authorize]
+        public ActionResult NewsFeed()
+        {
+            var userId = User.Identity.GetUserId();
+            var developerid = context.Developers.Where(d => d.User.Id == userId).Select(d => d.ID).SingleOrDefault();
+            var newsFeedList = new List<INewsFeed>();
+            var follows = context.Follows.Where(f => f.FollowerID == developerid).Select(f => f.FolloweeID).ToList();
+            var comments = context.Comments.Where(c => follows.Contains(c.DeveloperID))
+                .OrderBy(c => c.TimeStamp)
+                .Include(c => c.Developer)
+                .Include(c => c.Developer.User)
+                .Include(c => c.Project)
+                .Include(c => c.Project.Admin)
+                .Take(10).ToList();
+
+            var followers = context.Follows
+                .Where(f => follows
+                .Contains(f.FollowerID))
+                .OrderBy(f => f.TimeStamp)
+                .Include(f => f.Followee)
+                .Include(f => f.Followee.User)
+                .Include(f => f.Follower)
+                .Include(f => f.Follower.User)
+                .Take(10).ToList();
+
+            newsFeedList.AddRange(comments);
+            newsFeedList.AddRange(followers);
+            newsFeedList.AddRange(context.Projects.OrderBy(p => p.TimeStamp).Include(c => c.Admin).Include(p => p.Admin.User).Take(10).ToList());
+
+
+            return View(newsFeedList.OrderBy(n => n.TimeStamp).ToList());
         }
 
 
@@ -55,18 +89,14 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult Edit()
         {
             var currentUserID = User.Identity.GetUserId();
-            var Developer = context.Developers
+            var developer = context.Developers
                 .Include(d => d.ProgrammingLanguages)
                 .Include(d => d.User)
                 .SingleOrDefault(p => p.User.Id == currentUserID);
-            if (Developer == null)
+            if (developer == null)
                 return HttpNotFound();
-            var viewModel = new DeveloperFormViewModel()
-            {
-                Developer = Developer
-            };
 
-            return View("DeveloperForm", viewModel);
+            return View("DeveloperForm", developer);
         }
 
 
@@ -76,35 +106,26 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult Edit(Developer developer, string[] programmingLanguage)
         {
             var userID = User.Identity.GetUserId();
+            var AllProgrammingLanguage = context.ProgrammingLanguages.ToList();
             if (!ModelState.IsValid)
             {
-                PopulateDeveloperProgrammingLanguages(developer, programmingLanguage);
-                var viewModel = new DeveloperFormViewModel
-                {                    
-                    Developer = developer
-                };
-                return View("DeveloperForm", viewModel);
+                ProgrammingLanguage.UpdateDeveloperProgrammingLanguages(developer.ProgrammingLanguages.ToList(), programmingLanguage, AllProgrammingLanguage);
+              
+                return View("DeveloperForm", developer);
             }
             var DeveloperDB = context.Developers.Include(d=>d.User).Include(d => d.ProgrammingLanguages).Single(u => u.User.Id == userID);
             if (programmingLanguage != null)
             {
-                if (DeveloperDB.ProgrammingLanguages.Count() == 0)
-                {
-                    PopulateDeveloperProgrammingLanguages(DeveloperDB, programmingLanguage);
-                }
-                else
-                {
-                    UpdateDeveloperProgrammingLanguages(DeveloperDB, programmingLanguage);
-                }
+                ProgrammingLanguage.UpdateDeveloperProgrammingLanguages(developer.ProgrammingLanguages.ToList(), programmingLanguage, AllProgrammingLanguage);
             }
             var fileName = Path.GetFileName(developer.ProfilePicture.FileName);
-            var rondom = Guid.NewGuid() + fileName;
-            DeveloperDB.Picture = Path.Combine(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID), rondom);
+            DeveloperDB.Picture = Guid.NewGuid() + fileName;
+            var path = Path.Combine(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID), DeveloperDB.Picture);
             if (!Directory.Exists(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID)))
             {
                 Directory.CreateDirectory(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID));
             }
-            developer.ProfilePicture.SaveAs(DeveloperDB.Picture);           
+            developer.ProfilePicture.SaveAs(path);           
             DeveloperDB.User.Name = developer.User.Name;
             DeveloperDB.User.LastName = developer.User.LastName;
             DeveloperDB.GitHub = developer.GitHub;
@@ -115,39 +136,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return RedirectToAction("DeveloperProfile",new { id = developerID });
         }
 
-        private void UpdateDeveloperProgrammingLanguages(Developer developer, string[] programmingLanguage)
-        {
-
-            foreach (var language in context.ProgrammingLanguages)
-            {
-                if (programmingLanguage.Contains(language.ID.ToString()))
-                {
-                    if (!developer.ProgrammingLanguages.Contains(language))
-                    {
-                        developer.ProgrammingLanguages.Add(language);
-                        
-
-                    }
-                }
-                else
-                {
-                    if (developer.ProgrammingLanguages.Contains(language))
-                    {
-                        developer.ProgrammingLanguages.Remove(language);
-                    }
-                }
-            }
-        }
         
-        private void PopulateDeveloperProgrammingLanguages(Developer developer, string[] programmingLanguage)
-        {
-            var programminglanguagesDb = context.ProgrammingLanguages.ToList();
-            foreach (var programmingLanguageID in programmingLanguage)
-            {
-                developer.ProgrammingLanguages.Add(programminglanguagesDb.Where(p => p.ID.ToString() == programmingLanguageID).FirstOrDefault());
-
-            }
-        }
 
        
 

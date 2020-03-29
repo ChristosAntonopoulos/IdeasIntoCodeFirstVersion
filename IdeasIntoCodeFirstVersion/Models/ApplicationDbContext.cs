@@ -24,8 +24,9 @@ namespace IdeasIntoCodeFirstVersion.Models
         public DbSet<Notification> Notifications { get; set; }
 
         public DbSet<Team> Teams { get; set; }
-        //public DbSet<TeamDeveloper> TeamDevelopers{ get; set; }
+      
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+
         public DbSet<ProjectCategory> ProjectCategories { get; set; }
         public ApplicationDbContext()
             : base("IdeasIntoCodeFirstVersionContext", throwIfV1Schema: false)

@@ -69,13 +69,13 @@ p {
 }
 
 
-.wrapper {
+/*.wrapper {
     display: flex;
     width: 100%;
     align-items: stretch;
-}
+}*/
 
-#sidebar {
+/*#sidebar {
     min-width: 250px;
     max-width: 250px;
     background: #d9853b;
@@ -84,14 +84,14 @@ p {
     opacity: 0.8;
 }
 
-    /* #sidebar.active {              gia na ginei to HOOOOOOOOOOOOVEEEEEEEEEER
+     #sidebar.active {              gia na ginei to HOOOOOOOOOOOOVEEEEEEEEEER
   margin-left: -250px;
-} */
+} 
 
-    /* #sidebar .sidebar-header {               gia thn eikona profile
+     #sidebar .sidebar-header {               gia thn eikona profile
   padding: 20px;
   background: #558c89;
-} */
+} 
 
     #sidebar ul.components {
         padding: 20px 0;
@@ -176,5 +176,5 @@ ul ul a {
 
 #explore-section{
   background-color: #ECECEA;
-}
+}*/
 

@@ -38,11 +38,9 @@ namespace IdeasIntoCodeFirstVersion
             bundles.Add(new StyleBundle("~/Content/css").Include(                       
                       "~/Content/typeahead.css",
                        "~/Content/style.css",
-                       "~/Content/ fontawesome.css",
-                      
+                       "~/Content/fontawesome.css",                      
                       "~/Content/bootstrap.css",
-                       "~/Content/animate.css"
-                      /*"~/Content/site.css"*/));
+                       "~/Content/animate.css"));
         }
     }
 }

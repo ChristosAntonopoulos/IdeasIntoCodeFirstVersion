@@ -23,7 +23,7 @@ namespace IdeasIntoCodeFirstVersion.Models
 
         [Display(Name = "User ID")]
         public string UserID { get; set; }
-        public ApplicationUser User { get; set; }
+        public  ApplicationUser User { get; set; }
 
         public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
@@ -35,8 +35,8 @@ namespace IdeasIntoCodeFirstVersion.Models
         [ForeignKey("SenderID")]
         public ICollection<Message> SendMessages { get; set; }
 
-       [ForeignKey("ReceiverID")]
-       public ICollection<Message> RecievedMessages { get; set; }
+        [ForeignKey("ReceiverID")]
+        public ICollection<Message> RecievedMessages { get; set; }
 
         public ICollection<DeveloperNotification> DeveloperNotifications { get; set; }
 

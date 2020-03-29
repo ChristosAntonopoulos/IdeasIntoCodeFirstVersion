@@ -11,14 +11,14 @@ namespace IdeasIntoCodeFirstVersion.Models
     {
         [Key]
         [Column(Order = 1)]
-        public int DeveloperID { get;  set; }
+        public int DeveloperID { get; private set; }
 
         [Key]
         [Column(Order = 2)]
-        public int NotificationId { get;  set; }
+        public int NotificationId { get; private set; }
 
-        public Developer Developer { get;  set; }
-        public Notification Notification { get;  set; }
+        public Developer Developer { get; private set; }
+        public Notification Notification { get; private set; }
         public bool IsRead { get; set; }
 
         public DeveloperNotification()
@@ -26,17 +26,17 @@ namespace IdeasIntoCodeFirstVersion.Models
 
         }
 
-        //public DeveloperNotification(Developer developer, Notification notification)
-        //{
-        //    if (developer == null)
-        //        throw new ArgumentNullException("user");
+        public DeveloperNotification(Developer developer, Notification notification)
+        {
+            if (developer == null)
+                throw new ArgumentNullException("user");
 
-        //    if (notification == null)
-        //        throw new ArgumentNullException("notification");
+            if (notification == null)
+                throw new ArgumentNullException("notification");
 
-        //    Developer = developer;
-        //    Notification = notification;
-        //}
+            Developer = developer;
+            Notification = notification;
+        }
 
     }
 }

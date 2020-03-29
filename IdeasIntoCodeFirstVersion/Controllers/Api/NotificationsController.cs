@@ -26,7 +26,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 .Where(un => un.Developer.User.Id == userId && !un.IsRead)
                 .Select(un => un.Notification)
                 .Include(n => n.Developer)
-                .Include(n=>n.Project)
+                .Include(n => n.Project)
                 .ToList();
 
             return notifications;

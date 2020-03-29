@@ -88,7 +88,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                     var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
 
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("DeveloperProfile", "Developer", new { ID = developer.ID });
+                    return RedirectToAction("NewsFeed", "Developer");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
