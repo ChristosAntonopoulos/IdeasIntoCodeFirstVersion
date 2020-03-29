@@ -32,9 +32,9 @@
                                 {
                                     if (Model.ConnectedDeveloperAlreadyFollowsProfileDeveloper)
                                     {
-                                        <button data-folowee-id="@Model.DeveloperOfProfile.ID" type="button" class="btn btn-success js-toggle-follow">
+                                        <button data-folowee-id="@Model.DeveloperOfProfile.ID" type="button" class="btn btn-success js-toggle-unfollow">
                                             <i class="fas fa-user-plus"></i>
-                                            Following
+                                            Unfollow
                                         </button>
                                     }
                                     else
@@ -227,10 +227,27 @@
                         button
                             .removeClass("btn-primary")
                             .addClass("btn-success")
-                            .text("Following")
+                            .removeClass("js-toggle-follow")
+                            .addClass("js-toggle-unfollow")
+                            .text("Unfollow")
                     })
                     .fail(function () {
                         alert("Follow failed")
+                    });
+            });
+            $(".js-toggle-unfollow").click(function (e) {
+                var button = $(e.target);
+                $.post("/api/followings", { followeeId: button.attr("data-folowee-id") })
+                    .done(function () {
+                        button
+                            .removeClass("btn-success")
+                            .addClass("btn-primary")
+                            .removeClass("js-toggle-unfollow")
+                            .addClass("js-toggle-follow")
+                            .text("Follow")
+                    })
+                    .fail(function () {
+                        alert("Unfollow failed")
                     });
             });
 

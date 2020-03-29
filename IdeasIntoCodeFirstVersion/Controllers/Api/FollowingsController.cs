@@ -27,23 +27,23 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             var developer = context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
 
             if (context.Follows.Any(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID))
-                return BadRequest("The followers already exists");
-
-            var following = new Follow()
             {
-                FolloweeID = followingDto.FolloweeID,
-                FollowerID = developer.ID,
-                TimeStamp = DateTime.Now
-                
-            };
-
-            var notification = new Notification() { Developer = developer, TimeStamp = DateTime.Now, Type = NotificationType.Followed };
-            context.DeveloperNotifications.Add(new DeveloperNotification() { DeveloperID = followingDto.FolloweeID, Notification = notification, Developer = developer });
-            
-
-            context.Follows.Add(following);
+                var follow = context.Follows.Single(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID);
+                context.Follows.Remove(follow);
+            }
+            else
+            {
+                var following = new Follow()
+                {
+                    FolloweeID = followingDto.FolloweeID,
+                    FollowerID = developer.ID,
+                    TimeStamp = DateTime.Now
+                };
+                var notification = new Notification() { Developer = developer, TimeStamp = DateTime.Now, Type = NotificationType.Followed };
+                context.DeveloperNotifications.Add(new DeveloperNotification() { DeveloperID = followingDto.FolloweeID, Notification = notification, Developer = developer });
+                context.Follows.Add(following);
+            }         
             context.SaveChanges();
-
             return Ok();
         }
 
