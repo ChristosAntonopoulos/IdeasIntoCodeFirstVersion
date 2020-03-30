@@ -136,11 +136,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return RedirectToAction("DeveloperProfile",new { id = developerID });
         }
 
-        
 
-       
+        //[HttpGet]
+        //public ActionResult Get()
+        //{
+        //    Byte[] b = File.ReadAllBytes(@"E:\Test.jpg");   // You can use your own method over here.
+        //    return File(b, "image/jpeg");
+        //}
 
-       
+
+
 
     }
 }

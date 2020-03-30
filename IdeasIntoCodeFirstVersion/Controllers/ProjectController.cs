@@ -77,24 +77,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var userId = User.Identity.GetUserId();
             var developer = context.Developers.Include(d => d.ProjectsOwned)
            .Include(d => d.TeamParicipating.Select(t => t.Project)).SingleOrDefault(d => d.UserID == userId);
-            var list = new List<Project>();
-            var projectsOwned = developer.ProjectsOwned.ToList();
-            var projectsParticipating = developer.TeamParicipating.Select(t => t.Project).ToList();
-
-            //foreach (var myproject in projectsOwned)
-            //{
-            //    if (projectsParticipating.Contains(myproject))
-            //    {
-            //        projectsParticipating.Remove(myproject);
-            //    }
-            //}
+            
           
-
-
-
-            var viewmodel = new MyProjectViewModel(projectsOwned, projectsParticipating);
-
-            return View(viewmodel);
+            return View(developer);
         }
         // GET: Project
         public ActionResult ProjectProfile(int ID)
@@ -267,7 +252,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         [Authorize]
         public ActionResult Edit(int ID)
         {
-            //var project = context.Projects.SingleOrDefault(p => p.ID == ID);
+            
             var project = GetProjectOnly(ID);
             if (project == null)
                 return HttpNotFound();

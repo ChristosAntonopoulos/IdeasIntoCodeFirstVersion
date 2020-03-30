@@ -28,7 +28,7 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
         {
             get
             {
-                return ID != 0 ? "Edit Project" : "New Project";
+                return ID != null ? "Edit Project" : "New Project";
             }
         }
 

@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using System.IO;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.API
 {
@@ -19,15 +20,19 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         {
             context = new ApplicationDbContext();
         }
-
+        //[HttpGet]
+        //public IHttpActionResult Get()
+        //{
+        //    Byte[] b = File.ReadAllBytes(@"E:\Test.jpg");   // You can use your own method over here.
+        //    return File(b, "image/jpeg");
+        //}
         //GET/ API/developers
         public IHttpActionResult GetDevelopers()
         {
             var userId = User.Identity.GetUserId();
             var dev = context.Developers
-                        .Include(d => d.Comments)
-                        .Include(d => d.RecievedMessages)
-                        .Include(d => d.SendMessages).SingleOrDefault(d => d.UserID == userId);
+                        .SingleOrDefault(d => d.UserID==userId);
+           
             return Ok(dev);
         }
     }
