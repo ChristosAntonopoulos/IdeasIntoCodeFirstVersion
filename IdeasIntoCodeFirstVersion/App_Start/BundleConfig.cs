@@ -8,17 +8,16 @@ namespace IdeasIntoCodeFirstVersion
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            
-            bundles.Add(new ScriptBundle("~/bundles/lib").Include(                       
-                         "~/Scripts/jquery.signalR-2.4.1.js", 
+
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
+                         "~/Scripts/jquery.signalR-2.4.1.js",
                           "~/Scripts/typeahead.bundle.js",
                           "~/Scripts/jquery-{version}.js",
-                          "~/Scripts/bootstrap.js",
-                          "~/Scripts/bootstrap.bundle.js",
                           "~/Scripts/bootbox.js",
                           "~/Scripts/datatables/jquery.datatables.js",
                            "~/Scripts/underscore.min.js",
-                          "~/Scripts/datatables/datatables.bootstrap.js"                          
+                           //"~/Scripts/underscore.min.map.js",
+                          "~/Scripts/datatables/datatables.bootstrap.js"
                           ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,9 +29,9 @@ namespace IdeasIntoCodeFirstVersion
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                         "~/Scripts/popper.js",
-                        "~/Scripts/popper.min.js",
-                        "~/Scripts/bootstrap.bundle.js",
+                        "~/Scripts/umd/popper.js",
+                       "~/Scripts/umd/popper.min.js",
+                       "~/Scripts/bootstrap.bundle.min.js",
                          "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(                       
@@ -40,6 +39,7 @@ namespace IdeasIntoCodeFirstVersion
                        "~/Content/style.css",
                        "~/Content/fontawesome.css",                      
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min.css",
                        "~/Content/animate.css"));
         }
     }

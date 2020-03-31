@@ -7,9 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
-    @*@Styles.Render("~/Content/Site.css")*@
     @Scripts.Render("~/bundles/modernizr")
-
+    
 </head>
 <body>
     <div>
@@ -71,7 +70,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("MyProject","Project")"  aria-expanded="false">
+                            <a href="@Url.Action("MyProject","Project")" aria-expanded="false">
                                 <i class="far fa-lightbulb"></i>
                                 Projects
                             </a>
@@ -342,39 +341,41 @@
         }
     </style>
 
-
-    
     <script src="https://kit.fontawesome.com/7297f9c199.js" crossorigin="anonymous"></script>
     @Scripts.Render("~/bundles/lib")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
     <script type="text/x-template" id="notifications-template">
-        <%
-        _.each(notifications, function(notification) {
-        _.each(notifications, function(notification) {
-        if (notification.type == 0) { %>
-        <li><%= notification.developer.fullName %> has followed you </li>
-        <% };
-        if (notification.type == 1) { %>
-        <li><%= notification.developer.fullName %> has messaged you</li>
-        <% };
-        if (notification.type == 2) { %>
-        <li><%= notification.developer.fullName %> has petittioned to join you project with name <%= notification.project.title %></li>
-        <% }
-        })
-        %>
+        <ul class="notifications">
+            <%
+            _.each(notifications, function(notification) {
+            if (notification.type == 1) { %>
+            <li><%= notification.developer.user.fullName %> has followed you </li>
+            <% }
+
+            if (notification.type == 2) { %>
+            <li><span class="highlight"><%= notification.developer.user.fullName %></span> has messaged you</li>
+            <% }
+
+            if (notification.type == 3) { %>
+            <li><span class="highlight"><%= notification.developer.user.fullName %></span> has petittioned to join you project with name <%= notification.project.title %></li>
+            <% }
+            })
+            %>
+        </ul>
     </script>
     <script>
+
         $(document).ready(function () {
 
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
-
+          
             $.getJSON("/api/notifications", function (notifications) {
-                //if (notifications.length == 0)
-                //    return;
+                if (notifications.length == 0)
+                    console.log("No notifications")
 
                 $(".js-notifications-count")
                     .text(notifications.length)
@@ -391,41 +392,23 @@
                         return html;
                     },
                     placement: "bottom"
+                   
                 })
             });
-            @*$.ajax({
-                    url: '@Url.Action("ChatBox", "Messages")',
-                    type: 'GET',
-                    cache: false,
-                    data: { CurrentChatId: id, userID: userId}
-                }).done(function (result) {
-                    $('#chatbox').replaceWith(result);
 
-                });*@
+
             $.ajax({
                 url: "/api/developers/",
                 type: "GET",
                 cache: false,
                 success: function (result) {
                     $("#github").attr("href", result.gitHub);
-                    $("#picture").attr("href",result.picture)
+                    $("#picture").attr("href", result.picture)
                 }
             });
-           
-            
-            //$("#github").add(function (e) {
-            //    //var link = $(e.target);
-
-            //        $.ajax({
-            //            url: "/api/developers/",
-            //            dataType:'github'
-            //        }).done(function () {
-                        
-            //        });
 
 
 
-            //});
         });
     </script>
 
