@@ -25,6 +25,39 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             context.Dispose();
         }
 
+
+        [Authorize]
+        public ActionResult RegisterForm(int? ID)
+        {
+            var userId = User.Identity.GetUserId();
+            if (ID == null)
+            {
+                RedirectToAction("RegisterForm", ID = context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault());
+            }
+            var developer=context.Developers.Include(d=>d.User)
+                .SingleOrDefault(u => u.ID == ID);
+
+
+            return View("RegisterForm", developer);
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterForm(Developer developer)
+        {
+            var userID = User.Identity.GetUserId();
+            var developerDb=context.Developers.Include(d => d.User)
+                .SingleOrDefault(u => u.UserID == userID);
+
+            developerDb.User.LastName = developer.User.LastName;
+            developerDb.User.Name = developer.User.Name;
+            developerDb.GitHub = developer.GitHub;
+            developerDb.BirthDate = developer.BirthDate;
+            context.SaveChanges();
+            var developerID = context.Developers.Where(d => d.User.Id == userID).Select(d => d.ID).SingleOrDefault();
+            return RedirectToAction("DeveloperProfile", new { id = developerID });
+        }
+
         [Authorize]
         public ActionResult NewsFeed()
         {

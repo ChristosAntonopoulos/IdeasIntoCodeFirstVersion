@@ -1062,6 +1062,8 @@
     <Content Include="Views\Message\GetMessages.cshtml" />
     <Content Include="Views\Project\MyProject.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Developer\RegisterForm.cshtml" />
+    <Content Include="Views\ProgrammingLanguage\AddProgrammingLanguage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

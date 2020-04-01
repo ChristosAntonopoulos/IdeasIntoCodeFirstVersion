@@ -161,8 +161,7 @@
                         }
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Add</a>
-                        <a href="#" class="card-link">Edit</a>
+                        <a href="@Url.Action("AddProgrammingLanguage", "ProgrammingLanguage")" class="card-link">Add</a>                      
                     </div>
 
                 </div>
@@ -217,8 +216,11 @@
 
         </div>
     </div>
+    
 </section>
 @section scripts
+
+
 {
     <script>
         $(document).ready(function () {
@@ -238,4 +240,8 @@
 
         })
     </script>
+
+    <style>
+
+    </style>
 }

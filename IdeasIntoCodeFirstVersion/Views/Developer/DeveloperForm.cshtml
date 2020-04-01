@@ -18,37 +18,23 @@
             <div class="row h-100 justify-content-center align-items-center">
                 <div class="col-10 col-md-8 col-lg-6">
                     <form class="form-example" action="" method="post">
-                        <h1 class="text-center">Full Register Form</h1>
+                        <h1 class="text-center">Edit Form</h1>
 
 
                         <div class="form-group">
 
-                            <label for="username">Firstname:</label>
-                            <input class="form-group" type="text" id="firstname" placeholder="Enter Firsttname">
+                            <label for="username">Fullname:</label>
+                            <input class="form-group" type="text" id="fullname" value="@Model.User.FullName" readonly>
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
                         </div>
 
-                        <div class="form-group">
-                            <label for="password">Lastname:</label>
-                            <input class="form-group" type="text" id="lastname" placeholder="Enter Lastname">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                            <small>Error message</small>
-                        </div>
+                       
 
                         <div class="form-group">
                             <label for="password">Date of Birth:</label>
-                            <input class="form-group" type="date" id="date" placeholder="Enter Date of Birth">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                            <small>Error message</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">Email:</label>
-                            <input class="form-group" type="email" id="email" placeholder="Enter Email">
+                            <input class="form-group" type="date" id="date" placeholder="@Model.BirthDate">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
@@ -56,7 +42,7 @@
 
                         <div class="form-group">
                             <label for="password">GitHub:</label>
-                            <input class="form-group" type="text" id="github" placeholder="Enter Github">
+                            <input class="form-group" type="text" id="github" placeholder="@Model.GitHub">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
@@ -78,51 +64,20 @@
         </div>
 
 
-
-
-
-        <section class="grid">
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title text-center">Chose Technologies:</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="add-task">
-                                    <form id="task-form">
-                                        <label for="input"></label>
-                                        <input type="text" name="input" id="input-box">
-                                        <input type="submit" value="Add" class="add-task-btn">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title text-center">Technologies you prefer:</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="tasks">
-                                    <ul class="task-list"></ul>
-                                    <a href="#" class="clear-tasks-btn">Save</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-
     </div>
 
     <style>
+        
+        h1{
+            color:blue;
+           font-style:italic;
+        }
+        label{
+            font-weight: bold;
+        }
+         .container{
+            background-color:lightblue;
+        }
         .form {
             padding: 30px 40px;
         }
@@ -392,93 +347,6 @@
 
 
 
-        //Define UI Variables
-        const form = document.querySelector('#task-form');
-        const taskList = document.querySelector('.task-list');
-        const clearTaskButton = document.querySelector('.clear-tasks-btn');
-        const taskFilter = document.querySelector('#task-filter');
-        const inputBox = document.querySelector('#input-box');
-        const addTaskButton = document.querySelector('.add-task-btn');
-
-
-        // Load event listeners
-        loadEventListeners();
-
-        // Function to load event listeners
-        function loadEventListeners() {
-            form.addEventListener('submit', addTask);
-            taskList.addEventListener('click', removeTask);
-            clearTaskButton.addEventListener('click', clearTasks);
-            taskFilter.addEventListener('oninput', filterTasks);
-        }
-
-        //Add Task
-        function addTask(e) {
-            if (inputBox.value === '') {
-                alert('Please add a task!');
-            }
-
-            //Create li element
-            const liTag = document.createElement('li');
-            liTag.className = 'task-item';
-
-            //Append input from input box into li element
-            liTag.appendChild(document.createTextNode(inputBox.value));
-
-            // Create new link element with a class of "delete-item"
-            const linkTag = document.createElement('a');
-            linkTag.className = 'delete-item';
-
-            // Add icon HTML
-            linkTag.innerHTML = '<i class="fas fa-times"></i>';
-
-            // Append link to li
-            liTag.appendChild(linkTag);
-
-            // Append li to ul
-            taskList.appendChild(liTag);
-
-            // Clear input
-            inputBox.value = '';
-
-            e.preventDefault();
-        }
-
-        //Remove Tasks
-        function removeTask(e) {
-            if (e.target.parentElement.classList.contains('delete-item')) {
-                e.target.parentNode.parentNode.remove();
-            }
-        }
-
-        //Clear Tasks
-        function clearTasks(e) {
-            //Alert if there are no tasks (li) inside the task list (ul)
-            if (taskList.childNodes.length < 1) {
-                alert('No tasks to clear!');
-            }
-            else {
-                taskList.innerHTML = '';
-            }
-        }
-
-        //Filter Tasks
-        function filterTasks(e) {
-
-            var filter, liTag, a, i, txtValue;
-            filter = taskFilter.value.toUpperCase();
-            liTag = taskList.getElementsByTagName('li');
-
-            for (i = 0; i < liTag.length; i++) {
-                a = liTag[i].getElementsByTagName("a")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    liTag[i].style.display = "";
-                } else {
-                    liTag[i].style.display = "none";
-                }
-            }
-        }
     </script>
 
 }
