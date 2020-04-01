@@ -5,12 +5,15 @@
     {
         @Html.AntiForgeryToken()
 
-       <ul class="navbar-nav mt-2 mt-lg-0">
+        <ul class="navbar-nav mt-2 mt-lg-0">
             <li class="nav-item">
                 <a class="nav-link active" href="@Url.Action("NewsFeed", "Developer")"><i class="fas fa-home"></i> Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="#"><i class="fas fa-globe"></i> Notifications</a>
+            <li class="nav-item notifications">
+                <a class="nav-link active" href="#">
+                    <i class="fas fa-globe"></i> Notifications
+                    <span class="badge js-notifications-count hide"></span>
+                </a>
             </li>
         </ul>
     }
@@ -22,3 +25,7 @@ else
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
     </ul>
 }
+
+@Scripts.Render("~/bundles/lib")
+@Scripts.Render("~/bundles/bootstrap")
+
