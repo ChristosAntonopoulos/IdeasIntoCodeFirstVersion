@@ -140,8 +140,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         //[HttpGet]
         //public ActionResult Get()
         //{
-        //    Byte[] b = File.ReadAllBytes(@"E:\Test.jpg");   // You can use your own method over here.
-        //    return File(b, "image/jpeg");
+        //    var path = Server.MapPath("/Content/Images/homepage.jpg");
+        //    //var path = Path.Combine(dir, ".jpg"); //validate the path for security or use other means to generate the path.
+        //    return base.File(path, "image/jpg");
+            
         //}
 
 

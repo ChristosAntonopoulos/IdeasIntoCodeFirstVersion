@@ -16,6 +16,8 @@ namespace IdeasIntoCodeFirstVersion
             setting.ContractResolver = new CamelCasePropertyNamesContractResolver();
             setting.Formatting = Formatting.Indented;
 
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             config.MapHttpAttributeRoutes();

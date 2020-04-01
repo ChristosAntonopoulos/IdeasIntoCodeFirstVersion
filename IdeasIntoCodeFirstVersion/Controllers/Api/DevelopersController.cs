@@ -32,7 +32,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             var userId = User.Identity.GetUserId();
             var dev = context.Developers
                         .SingleOrDefault(d => d.UserID==userId);
-           
+
+            
+
             return Ok(dev);
         }
     }
