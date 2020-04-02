@@ -136,11 +136,18 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return RedirectToAction("DeveloperProfile",new { id = developerID });
         }
 
-        
 
-       
+        //[HttpGet]
+        //public ActionResult Get()
+        //{
+        //    var path = Server.MapPath("/Content/Images/homepage.jpg");
+        //    //var path = Path.Combine(dir, ".jpg"); //validate the path for security or use other means to generate the path.
+        //    return base.File(path, "image/jpg");
+            
+        //}
 
-       
+
+
 
     }
 }

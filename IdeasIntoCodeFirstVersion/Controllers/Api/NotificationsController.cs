@@ -27,6 +27,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 .Select(un => un.Notification)
                 .Include(n => n.Developer)
                 .Include(n => n.Project)
+                .Include(n => n.Developer.User)
                 .ToList();
 
             return notifications;

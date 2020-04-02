@@ -8,6 +8,7 @@ using IdeasIntoCodeFirstVersion.Models;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using System.Net;
 using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -38,14 +39,18 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             return languages;
         }
 
-        private List<ApplicationUser> GetUsersToUpdate(string userID)
+        private List<Developer> GetDevelopersToUpdate(int devID)
         {
-            var applicationUsersToUpdateNewsFeed = context.Developers
-                    .Where(d => d.Followers.Select(f => f.Followee == context.Developers
-                    .Where(dev => dev.User.Id == userID).FirstOrDefault()).FirstOrDefault())
-                    .Select(developer => developer.User).ToList();
+            var developersToUpdateNewsFeed = context.Follows
+                    .Where(f => f.FolloweeID== devID)
+                    .Select(f => f.Follower).ToList();
+                    
+                   
+                   
+                   
+                    
             
-            return applicationUsersToUpdateNewsFeed;
+            return developersToUpdateNewsFeed;
         }
 
         private int GetAdminId(string userID)
@@ -65,12 +70,22 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var project = context.Projects              
               .Include(p => p.Team.TeamMembers.Select(t=>t.User))
               .Include(p => p.Admin)
+              .Include(p=>p.Admin.User)
               .Include(p => p.ProgrammingLanguages)
               .Include(p => p.ProjectCategories)
               .Include(p => p.Comments.Select(c=>c.Developer).Select(c=>c.User)).Single(p => p.ID == ID);
             return project;
         }
 
+        public ActionResult MyProject()
+        {
+            var userId = User.Identity.GetUserId();
+            var developer = context.Developers.Include(d => d.ProjectsOwned)
+           .Include(d => d.TeamParicipating.Select(t => t.Project)).SingleOrDefault(d => d.UserID == userId);
+            
+          
+            return View(developer);
+        }
         // GET: Project
         public ActionResult ProjectProfile(int ID)
         {
@@ -130,10 +145,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
                 context.Projects.Add(project);
                 var newsFeedHub = new NewsFeedTickerHub();
+                var userId = User.Identity.GetUserId();
+                var currentDev = context.Developers.Where(d => d.User.Id == userId).Include(d => d.User).FirstOrDefault();
+                var path = Server.MapPath("/Content/Images/homepage.jpg");
+                
+                var pic = base.File(path, "image/jpg");
 
-                var userID = User.Identity.GetUserId();
-
-                newsFeedHub.SendNotification(GetUsersToUpdate(userID), project);
+                newsFeedHub.SendNotification(GetDevelopersToUpdate(project.AdminID), project,currentDev, pic);
 
             }
             else
@@ -242,7 +260,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         [Authorize]
         public ActionResult Edit(int ID)
         {
-            //var project = context.Projects.SingleOrDefault(p => p.ID == ID);
+            
             var project = GetProjectOnly(ID);
             if (project == null)
                 return HttpNotFound();

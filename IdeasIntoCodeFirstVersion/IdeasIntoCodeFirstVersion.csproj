@@ -272,6 +272,10 @@
     <Compile Include="Migrations\202003290856595_populateDB.Designer.cs">
       <DependentUpon>202003290856595_populateDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003281433093_MessageIsRead.cs" />
+    <Compile Include="Migrations\202003281433093_MessageIsRead.Designer.cs">
+      <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -1056,6 +1060,8 @@
     <Content Include="Views\Message\SendMessage.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\Message\GetMessages.cshtml" />
+    <Content Include="Views\Project\MyProject.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1108,6 +1114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003290856595_populateDB.resx">
       <DependentUpon>202003290856595_populateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003281433093_MessageIsRead.resx">
+      <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

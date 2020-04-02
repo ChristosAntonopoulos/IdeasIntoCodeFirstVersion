@@ -1,0 +1,25 @@
+﻿@model IdeasIntoCodeFirstVersion.Models.Developer
+@{
+    ViewBag.Title = "MyProject";
+}
+<button class="btn btn-primary" onclick="window.location.href='@Url.Action("New","Project")'">
+    New Project
+</button>
+<h2>MyProjects</h2>
+
+<h2>Project Owned</h2>
+
+@foreach (var myproject in Model.ProjectsOwned)
+{
+    <li>@Html.ActionLink(myproject.Title, "ProjectProfile", "Project", new { id=myproject.ID}, null)</li>
+
+}
+<h2>Project  Participating</h2>
+@foreach (var team in Model.TeamParicipating)
+{
+    <li>@Html.ActionLink(team.Project.Title, "ProjectProfile", "Project", new {id=team.ProjectID }, null)</li>
+
+
+}
+
+

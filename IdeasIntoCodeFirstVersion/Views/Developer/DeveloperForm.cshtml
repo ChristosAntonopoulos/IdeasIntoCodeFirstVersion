@@ -4,132 +4,481 @@
     ViewBag.Title = "View";
 }
 
-<h2>View</h2>
-
 
 @using (Html.BeginForm("Edit", "Developer", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Developer</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="container">
 
-    <div class="form-group row">
-        @Html.LabelFor(model => model.User.LastName, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+
+
+
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="col-10 col-md-8 col-lg-6">
+                    <form class="form-example" action="" method="post">
+                        <h1 class="text-center">Full Register Form</h1>
+
+
+                        <div class="form-group">
+
+                            <label for="username">Firstname:</label>
+                            <input class="form-group" type="text" id="firstname" placeholder="Enter Firsttname">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Lastname:</label>
+                            <input class="form-group" type="text" id="lastname" placeholder="Enter Lastname">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Date of Birth:</label>
+                            <input class="form-group" type="date" id="date" placeholder="Enter Date of Birth">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Email:</label>
+                            <input class="form-group" type="email" id="email" placeholder="Enter Email">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">GitHub:</label>
+                            <input class="form-group" type="text" id="github" placeholder="Enter Github">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Picture:</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="validatedCustomFile">
+                                <label class="custom-file-label" for="validatedCustomFile"></label>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary btn-customized">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
+
+
+
+
+
+        <section class="grid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title text-center">Chose Technologies:</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="add-task">
+                                    <form id="task-form">
+                                        <label for="input"></label>
+                                        <input type="text" name="input" id="input-box">
+                                        <input type="submit" value="Add" class="add-task-btn">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title text-center">Technologies you prefer:</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="tasks">
+                                    <ul class="task-list"></ul>
+                                    <a href="#" class="clear-tasks-btn">Save</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
     </div>
 
-    <div class="form-group row">
-        @Html.LabelFor(model => model.User.Name, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.User.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.User.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group row">
-        @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group row">
-        @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group row">
-        @Html.LabelFor(model => model.GitHub, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.GitHub, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.GitHub, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <style>
+        .form {
+            padding: 30px 40px;
+        }
 
 
-    <div class="form-group row">
-        @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ProfilePicture, new { Type = "File" })
-           @*// @Html.ValidationMessageFor(model => model.Developer.GitHub, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
+        /* FORM VALIDATION CSS */
 
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Programming Languages</label>
-        <div class="col-md-8">
-            <input id="selectprogramminglanguages" name="programminglanguages" type="text" value="" class="typeahead form-control" />
-            <ul class="col-md-offset-2 col-md-10 list-group" id="selectedprogramminglanguages">
-                @foreach (var programmingLanguage in Model.ProgrammingLanguages)
-                {
-                    <li class='list-group-item d-flex justify-content-between align-items-center'>
-                        <input type='hidden' name='programmingLanguage' value=@programmingLanguage.ID />
-                        @programmingLanguage.Name<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"></button>
-                    </li>
+        .form-group input,
+        select {
+            border: 2px solid #f0f0f0;
+            border-radius: 4px;
+            display: block;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 10px;
+            width: 100%;
+        }
+
+            .form-group input:focus,
+            select:focus,
+            option:focus {
+                outline: 0;
+                border-color: #777;
+            }
+
+        .form-group.success input {
+            border-color: #2ecc71;
+        }
+
+        .form-group.success select {
+            border-color: #2ecc71;
+        }
+
+        .form-group.error input {
+            border-color: #e74c3c;
+        }
+
+        .form-group.error select {
+            border-color: #e74c3c;
+        }
+
+        .form-group i {
+            visibility: hidden;
+            position: absolute;
+            top: 500px;
+            right: 380px;
+        }
+
+        .form-group.success i.fa-check-circle {
+            color: #2ecc71;
+            visibility: visible;
+        }
+
+        .form-group.error i.fa-exclamation-circle {
+            color: #e74c3c;
+            visibility: visible;
+        }
+
+        .form-group small {
+            color: #e74c3c;
+            position: absolute;
+            bottom: 109x;
+            left: 10;
+            visibility: hidden;
+        }
+
+        .form-group.error small {
+            visibility: visible;
+        }
+
+
+
+
+        /* Technologies Cards CSS */
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Lato", sans-serif;
+        }
+
+        /* ====HEADING==== */
+
+
+
+
+
+        .grid {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        .add-task,
+        .tasks {
+            width: 75%;
+            padding: 15px 15px;
+        }
+
+        .add-task,
+        .tasks {
+            margin: auto;
+            border: 0.5px solid #e6e6e6;
+            -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+            margin-bottom: 20px;
+        }
+
+        #input-box,
+        #task-filter {
+            margin-bottom: 20px;
+            width: 100%;
+            background: transparent;
+            border: none;
+            /* border-bottom: 1px solid #9e9e9e; */
+        }
+
+        ::-webkit-input-placeholder {
+            /* WebKit, Blink, Edge */
+            color: black;
+        }
+
+        /* ====BUTTONS==== */
+        .add-task-btn,
+        .clear-tasks-btn {
+            padding: 10px 20px;
+            border: 0;
+            color: white;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .add-task-btn {
+            background: #00a000;
+            border: 0px solid #000000;
+            -webkit-appearance: none;
+        }
+
+        .clear-tasks-btn {
+            background: black;
+        }
+
+        .tasks {
+            background: white;
+            margin: 10px auto;
+            padding-bottom: 20px;
+            -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+        }
+
+        .task-list {
+            list-style-type: none;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+            .task-list li {
+                /* border: 1px solid #e0e0e0; */
+                padding: 10px 20px 10px 20px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+                .task-list li:nth-child(n + 2):nth-child(-n + 5) {
+                    border-top: 0px;
                 }
-            </ul>
-        </div>
-    </div>
 
-    @Html.HiddenFor(model => model.ID)
-
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-danger" />
-    </div>
-</div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+        .fas:hover {
+            color: red;
+        }
+    </style>
 
 
     <script>
-        $(document).ready(function () {
-
-            var programmingLanguages = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                prefetch: '/api/programminglanguages'
-            });
-
-            $('#selectprogramminglanguages').typeahead({
-                minLength: 1,
-                highlight: true
-            },
-                {
-                    name: 'programmingLanguages',
-                    display: 'name',
-                    source: programmingLanguages
-                }).on("typeahead:select", function (e, programminglanguage) {
-
-                    $("#selectedprogramminglanguages").append("<li class='list-group-item d-flex justify-content-between align-items-center'><input type='hidden' name='programmingLanguage' value='"
-                        + programminglanguage.id + "' /> " + programminglanguage.name +
-                        '<button type="button" style="background-color:red" class="deletebutton" onclick="removeParentElement()"></button></li>')
-                });
-        })
+        // const form = document.getElementById("form");
+        // const firstname = document.getElementById('firstname');
+        // const lastname = document.getElementById('lastname');
+        // const stream = document.getElementById('stream');
+        // const fess = document.getElementById('fees')
+        // const date = document.getElementById("date");
 
 
 
-        $('input:text').click(
-            function () {
-                $(this).val('');
-            });
+        // form.addEventListener('submit', e => {
+        // 	e.preventDefault();
+
+        // 	checkInputs();
+        // });
+
+        // function checkInputs() {
+        // 	const firstnameValue = firstname.value.trim();
+        // 	const lastnameValue = lastname.value.trim();
+
+        // 	// const streamValue = stream.options[stream.selectedIndex].text;
+        // 	// const feesValue = fees.value.trim();
+        // 	// const dateValue = date.value;
+
+        // 	if(firstnameValue === '') {
+        // 		setErrorFor(firstname, 'Title cannot be blank');
+        // 	} else if(firstnameValue.length < 5) {
+        // 		setErrorFor(firstname, 'Title must be over 5 chars');
+        // 	} else if(firstnameValue.length > 18) {
+        // 		setErrorFor(firstname, 'Title must be under 18 chars');
+        // 	} else if(firstnameValue.substr(0, 1) <='[0-9]') {
+        // 		setErrorFor(firstname, 'Title must not contain nums');
+        // 	}
+        // 	else {
+        // 		setSuccessFor(firstname);
+        // 	}
 
 
+        // 	if(lastnameValue === '') {
+        // 		setErrorFor(lastname, 'Title cannot be blank');
+        // 	} else if(lastnameValue.length < 5) {
+        // 		setErrorFor(lastname, 'Title must be over 5 chars');
+        // 	} else if(lastnameValue.length > 18) {
+        // 		setErrorFor(lastname, 'Title must be under 18 chars');
+        // 	} else if(lastnameValue.substr(0, 1) <='[0-9]') {
+        // 		setErrorFor(lastname, 'Title must not contain nums');
+        // 	}
+        // 	else {
+        // 		setSuccessFor(lastname);
+        // 	}
+
+
+        // 	// if(streamValue === "Choose Stream") {
+        // 	// 	setErrorFor(stream, 'Stream cannot be blank');
+        // 	// } else {
+        // 	// 	setSuccessFor(stream);
+        // 	// }
+
+        // 	// if(feesValue === '') {
+        // 	// 	setErrorFor(fees, 'Fees cannot be blank');
+        // 	// } else if(feesValue <= 1000) {
+        // 	// 	setErrorFor(fees, 'Fees cannot be under 1000');
+        // 	// }
+        // 	// else {
+        // 	// 	setSuccessFor(fees);
+        // 	// }
+
+        // 	// if(dateValue === '') {
+        // 	// 	setErrorFor(date, 'Date cannot be blank');
+        // 	// } else {
+        // 	// 	setSuccessFor(date);
+        // 	// }
+
+
+        // }
+
+        // function setErrorFor(input, message) {
+        // 	const formGroup = input.parentElement;
+        // 	const small = formGroup.querySelector('small');
+        // 	formGroup.className = 'form-group error';
+        // 	small.innerText = message;
+        // }
+
+        // function setSuccessFor(input) {
+        // 	const formGroup = input.parentElement;
+        // 	formGroup.className = 'form-group success';
+        // }
+
+
+
+        //Define UI Variables
+        const form = document.querySelector('#task-form');
+        const taskList = document.querySelector('.task-list');
+        const clearTaskButton = document.querySelector('.clear-tasks-btn');
+        const taskFilter = document.querySelector('#task-filter');
+        const inputBox = document.querySelector('#input-box');
+        const addTaskButton = document.querySelector('.add-task-btn');
+
+
+        // Load event listeners
+        loadEventListeners();
+
+        // Function to load event listeners
+        function loadEventListeners() {
+            form.addEventListener('submit', addTask);
+            taskList.addEventListener('click', removeTask);
+            clearTaskButton.addEventListener('click', clearTasks);
+            taskFilter.addEventListener('oninput', filterTasks);
+        }
+
+        //Add Task
+        function addTask(e) {
+            if (inputBox.value === '') {
+                alert('Please add a task!');
+            }
+
+            //Create li element
+            const liTag = document.createElement('li');
+            liTag.className = 'task-item';
+
+            //Append input from input box into li element
+            liTag.appendChild(document.createTextNode(inputBox.value));
+
+            // Create new link element with a class of "delete-item"
+            const linkTag = document.createElement('a');
+            linkTag.className = 'delete-item';
+
+            // Add icon HTML
+            linkTag.innerHTML = '<i class="fas fa-times"></i>';
+
+            // Append link to li
+            liTag.appendChild(linkTag);
+
+            // Append li to ul
+            taskList.appendChild(liTag);
+
+            // Clear input
+            inputBox.value = '';
+
+            e.preventDefault();
+        }
+
+        //Remove Tasks
+        function removeTask(e) {
+            if (e.target.parentElement.classList.contains('delete-item')) {
+                e.target.parentNode.parentNode.remove();
+            }
+        }
+
+        //Clear Tasks
+        function clearTasks(e) {
+            //Alert if there are no tasks (li) inside the task list (ul)
+            if (taskList.childNodes.length < 1) {
+                alert('No tasks to clear!');
+            }
+            else {
+                taskList.innerHTML = '';
+            }
+        }
+
+        //Filter Tasks
+        function filterTasks(e) {
+
+            var filter, liTag, a, i, txtValue;
+            filter = taskFilter.value.toUpperCase();
+            liTag = taskList.getElementsByTagName('li');
+
+            for (i = 0; i < liTag.length; i++) {
+                a = liTag[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    liTag[i].style.display = "";
+                } else {
+                    liTag[i].style.display = "none";
+                }
+            }
+        }
     </script>
 
 }
