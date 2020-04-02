@@ -13,6 +13,7 @@
                         @if (Model.Action == true)
                         {
                             <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
+
                         }
                         @if (Model.Action == false)
                         {
@@ -20,8 +21,9 @@
                         }
                         @if (Model.Action == null)
                         {
-                            <button class="btn btn-info  btn-sm" disabled="disabled">Edit</button>
-
+                            <button class="btn btn-info btn-sm js-toggle-join" href="#">
+                                <i class="fas fa-cog"></i>
+                            </button>
                         }
 
                     </div>
@@ -30,6 +32,7 @@
         </div>
     </div>
 </section>
+
 
 
 <section class="py-5" id="section2">
@@ -47,7 +50,7 @@
                 <div class="col-md-3">
                     <h3>Project Admin:</h3>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <a href="@Url.Action("DeveloperProfile", "Developer", new { ID=Model.Project.Admin.ID })">
                         <img class="rounded-circle" src="~/Content/Images/ProfilePicture/@Model.Project.Admin.ID/@Model.Project.Admin.Picture" style="width: 50px;">
                         <small>@Model.Project.Admin.User.Name</small>
@@ -90,7 +93,7 @@
                         <div class="panel-body">
                             @foreach (var progLanguages in Model.Project.ProgrammingLanguages)
                             {
-                                <a href="#" class="list-group-item text-danger" id="language">@progLanguages.Name</a>
+                                <a href="#" class="list-group-item text-dark badge badge-pill badge-primary" id="language">@progLanguages.Name</a>
                             }
 
                         </div>
@@ -104,7 +107,7 @@
                         <div class="panel-body">
                             @foreach (var category in Model.Project.ProjectCategories)
                             {
-                                <a href="#" class="list-group-item text-danger" id="category">@category.Name</a>
+                                <a href="#" class="list-group-item text-dark badge badge-pill badge-primary" id="category">@category.Name</a>
                             }
                         </div>
                     </div>
@@ -141,38 +144,46 @@
     <div>
         <div class="container">
             <div class="row" id="comments">
-                <h2><strong>Comments</strong></h2>
-                <div id="comments">
-                    <div class="row">
-                        <div class="col-12">
-                            <form class="comment-form" method="post" action="">
-                                <textarea id="commentText" class="comment-area col-md-12" name="user_comment" placeholder="Write your comment here"></textarea>
-                            </form>
-                            <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.User.FullName" id="submitComment" type="submit" class="btn  btn-primary">Post</button>
-                        </div>
-                    </div>
-                    @foreach (var comment in Model.Project.Comments)
-                    {
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="~/Content/Images/ProfilePicture/@comment.Developer.ID/@comment.Developer.Picture" class="img img-rounded img-fluid" />
 
-                                </div>
-                                <div class="col-md-10">
-                                    <p><strong>@comment.Developer.User.FullName</strong></p>
-                                    <p>@comment.Text</p>
-                                    <p class="text-secondary text-center">@comment.TimeStamp</p>
+                <div class="col-12 text-center pb-3">
+                    <h2><strong>Comments</strong></h2>
+                </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    }
-
+                <div class="col-10">
+                    <form class="comment-form" method="post" action="">
+                        <textarea id="commentText" class="comment-area col-md-12" name="user_comment"
+                                  placeholder="Write your comment here"></textarea>
+                    </form>
+                </div>
+                <div class="col-2 mt-2">
+                    <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.User.FullName" id="submitComment" type="submit"
+                            class="btn  btn-primary">
+                        Post
+                    </button>
                 </div>
 
 
+
+                @foreach (var comment in Model.Project.Comments)
+                {
+                    <div class="row mt-5">
+
+                        <div class="col-1">
+                            <img src="~/Content/Images/ProfilePicture/@comment.Developer.ID/@comment.Developer.Picture" class="img img-rounded img-fluid" />
+                        </div>
+
+                        <div class="col-11">
+                            <p><strong>@comment.Developer.User.FullName</strong></p>
+                            <p>@comment.Text</p>
+                            <p class="text-secondary text-center">@comment.TimeStamp</p>
+                        </div>
+
+                    </div>
+                }
+
             </div>
+
+
         </div>
     </div>
 </section>
