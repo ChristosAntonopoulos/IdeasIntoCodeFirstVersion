@@ -43,9 +43,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
            
             var project = context.Projects
                 .Include(p => p.Team.TeamMembers)
+                .Include(p=>p.Admin)
                 .Where(p=>p.ID==joinDto.ProjectID).SingleOrDefault();
 
-            project.Team.TeamMembers.Add(developer);     
+            project.Team.TeamMembers.Add(developer);
+            context.DeveloperNotifications.Add(new DeveloperNotification(project.Admin,new Notification(developer,project,NotificationType.JoinRequest)));
             context.SaveChanges();
             return Ok();
         }
