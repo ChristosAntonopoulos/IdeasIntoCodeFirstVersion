@@ -20,9 +20,8 @@ namespace IdeasIntoCodeFirstVersion.DTOs
 
         public bool Active { get; set; }
 
-        public int AdminID { get; set; }
+        public DateTime TimeStamp { get; set; }
 
-        [ForeignKey("AdminID")]
-        public DeveloperDto Admin { get; set; }
+
     }
 }

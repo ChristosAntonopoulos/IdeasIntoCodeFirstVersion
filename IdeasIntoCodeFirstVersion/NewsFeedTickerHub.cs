@@ -2,6 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+using AutoMapper;
+using IdeasIntoCodeFirstVersion.DTOs;
 using IdeasIntoCodeFirstVersion.Interface;
 using IdeasIntoCodeFirstVersion.Models;
 using Microsoft.AspNet.SignalR;
@@ -15,27 +18,31 @@ namespace IdeasIntoCodeFirstVersion
         private static readonly ConcurrentDictionary<string, string> Users =
         new ConcurrentDictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
+       
 
-
-        public void Connect(string userid)
+        public void Connect(string devId)
         {
-
-            Users.GetOrAdd(userid, Context.ConnectionId);
+             
+            Users.GetOrAdd(devId, Context.ConnectionId);
         }
 
-        public void SendNotification(List<ApplicationUser> applicationUsers,INewsFeed newsFeed)
+        public void SendNotification(List<Developer> developersToNotify,INewsFeed newsFeed,Developer developerOfNotification, FilePathResult pic)
         {
             try
             {
                 
-                foreach (var applicationUser in applicationUsers)
+                foreach (var developer in developersToNotify)
                 {
                     string receiverConnectionString;
-                    if (Users.TryGetValue(applicationUser.Id, out receiverConnectionString))
+                    if (Users.TryGetValue(developer.ID.ToString(), out receiverConnectionString))
                     {
-                        var cid = receiverConnectionString;
-                        //var context = GlobalHost.ConnectionManager.GetHubContext<NewsFeedTickerHub>();
-                        Clients.Client(cid).broadcaastNotif(newsFeed);
+                        //var cid = receiverConnectionString;
+                        var project = (newsFeed as Project);
+                       
+                        //var bob = Directory.GetFiles("/Content/Images/dev").Select(Path.GetFileName);
+                        var context = GlobalHost.ConnectionManager.GetHubContext<NewsFeedTickerHub>();
+                        var projectDto = Mapper.Map<Project, ProjectDto>(project);
+                         context.Clients.Client(receiverConnectionString).getProjectNotification(projectDto, developerOfNotification.User.FullName,pic);
                     }
 
                 }
