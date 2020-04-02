@@ -5,8 +5,9 @@
 }
 
 
-@using (Html.BeginForm("RegisterForm", "Developer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("RegisterForm", "Developer", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+
     @Html.AntiForgeryToken()
 
     <div class="container">
@@ -15,27 +16,27 @@
         <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
                 <div class="col-10 col-md-8 col-lg-6">
-                    <form class="form-example" action="" method="post">
+                    <form class="form-example " action="" method="post">
                         <h1 class="text-center">Welcome @Model.User.FullName</h1>
 
                         @*<div class="form-group">
-                            <label for="password">First Name:</label>
-                            <input class="form-group" type="text" id="name" placeholder="@Model.User.Name">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                            <small>Error message</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Last Name:</label>
-                            <input class="form-group" type="text" id="lastname" placeholder="@Model.User.LastName">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                            <small>Error message</small>
-                        </div>*@
+                                <label for="password">First Name:</label>
+                                <input class="form-group" type="text" id="name" placeholder="@Model.User.Name">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Last Name:</label>
+                                <input class="form-group" type="text" id="lastname" placeholder="@Model.User.LastName">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>*@
 
                         <div class="form-group">
                             <label for="password">Date of Birth:</label>
-                            <input class="form-group" type="date" id="date" placeholder="@Model.BirthDate">
+                            <input class="form-group"  name="birthdate"type="date" @*data-rule-validBirthday="true"*@ id="date" placeholder="@Model.BirthDate">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
@@ -43,19 +44,26 @@
 
                         <div class="form-group">
                             <label for="password">GitHub:</label>
-                            <input class="form-group" type="text" id="github" placeholder="@Model.GitHub">
+                            <input class="form-group" type="text" name="github" id="github" placeholder="@Model.GitHub">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
                         </div>
 
+                        <div class="form-group">
+                            <label for="password">Linkedin:</label>
+                            <input class="form-group" type="text" name="linkedin" id="linkedin" placeholder="@Model.Linkedin">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
                         @*<div class="form-group">
-            <label for="password">Picture:</label>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="validatedCustomFile">
-                <label class="custom-file-label" for="validatedCustomFile"></label>
-            </div>
-        </div>*@
+                                <label for="password">Picture:</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="validatedCustomFile">
+                                    <label class="custom-file-label" for="validatedCustomFile"></label>
+                                </div>
+                            </div>*@
 
 
                         <button type="submit" class="btn btn-primary btn-customized">Submit</button>
@@ -66,20 +74,23 @@
 
     </div>
 
+
     <style>
-        h1{
-            color:blue;
-           font-style:italic;
+        h1 {
+            color: blue;
+            font-style: italic;
         }
-        label{
+
+        label {
             font-weight: bold;
         }
+
         .form {
             padding: 30px 40px;
         }
 
-        .container{
-            background-color:lightblue;
+        .container {
+            background-color: lightsteelblue;
         }
         /* FORM VALIDATION CSS */
 
@@ -158,7 +169,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: "Lato", sans-serif;
-            
         }
 
         /* ====HEADING==== */
@@ -173,7 +183,7 @@
             margin-top: 10px;
         }
 
-      
+
         #input-box {
             margin-bottom: 20px;
             width: 100%;
@@ -188,14 +198,13 @@
         }
 
         /* ====BUTTONS==== */
-      
+
 
         .fas:hover {
             color: red;
         }
     </style>
 
-
-    
+ 
 
 }

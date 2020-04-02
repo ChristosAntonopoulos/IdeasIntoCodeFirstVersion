@@ -47,14 +47,14 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         {
             var userID = User.Identity.GetUserId();
             var developerDb=context.Developers.Include(d => d.User)
-                .SingleOrDefault(u => u.UserID == userID);
+                .Single(u => u.UserID == userID);
 
-            developerDb.User.LastName = developer.User.LastName;
-            developerDb.User.Name = developer.User.Name;
+            
             developerDb.GitHub = developer.GitHub;
+            developerDb.Linkedin = developer.Linkedin;
             developerDb.BirthDate = developer.BirthDate;
             context.SaveChanges();
-            var developerID = context.Developers.Where(d => d.User.Id == userID).Select(d => d.ID).SingleOrDefault();
+            var developerID = developerDb.ID;
             return RedirectToAction("DeveloperProfile", new { id = developerID });
         }
 
@@ -92,6 +92,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
 
+        [Authorize]
         public ActionResult DeveloperProfile(int? ID)
         {
             var userId = User.Identity.GetUserId(); 
@@ -159,9 +160,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 Directory.CreateDirectory(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID));
             }
             developer.ProfilePicture.SaveAs(path);           
-            DeveloperDB.User.Name = developer.User.Name;
-            DeveloperDB.User.LastName = developer.User.LastName;
+            //DeveloperDB.User.Name = developer.User.Name;
+            //DeveloperDB.User.LastName = developer.User.LastName;
             DeveloperDB.GitHub = developer.GitHub;
+            DeveloperDB.Linkedin = developer.Linkedin;
             DeveloperDB.User.Email = developer.User.Email;
             DeveloperDB.BirthDate = developer.BirthDate;
             context.SaveChanges();

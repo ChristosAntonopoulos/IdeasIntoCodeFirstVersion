@@ -30,11 +30,11 @@
                             <small>Error message</small>
                         </div>
 
-                       
+
 
                         <div class="form-group">
                             <label for="password">Date of Birth:</label>
-                            <input class="form-group" type="date" id="date" placeholder="@Model.BirthDate">
+                            <input class="form-group" type="date" name="birthdate" id="date" placeholder="@Model.BirthDate">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
@@ -42,7 +42,15 @@
 
                         <div class="form-group">
                             <label for="password">GitHub:</label>
-                            <input class="form-group" type="text" id="github" placeholder="@Model.GitHub">
+                            <input class="form-group" type="text" name="github" id="github" placeholder="@Model.GitHub">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Linkedin:</label>
+                            <input class="form-group" type="text" name="linkedin" id="linkedin" placeholder="@Model.Linkedin">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
@@ -67,17 +75,20 @@
     </div>
 
     <style>
-        
-        h1{
-            color:blue;
-           font-style:italic;
+
+        h1 {
+            color: blue;
+            font-style: italic;
         }
-        label{
+
+        label {
             font-weight: bold;
         }
-         .container{
-            background-color:lightblue;
+
+        .container {
+            background-color:lightsteelblue;
         }
+
         .form {
             padding: 30px 40px;
         }
@@ -257,93 +268,94 @@
     </style>
 
 
+  
     <script>
-        // const form = document.getElementById("form");
-        // const firstname = document.getElementById('firstname');
-        // const lastname = document.getElementById('lastname');
-        // const stream = document.getElementById('stream');
-        // const fess = document.getElementById('fees')
-        // const date = document.getElementById("date");
+            // const form = document.getElementById("form");
+            // const firstname = document.getElementById('firstname');
+            // const lastname = document.getElementById('lastname');
+            // const stream = document.getElementById('stream');
+            // const fess = document.getElementById('fees')
+            // const date = document.getElementById("date");
 
 
 
-        // form.addEventListener('submit', e => {
-        // 	e.preventDefault();
+            // form.addEventListener('submit', e => {
+            // 	e.preventDefault();
 
-        // 	checkInputs();
-        // });
+            // 	checkInputs();
+            // });
 
-        // function checkInputs() {
-        // 	const firstnameValue = firstname.value.trim();
-        // 	const lastnameValue = lastname.value.trim();
+            // function checkInputs() {
+            // 	const firstnameValue = firstname.value.trim();
+            // 	const lastnameValue = lastname.value.trim();
 
-        // 	// const streamValue = stream.options[stream.selectedIndex].text;
-        // 	// const feesValue = fees.value.trim();
-        // 	// const dateValue = date.value;
+            // 	// const streamValue = stream.options[stream.selectedIndex].text;
+            // 	// const feesValue = fees.value.trim();
+            // 	// const dateValue = date.value;
 
-        // 	if(firstnameValue === '') {
-        // 		setErrorFor(firstname, 'Title cannot be blank');
-        // 	} else if(firstnameValue.length < 5) {
-        // 		setErrorFor(firstname, 'Title must be over 5 chars');
-        // 	} else if(firstnameValue.length > 18) {
-        // 		setErrorFor(firstname, 'Title must be under 18 chars');
-        // 	} else if(firstnameValue.substr(0, 1) <='[0-9]') {
-        // 		setErrorFor(firstname, 'Title must not contain nums');
-        // 	}
-        // 	else {
-        // 		setSuccessFor(firstname);
-        // 	}
-
-
-        // 	if(lastnameValue === '') {
-        // 		setErrorFor(lastname, 'Title cannot be blank');
-        // 	} else if(lastnameValue.length < 5) {
-        // 		setErrorFor(lastname, 'Title must be over 5 chars');
-        // 	} else if(lastnameValue.length > 18) {
-        // 		setErrorFor(lastname, 'Title must be under 18 chars');
-        // 	} else if(lastnameValue.substr(0, 1) <='[0-9]') {
-        // 		setErrorFor(lastname, 'Title must not contain nums');
-        // 	}
-        // 	else {
-        // 		setSuccessFor(lastname);
-        // 	}
+            // 	if(firstnameValue === '') {
+            // 		setErrorFor(firstname, 'Title cannot be blank');
+            // 	} else if(firstnameValue.length < 5) {
+            // 		setErrorFor(firstname, 'Title must be over 5 chars');
+            // 	} else if(firstnameValue.length > 18) {
+            // 		setErrorFor(firstname, 'Title must be under 18 chars');
+            // 	} else if(firstnameValue.substr(0, 1) <='[0-9]') {
+            // 		setErrorFor(firstname, 'Title must not contain nums');
+            // 	}
+            // 	else {
+            // 		setSuccessFor(firstname);
+            // 	}
 
 
-        // 	// if(streamValue === "Choose Stream") {
-        // 	// 	setErrorFor(stream, 'Stream cannot be blank');
-        // 	// } else {
-        // 	// 	setSuccessFor(stream);
-        // 	// }
-
-        // 	// if(feesValue === '') {
-        // 	// 	setErrorFor(fees, 'Fees cannot be blank');
-        // 	// } else if(feesValue <= 1000) {
-        // 	// 	setErrorFor(fees, 'Fees cannot be under 1000');
-        // 	// }
-        // 	// else {
-        // 	// 	setSuccessFor(fees);
-        // 	// }
-
-        // 	// if(dateValue === '') {
-        // 	// 	setErrorFor(date, 'Date cannot be blank');
-        // 	// } else {
-        // 	// 	setSuccessFor(date);
-        // 	// }
+            // 	if(lastnameValue === '') {
+            // 		setErrorFor(lastname, 'Title cannot be blank');
+            // 	} else if(lastnameValue.length < 5) {
+            // 		setErrorFor(lastname, 'Title must be over 5 chars');
+            // 	} else if(lastnameValue.length > 18) {
+            // 		setErrorFor(lastname, 'Title must be under 18 chars');
+            // 	} else if(lastnameValue.substr(0, 1) <='[0-9]') {
+            // 		setErrorFor(lastname, 'Title must not contain nums');
+            // 	}
+            // 	else {
+            // 		setSuccessFor(lastname);
+            // 	}
 
 
-        // }
+            // 	// if(streamValue === "Choose Stream") {
+            // 	// 	setErrorFor(stream, 'Stream cannot be blank');
+            // 	// } else {
+            // 	// 	setSuccessFor(stream);
+            // 	// }
 
-        // function setErrorFor(input, message) {
-        // 	const formGroup = input.parentElement;
-        // 	const small = formGroup.querySelector('small');
-        // 	formGroup.className = 'form-group error';
-        // 	small.innerText = message;
-        // }
+            // 	// if(feesValue === '') {
+            // 	// 	setErrorFor(fees, 'Fees cannot be blank');
+            // 	// } else if(feesValue <= 1000) {
+            // 	// 	setErrorFor(fees, 'Fees cannot be under 1000');
+            // 	// }
+            // 	// else {
+            // 	// 	setSuccessFor(fees);
+            // 	// }
 
-        // function setSuccessFor(input) {
-        // 	const formGroup = input.parentElement;
-        // 	formGroup.className = 'form-group success';
-        // }
+            // 	// if(dateValue === '') {
+            // 	// 	setErrorFor(date, 'Date cannot be blank');
+            // 	// } else {
+            // 	// 	setSuccessFor(date);
+            // 	// }
+
+
+            // }
+
+            // function setErrorFor(input, message) {
+            // 	const formGroup = input.parentElement;
+            // 	const small = formGroup.querySelector('small');
+            // 	formGroup.className = 'form-group error';
+            // 	small.innerText = message;
+            // }
+
+            // function setSuccessFor(input) {
+            // 	const formGroup = input.parentElement;
+            // 	formGroup.className = 'form-group success';
+            // }
 
 
 
