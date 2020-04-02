@@ -118,8 +118,10 @@
                             <th scope="row">
                                 <i class="fab fa-linkedin"></i>
                                 Linkedin:
+
                             </th>
-                            <td>Filippos Kontoes</td>
+                            <td scope="col"><a href="@Model.DeveloperOfProfile.Linkedin">@Model.DeveloperOfProfile.Linkedin</a></td>
+
                         </tr>
                     </tbody>
                 </table>
@@ -161,8 +163,7 @@
                         }
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Add</a>
-                        <a href="#" class="card-link">Edit</a>
+                        <a href="@Url.Action("AddProgrammingLanguage", "ProgrammingLanguage")" class="card-link">Add</a>                      
                     </div>
 
                 </div>
@@ -217,8 +218,11 @@
 
         </div>
     </div>
+    
 </section>
 @section scripts
+
+
 {
     <script>
         $(document).ready(function () {
@@ -238,4 +242,8 @@
 
         })
     </script>
+
+    <style>
+
+    </style>
 }

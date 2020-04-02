@@ -18,6 +18,7 @@ namespace IdeasIntoCodeFirstVersion.Models
         public DateTime BirthDate { get; set; }
           
         public string GitHub { get; set; }   
+        public string Linkedin { get; set; }
         
         public DateTime DateCreated { get; set; }
 

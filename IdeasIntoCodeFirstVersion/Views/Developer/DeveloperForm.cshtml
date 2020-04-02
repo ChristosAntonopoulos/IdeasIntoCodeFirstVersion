@@ -18,37 +18,23 @@
             <div class="row h-100 justify-content-center align-items-center">
                 <div class="col-10 col-md-8 col-lg-6">
                     <form class="form-example" action="" method="post">
-                        <h1 class="text-center">Full Register Form</h1>
+                        <h1 class="text-center">Edit Form</h1>
 
 
                         <div class="form-group">
 
-                            <label for="username">Firstname:</label>
-                            <input class="form-group" type="text" id="firstname" value="@Model.User.Name">
+                            <label for="username">Fullname:</label>
+                            <input class="form-group" type="text" id="fullname" value="@Model.User.FullName" readonly>
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
                         </div>
 
-                        <div class="form-group">
-                            <label for="password">Lastname:</label>
-                            <input class="form-group" type="text" id="lastname" placeholder="Enter Lastname">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                            <small>Error message</small>
-                        </div>
+
 
                         <div class="form-group">
                             <label for="password">Date of Birth:</label>
-                            <input class="form-group" type="date" id="date" placeholder="Enter Date of Birth">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                            <small>Error message</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">Email:</label>
-                            <input class="form-group" type="email" id="email" placeholder="Enter Email">
+                            <input class="form-group" type="date" name="birthdate" id="date" placeholder="@Model.BirthDate">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
@@ -56,7 +42,15 @@
 
                         <div class="form-group">
                             <label for="password">GitHub:</label>
-                            <input class="form-group" type="text" id="github" placeholder="Enter Github">
+                            <input class="form-group" type="text" name="github" id="github" placeholder="@Model.GitHub">
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Linkedin:</label>
+                            <input class="form-group" type="text" name="linkedin" id="linkedin" placeholder="@Model.Linkedin">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
@@ -78,51 +72,23 @@
         </div>
 
 
-
-
-
-        <section class="grid">
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title text-center">Chose Technologies:</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="add-task">
-                                    <form id="task-form">
-                                        <label for="input"></label>
-                                        <input type="text" name="input" id="input-box">
-                                        <input type="submit" value="Add" class="add-task-btn">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title text-center">Technologies you prefer:</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="tasks">
-                                    <ul class="task-list"></ul>
-                                    <a href="#" class="clear-tasks-btn">Save</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-
     </div>
 
     <style>
+
+        h1 {
+            color: blue;
+            font-style: italic;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .container {
+            background-color:lightsteelblue;
+        }
+
         .form {
             padding: 30px 40px;
         }
@@ -302,183 +268,97 @@
     </style>
 
 
+  
     <script>
-        // const form = document.getElementById("form");
-        // const firstname = document.getElementById('firstname');
-        // const lastname = document.getElementById('lastname');
-        // const stream = document.getElementById('stream');
-        // const fess = document.getElementById('fees')
-        // const date = document.getElementById("date");
+            // const form = document.getElementById("form");
+            // const firstname = document.getElementById('firstname');
+            // const lastname = document.getElementById('lastname');
+            // const stream = document.getElementById('stream');
+            // const fess = document.getElementById('fees')
+            // const date = document.getElementById("date");
 
 
 
-        // form.addEventListener('submit', e => {
-        // 	e.preventDefault();
+            // form.addEventListener('submit', e => {
+            // 	e.preventDefault();
 
-        // 	checkInputs();
-        // });
+            // 	checkInputs();
+            // });
 
-        // function checkInputs() {
-        // 	const firstnameValue = firstname.value.trim();
-        // 	const lastnameValue = lastname.value.trim();
+            // function checkInputs() {
+            // 	const firstnameValue = firstname.value.trim();
+            // 	const lastnameValue = lastname.value.trim();
 
-        // 	// const streamValue = stream.options[stream.selectedIndex].text;
-        // 	// const feesValue = fees.value.trim();
-        // 	// const dateValue = date.value;
+            // 	// const streamValue = stream.options[stream.selectedIndex].text;
+            // 	// const feesValue = fees.value.trim();
+            // 	// const dateValue = date.value;
 
-        // 	if(firstnameValue === '') {
-        // 		setErrorFor(firstname, 'Title cannot be blank');
-        // 	} else if(firstnameValue.length < 5) {
-        // 		setErrorFor(firstname, 'Title must be over 5 chars');
-        // 	} else if(firstnameValue.length > 18) {
-        // 		setErrorFor(firstname, 'Title must be under 18 chars');
-        // 	} else if(firstnameValue.substr(0, 1) <='[0-9]') {
-        // 		setErrorFor(firstname, 'Title must not contain nums');
-        // 	}
-        // 	else {
-        // 		setSuccessFor(firstname);
-        // 	}
-
-
-        // 	if(lastnameValue === '') {
-        // 		setErrorFor(lastname, 'Title cannot be blank');
-        // 	} else if(lastnameValue.length < 5) {
-        // 		setErrorFor(lastname, 'Title must be over 5 chars');
-        // 	} else if(lastnameValue.length > 18) {
-        // 		setErrorFor(lastname, 'Title must be under 18 chars');
-        // 	} else if(lastnameValue.substr(0, 1) <='[0-9]') {
-        // 		setErrorFor(lastname, 'Title must not contain nums');
-        // 	}
-        // 	else {
-        // 		setSuccessFor(lastname);
-        // 	}
+            // 	if(firstnameValue === '') {
+            // 		setErrorFor(firstname, 'Title cannot be blank');
+            // 	} else if(firstnameValue.length < 5) {
+            // 		setErrorFor(firstname, 'Title must be over 5 chars');
+            // 	} else if(firstnameValue.length > 18) {
+            // 		setErrorFor(firstname, 'Title must be under 18 chars');
+            // 	} else if(firstnameValue.substr(0, 1) <='[0-9]') {
+            // 		setErrorFor(firstname, 'Title must not contain nums');
+            // 	}
+            // 	else {
+            // 		setSuccessFor(firstname);
+            // 	}
 
 
-        // 	// if(streamValue === "Choose Stream") {
-        // 	// 	setErrorFor(stream, 'Stream cannot be blank');
-        // 	// } else {
-        // 	// 	setSuccessFor(stream);
-        // 	// }
-
-        // 	// if(feesValue === '') {
-        // 	// 	setErrorFor(fees, 'Fees cannot be blank');
-        // 	// } else if(feesValue <= 1000) {
-        // 	// 	setErrorFor(fees, 'Fees cannot be under 1000');
-        // 	// }
-        // 	// else {
-        // 	// 	setSuccessFor(fees);
-        // 	// }
-
-        // 	// if(dateValue === '') {
-        // 	// 	setErrorFor(date, 'Date cannot be blank');
-        // 	// } else {
-        // 	// 	setSuccessFor(date);
-        // 	// }
+            // 	if(lastnameValue === '') {
+            // 		setErrorFor(lastname, 'Title cannot be blank');
+            // 	} else if(lastnameValue.length < 5) {
+            // 		setErrorFor(lastname, 'Title must be over 5 chars');
+            // 	} else if(lastnameValue.length > 18) {
+            // 		setErrorFor(lastname, 'Title must be under 18 chars');
+            // 	} else if(lastnameValue.substr(0, 1) <='[0-9]') {
+            // 		setErrorFor(lastname, 'Title must not contain nums');
+            // 	}
+            // 	else {
+            // 		setSuccessFor(lastname);
+            // 	}
 
 
-        // }
+            // 	// if(streamValue === "Choose Stream") {
+            // 	// 	setErrorFor(stream, 'Stream cannot be blank');
+            // 	// } else {
+            // 	// 	setSuccessFor(stream);
+            // 	// }
 
-        // function setErrorFor(input, message) {
-        // 	const formGroup = input.parentElement;
-        // 	const small = formGroup.querySelector('small');
-        // 	formGroup.className = 'form-group error';
-        // 	small.innerText = message;
-        // }
+            // 	// if(feesValue === '') {
+            // 	// 	setErrorFor(fees, 'Fees cannot be blank');
+            // 	// } else if(feesValue <= 1000) {
+            // 	// 	setErrorFor(fees, 'Fees cannot be under 1000');
+            // 	// }
+            // 	// else {
+            // 	// 	setSuccessFor(fees);
+            // 	// }
 
-        // function setSuccessFor(input) {
-        // 	const formGroup = input.parentElement;
-        // 	formGroup.className = 'form-group success';
-        // }
-
-
-
-        //Define UI Variables
-        const form = document.querySelector('#task-form');
-        const taskList = document.querySelector('.task-list');
-        const clearTaskButton = document.querySelector('.clear-tasks-btn');
-        const taskFilter = document.querySelector('#task-filter');
-        const inputBox = document.querySelector('#input-box');
-        const addTaskButton = document.querySelector('.add-task-btn');
+            // 	// if(dateValue === '') {
+            // 	// 	setErrorFor(date, 'Date cannot be blank');
+            // 	// } else {
+            // 	// 	setSuccessFor(date);
+            // 	// }
 
 
-        // Load event listeners
-        loadEventListeners();
+            // }
 
-        // Function to load event listeners
-        function loadEventListeners() {
-            form.addEventListener('submit', addTask);
-            taskList.addEventListener('click', removeTask);
-            clearTaskButton.addEventListener('click', clearTasks);
-            taskFilter.addEventListener('oninput', filterTasks);
-        }
+            // function setErrorFor(input, message) {
+            // 	const formGroup = input.parentElement;
+            // 	const small = formGroup.querySelector('small');
+            // 	formGroup.className = 'form-group error';
+            // 	small.innerText = message;
+            // }
 
-        //Add Task
-        function addTask(e) {
-            if (inputBox.value === '') {
-                alert('Please add a task!');
-            }
+            // function setSuccessFor(input) {
+            // 	const formGroup = input.parentElement;
+            // 	formGroup.className = 'form-group success';
+            // }
 
-            //Create li element
-            const liTag = document.createElement('li');
-            liTag.className = 'task-item';
 
-            //Append input from input box into li element
-            liTag.appendChild(document.createTextNode(inputBox.value));
 
-            // Create new link element with a class of "delete-item"
-            const linkTag = document.createElement('a');
-            linkTag.className = 'delete-item';
-
-            // Add icon HTML
-            linkTag.innerHTML = '<i class="fas fa-times"></i>';
-
-            // Append link to li
-            liTag.appendChild(linkTag);
-
-            // Append li to ul
-            taskList.appendChild(liTag);
-
-            // Clear input
-            inputBox.value = '';
-
-            e.preventDefault();
-        }
-
-        //Remove Tasks
-        function removeTask(e) {
-            if (e.target.parentElement.classList.contains('delete-item')) {
-                e.target.parentNode.parentNode.remove();
-            }
-        }
-
-        //Clear Tasks
-        function clearTasks(e) {
-            //Alert if there are no tasks (li) inside the task list (ul)
-            if (taskList.childNodes.length < 1) {
-                alert('No tasks to clear!');
-            }
-            else {
-                taskList.innerHTML = '';
-            }
-        }
-
-        //Filter Tasks
-        function filterTasks(e) {
-
-            var filter, liTag, a, i, txtValue;
-            filter = taskFilter.value.toUpperCase();
-            liTag = taskList.getElementsByTagName('li');
-
-            for (i = 0; i < liTag.length; i++) {
-                a = liTag[i].getElementsByTagName("a")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    liTag[i].style.display = "";
-                } else {
-                    liTag[i].style.display = "none";
-                }
-            }
-        }
     </script>
 
 }

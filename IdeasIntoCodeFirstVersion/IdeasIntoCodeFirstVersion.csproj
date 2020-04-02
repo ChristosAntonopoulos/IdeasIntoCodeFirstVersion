@@ -276,6 +276,10 @@
     <Compile Include="Migrations\202003281433093_MessageIsRead.Designer.cs">
       <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004020754249_AddLinkedintoDeveloperModel.cs" />
+    <Compile Include="Migrations\202004020754249_AddLinkedintoDeveloperModel.Designer.cs">
+      <DependentUpon>202004020754249_AddLinkedintoDeveloperModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -631,6 +635,8 @@
     <Content Include="Content\Images\profpicegw.jpg" />
     <Content Include="Content\Images\userpic.png" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -838,6 +844,8 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="App_Code\GlyphIcon.cshtml" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -996,6 +1004,8 @@
     <Content Include="Scripts\src\utils\setAttributes.js" />
     <Content Include="Scripts\src\utils\setStyles.js" />
     <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\typeahead.bundle.js" />
     <Content Include="Scripts\typeahead.bundle.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
@@ -1062,6 +1072,8 @@
     <Content Include="Views\Message\GetMessages.cshtml" />
     <Content Include="Views\Project\MyProject.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Developer\RegisterForm.cshtml" />
+    <Content Include="Views\ProgrammingLanguage\AddProgrammingLanguage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1117,6 +1129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003281433093_MessageIsRead.resx">
       <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020754249_AddLinkedintoDeveloperModel.resx">
+      <DependentUpon>202004020754249_AddLinkedintoDeveloperModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

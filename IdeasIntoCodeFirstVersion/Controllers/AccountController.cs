@@ -161,8 +161,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, LastName = model.LastName };
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
-
+                
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -177,7 +178,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                     context.Developers.Add(new Developer { UserID = user.Id, DateCreated = DateTime.Now, BirthDate = DateTime.Now });
                     context.SaveChanges();
 
-                    return RedirectToAction("DeveloperProfile", "Developer", new { });
+                    return RedirectToAction("RegisterForm", "Developer", new { });
                 }
 
                 AddErrors(result);
