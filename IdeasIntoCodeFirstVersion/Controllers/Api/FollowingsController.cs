@@ -51,8 +51,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             else
             {
                 var following = new Follow(developer.ID, followingDto.FolloweeID);
-                var notification = new Notification(developer, NotificationType.Followed);
-                context.DeveloperNotifications.Add(new DeveloperNotification(developer, notification));
+                context.DeveloperNotifications.Add(new DeveloperNotification(followingDto.FolloweeID, new Notification(developer, NotificationType.Followed)));
                 context.Follows.Add(following);
             }
             context.SaveChanges();

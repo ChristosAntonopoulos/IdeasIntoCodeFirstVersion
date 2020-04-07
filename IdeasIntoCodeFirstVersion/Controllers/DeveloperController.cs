@@ -25,6 +25,39 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             context.Dispose();
         }
 
+
+        [Authorize]
+        public ActionResult RegisterForm(int? ID)
+        {
+            var userId = User.Identity.GetUserId();
+            if (ID == null)
+            {
+                RedirectToAction("RegisterForm", ID = context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault());
+            }
+            var developer=context.Developers.Include(d=>d.User)
+                .SingleOrDefault(u => u.ID == ID);
+
+
+            return View("RegisterForm", developer);
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterForm(Developer developer)
+        {
+            var userID = User.Identity.GetUserId();
+            var developerDb=context.Developers.Include(d => d.User)
+                .Single(u => u.UserID == userID);
+
+            
+            developerDb.GitHub = developer.GitHub;
+            developerDb.Linkedin = developer.Linkedin;
+            developerDb.BirthDate = developer.BirthDate;
+            context.SaveChanges();
+            var developerID = developerDb.ID;
+            return RedirectToAction("DeveloperProfile", new { id = developerID });
+        }
+
         [Authorize]
         public ActionResult NewsFeed()
         {
@@ -59,6 +92,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         }
 
 
+        [Authorize]
         public ActionResult DeveloperProfile(int? ID)
         {
             var userId = User.Identity.GetUserId(); 
@@ -126,9 +160,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 Directory.CreateDirectory(Server.MapPath("~/Content/Images/ProfilePicture/" + DeveloperDB.ID));
             }
             developer.ProfilePicture.SaveAs(path);           
-            DeveloperDB.User.Name = developer.User.Name;
-            DeveloperDB.User.LastName = developer.User.LastName;
+            //DeveloperDB.User.Name = developer.User.Name;
+            //DeveloperDB.User.LastName = developer.User.LastName;
             DeveloperDB.GitHub = developer.GitHub;
+            DeveloperDB.Linkedin = developer.Linkedin;
             DeveloperDB.User.Email = developer.User.Email;
             DeveloperDB.BirthDate = developer.BirthDate;
             context.SaveChanges();

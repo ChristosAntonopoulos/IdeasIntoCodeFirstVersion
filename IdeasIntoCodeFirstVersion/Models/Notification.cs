@@ -33,6 +33,8 @@ namespace IdeasIntoCodeFirstVersion.Models
             DeveloperNotifications = new List<DeveloperNotification>();
         }
 
+
+
         public Notification(Developer developer, Project project, NotificationType notificationType)
         {
             if (developer == null)

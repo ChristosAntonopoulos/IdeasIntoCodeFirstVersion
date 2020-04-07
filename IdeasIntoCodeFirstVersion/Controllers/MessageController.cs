@@ -90,7 +90,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var userId = User.Identity.GetUserId();
             var sender = context.Developers.Single(d => d.User.Id == userId);
             var receiver = context.Developers.Single(d => d.ID == viewModel.ReceiverID);
-            var message = new Message(viewModel.Subject, viewModel.Text, sender, receiver);
+            var message = new Message(viewModel.Subject, viewModel.Text, sender, receiver);            
+            context.DeveloperNotifications.Add(new DeveloperNotification(receiver, new Notification(sender, NotificationType.Messaged)));               
             sender.SendMessage(message);
             context.SaveChanges();
             return RedirectToAction("DeveloperProfile", "Developer", new { controller = "Developer", action = "DeveloperProfile", id = viewModel.ReceiverID });

@@ -1,9 +1,11 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
@@ -34,6 +36,21 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
             return PartialView("_ProgrammingLanguageSearchResult", programmingLanguages);
         }
-        
+
+        public ActionResult AddProgrammingLanguage()
+        {
+            var currentUserID = User.Identity.GetUserId();
+            var developer = context.Developers
+                .Include(d => d.ProgrammingLanguages)
+                .Include(d => d.User)
+                .SingleOrDefault(p => p.User.Id == currentUserID);
+            if (developer == null)
+                return HttpNotFound();
+
+            return View("AddProgrammingLanguage", developer);
+            //var programmingLanguages = context.ProgrammingLanguages.Where(p => p.Name.StartsWith(searchString)).ToList();
+            
+        }
+
     }
 }
