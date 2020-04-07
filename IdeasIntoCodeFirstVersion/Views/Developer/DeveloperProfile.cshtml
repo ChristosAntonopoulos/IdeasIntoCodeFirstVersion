@@ -69,20 +69,20 @@
 
             <div class="col-6 col-md-4 row" id="fol">
                 <div class="col-6">
-                    <ul class="list-group">
-                        <li class="list-group-item border-0">
+                    @*<ul class="list-group">*@
+                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Followers"})" class="list-group-item border-0">
                             Followers
                             <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Followers.Count</span>
-                        </li>
-                    </ul>
+                        </a>
+                    @*</ul>*@
                 </div>
                 <div class="col-6">
-                    <ul class="list-group">
-                        <li class="list-group-item border-0">
+                    @*<ul class="list-group">*@
+                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Following"})" class="list-group-item border-0">
                             Following
                             <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Following.Count</span>
-                        </li>
-                    </ul>
+                        </a>
+                    @*</ul>*@
                 </div>
             </div>
         </div>

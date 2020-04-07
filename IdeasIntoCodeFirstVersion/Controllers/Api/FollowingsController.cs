@@ -18,6 +18,24 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         {
             context = new ApplicationDbContext();
         }
+        public IEnumerable<Developer> GetListOfFollowers(int ID, string list)
+        {
+            var developer = context.Developers.SingleOrDefault(d => d.ID == ID);
+            var listToDisplay = new List<Developer>();
+            if (list == "Followers")
+            {
+                listToDisplay = context.Follows.Where(f => f.FolloweeID == ID).Select(f => f.Follower)
+                .Include(f => f.User)
+                .ToList();
+            }
+            else if (list == "Following")
+            {
+                listToDisplay = context.Follows.Where(f => f.FollowerID == ID).Select(f => f.Followee)
+                .Include(f => f.User)
+                .ToList();
+            }
+            return listToDisplay;
+        }
 
         //POST /api/followings
         [HttpPost]

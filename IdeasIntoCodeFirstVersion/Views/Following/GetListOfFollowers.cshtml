@@ -1,0 +1,72 @@
+﻿@model IdeasIntoCodeFirstVersion.ViewModels.FollowersFollowingViewModel
+@{
+    ViewBag.Title = "GetListOfFollowers";
+}
+
+    <h2 id="whatListToGet" data-list=@Model.WhatListToGet>@Model.WhatListToGet</h2>
+
+<table id="developers" class="table table-bordered" data-developer=@Model.ID>
+    <thead>
+        <tr>
+            <th>Developer</th>
+            <th>Github</th>
+            @*<th>Discount Rate</th>
+            <th>Delete</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var viewer in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(viewer.Name, "Edit", "Viewer", new { id = viewer.ID }, null)</td>
+                    <td>@viewer.MembershipType.Name</td>
+                    <td>@viewer.MembershipType.DiscountRate %</td>
+                    <td>
+                        <button data-viewer-id="@viewer.ID" class="btn btn-link js-delete">Delete</button>
+                    </td>
+                </tr>
+            }*@
+    </tbody>
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            const developerID = $("#developers").attr("data-developer");
+            const whatListToGet = $("#whatListToGet").attr("data-list");
+            var table = $("#developers").DataTable({
+                ajax: {
+                    url: "/api/followings/",
+                    data: {
+                        ID: developerID,
+                        list: whatListToGet
+                    },
+                    dataSrc: "",//den xreiazetai na valw gt fernei ENA array apo objects an eferna polla tha xreiazotan
+                },
+                columns: [
+                    {
+                        data: "user.fullName",
+                        render: function (data, type, developer) {
+                            return "<a href='/developer/developerProfile/" + developer.id + "'>" + developer.user.fullName + "</a>";
+                        }
+                    },
+                    {
+                        data: "gitHub"
+                    }
+                    //{
+                    //    data: "membershipType.discountRate"
+                    //},
+                    //{
+                    //    data: "id",
+                    //    render: function (data) {
+                    //        return "<button class ='btn btn-link js-delete' data-viewer-id=" + data + ">Delete</button>"
+                    //    }
+                    //}
+                ]
+            });
+           
+        });
+    </script>
+}
