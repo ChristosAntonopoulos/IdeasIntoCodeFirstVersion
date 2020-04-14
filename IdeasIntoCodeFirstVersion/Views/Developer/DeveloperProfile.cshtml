@@ -19,22 +19,22 @@
 
                         <div class="d-flex justify-content-center">
                             @*<div class="p-4">
-                                @if (!Model.ShowActionButtons)
-                                {
-                                    <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">New Message</a>
-                                    <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Send"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Send Messages</a>
-                                    <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Received"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Received Messages</a>
-                                   
-                                }
-                            </div>*@
+                                    @if (!Model.ShowActionButtons)
+                                    {
+                                        <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">New Message</a>
+                                        <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Send"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Send Messages</a>
+                                        <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Received"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Received Messages</a>
+
+                                    }
+                                </div>*@
                             <div class="p-4">
                                 @if (Model.ShowActionButtons)
                                 {
                                     if (Model.ConnectedDeveloperAlreadyFollowsProfileDeveloper)
                                     {
-                                        <button data-folowee-id="@Model.DeveloperOfProfile.ID" type="button" class="btn btn-success js-toggle-follow">
+                                        <button data-folowee-id="@Model.DeveloperOfProfile.ID" type="button" class="btn btn-success js-toggle-unfollow">
                                             <i class="fas fa-user-plus"></i>
-                                            Following
+                                            Unfollow
                                         </button>
                                     }
                                     else
@@ -51,7 +51,7 @@
                             <div class="p-4">
                                 @if (Model.ShowActionButtons)
                                 {
-                                    <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })">Message</a>
+                                    <a href="@Url.Action("SendMessage", "Message", new {ID = Model.DeveloperOfProfile.ID })">Message</a>
                                     @*<button  type="button" class="btn btn-primary">
                                             <i class="fas fa-envelope"></i>
                                             Message
@@ -69,20 +69,20 @@
 
             <div class="col-6 col-md-4 row" id="fol">
                 <div class="col-6">
-                    <ul class="list-group">
-                        <li class="list-group-item border-0">
+                    @*<ul class="list-group">*@
+                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Followers"})" class="list-group-item border-0">
                             Followers
                             <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Followers.Count</span>
-                        </li>
-                    </ul>
+                        </a>
+                    @*</ul>*@
                 </div>
                 <div class="col-6">
-                    <ul class="list-group">
-                        <li class="list-group-item border-0">
+                    @*<ul class="list-group">*@
+                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Following"})" class="list-group-item border-0">
                             Following
                             <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Following.Count</span>
-                        </li>
-                    </ul>
+                        </a>
+                    @*</ul>*@
                 </div>
             </div>
         </div>
@@ -202,10 +202,10 @@
                                 @project.Description
                             </p>
                             <div class="d-flex justify-content-center">
-                                
-                                    <button type="button" class="btn btn-warning" onclick="window.location.href='@Url.Action("ProjectProfile", "Project", new { ID = project.ID })'">See More</button>
-                               
-                                
+
+                                <button type="button" class="btn btn-warning" onclick="window.location.href='@Url.Action("ProjectProfile", "Project", new { ID = project.ID })'">See More</button>
+
+
 
                             </div>
                         </div>
@@ -226,19 +226,68 @@
 {
     <script>
         $(document).ready(function () {
-            $(".js-toggle-follow").click(function (e) {
-                var button = $(e.target);
+            jQuery.fn.clickToggle = function (a, b) {
+                return this.on("click", function (ev) { [b, a][this.$_io ^= 1].call(this, ev) })
+            };
+            $('.js-toggle-follow').clickToggle(function (ev) {
+                var button = $(ev.target);
                 $.post("/api/followings", { followeeId: button.attr("data-folowee-id") })
                     .done(function () {
                         button
                             .removeClass("btn-primary")
                             .addClass("btn-success")
-                            .text("Following")
+                            .removeClass("js-toggle-follow")
+                            .addClass("js-toggle-unfollow")
+                            .text("Unfollow")
+                    })
+                    .fail(function () {
+                        alert("Follow failed")
+                    });
+            }, function (ev) {
+                var button = $(ev.target);
+                $.post("/api/followings", { followeeId: button.attr("data-folowee-id") })
+                    .done(function () {
+                        button
+                            .removeClass("btn-success")
+                            .addClass("btn-primary")
+                            .removeClass("js-toggle-unfollow")
+                            .addClass("js-toggle-follow")
+                            .text("Follow")
+                    })
+                    .fail(function () {
+                        alert("Unfollow failed")
+                    });
+            });
+            $('.js-toggle-unfollow').clickToggle(function (ev) {
+                var button = $(ev.target);
+                $.post("/api/followings", { followeeId: button.attr("data-folowee-id") })
+                    .done(function () {
+                        button
+                            .removeClass("btn-success")
+                            .addClass("btn-primary")
+                            .removeClass("js-toggle-unfollow")
+                            .addClass("js-toggle-follow")
+                            .text("Follow")
+                    })
+                    .fail(function () {
+                        alert("Unfollow failed")
+                    });
+            }, function (ev) {
+                var button = $(ev.target);
+                $.post("/api/followings", { followeeId: button.attr("data-folowee-id") })
+                    .done(function () {
+                        button
+                            .removeClass("btn-primary")
+                            .addClass("btn-success")
+                            .removeClass("js-toggle-follow")
+                            .addClass("js-toggle-unfollow")
+                            .text("Unfollow")
                     })
                     .fail(function () {
                         alert("Follow failed")
                     });
             });
+
 
         })
     </script>

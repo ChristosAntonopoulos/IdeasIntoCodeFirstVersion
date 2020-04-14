@@ -38,5 +38,16 @@ namespace IdeasIntoCodeFirstVersion.Models
             Notification = notification;
         }
 
+        public DeveloperNotification(int developerId, Notification notification)
+        {
+           
+
+            if (notification == null)
+                throw new ArgumentNullException("notification");
+
+            DeveloperID = developerId;
+            Notification = notification;
+        }
+
     }
 }

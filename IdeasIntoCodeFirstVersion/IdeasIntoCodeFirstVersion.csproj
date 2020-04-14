@@ -200,6 +200,7 @@
     <Compile Include="Controllers\Api\ProjectsController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
+    <Compile Include="Controllers\FollowingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DeveloperFormViewModel.cs" />
     <Compile Include="ViewModels\DeveloperProfileViewModel.cs" />
+    <Compile Include="ViewModels\FollowersFollowingViewModel.cs" />
     <Compile Include="ViewModels\GetMessagesViewModel.cs" />
     <Compile Include="ViewModels\MessageFormViewModel.cs" />
     <Compile Include="ViewModels\NewsFeedViewModel.cs" />
@@ -1074,6 +1076,7 @@
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Developer\RegisterForm.cshtml" />
     <Content Include="Views\ProgrammingLanguage\AddProgrammingLanguage.cshtml" />
+    <Content Include="Views\Following\GetListOfFollowers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,6 +18,24 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         {
             context = new ApplicationDbContext();
         }
+        public IEnumerable<Developer> GetListOfFollowers(int ID, string list)
+        {
+            var developer = context.Developers.SingleOrDefault(d => d.ID == ID);
+            var listToDisplay = new List<Developer>();
+            if (list == "Followers")
+            {
+                listToDisplay = context.Follows.Where(f => f.FolloweeID == ID).Select(f => f.Follower)
+                .Include(f => f.User)
+                .ToList();
+            }
+            else if (list == "Following")
+            {
+                listToDisplay = context.Follows.Where(f => f.FollowerID == ID).Select(f => f.Followee)
+                .Include(f => f.User)
+                .ToList();
+            }
+            return listToDisplay;
+        }
 
         //POST /api/followings
         [HttpPost]
@@ -26,11 +44,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             var userId = User.Identity.GetUserId();
             var developer = context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
             if (context.Follows.Any(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID))
-                return BadRequest("The followers already exists");
-            var following = new Follow(developer.ID, followingDto.FolloweeID);
-            var notification = new Notification(developer, NotificationType.Followed);
-            context.DeveloperNotifications.Add(new DeveloperNotification(developer, notification));
-            context.Follows.Add(following);
+            {
+                var follow = context.Follows.Single(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID);
+                context.Follows.Remove(follow);
+            }
+            else
+            {
+                var following = new Follow(developer.ID, followingDto.FolloweeID);
+                context.DeveloperNotifications.Add(new DeveloperNotification(followingDto.FolloweeID, new Notification(developer, NotificationType.Followed)));
+                context.Follows.Add(following);
+            }
             context.SaveChanges();
             return Ok();
         }
