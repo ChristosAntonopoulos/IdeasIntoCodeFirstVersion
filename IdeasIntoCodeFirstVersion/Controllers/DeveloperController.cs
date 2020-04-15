@@ -48,7 +48,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult RegisterForm(Developer developer)
         {
             var userID = User.Identity.GetUserId();
-            var developerDb = unitOfWork.Developers.GetDeveloperWithUserUsingUserId(userID);
+            var developerDb = unitOfWork.Developers.GetDeveloperIncludeUserUsingUserId(userID);
 
             
             developerDb.GitHub = developer.GitHub;
@@ -123,7 +123,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
               
                 return View("DeveloperForm", developer);
             }
-            var DeveloperDB = context.Developers.Include(d=>d.User).Include(d => d.ProgrammingLanguages).Single(u => u.User.Id == userID);
+            var DeveloperDB = unitOfWork.Developers.GetDeveloperWithUserAndProgrammingLanguagesUsingUserId(userID);
             if (programmingLanguage != null)
             {
                 ProgrammingLanguage.UpdateDeveloperProgrammingLanguages(developer.ProgrammingLanguages.ToList(), programmingLanguage, AllProgrammingLanguage);
@@ -142,8 +142,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             DeveloperDB.Linkedin = developer.Linkedin;
             DeveloperDB.User.Email = developer.User.Email;
             DeveloperDB.BirthDate = developer.BirthDate;
-            context.SaveChanges();
-            var developerID = context.Developers.Where(d => d.User.Id == userID).Select(d => d.ID).SingleOrDefault();
+            unitOfWork.Complete();
+            var developerID = unitOfWork.Developers.GetDeveloperIDUsingUserID(userID);
             return RedirectToAction("DeveloperProfile",new { id = developerID });
         }
 
