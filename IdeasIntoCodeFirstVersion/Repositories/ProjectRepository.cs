@@ -32,6 +32,14 @@ namespace IdeasIntoCodeFirstVersion.Repositories
               .Include(p => p.Comments.Select(c => c.Developer).Select(c => c.User)).Single(p => p.ID == ID);
             
         }
+        public List<Project> Get10NewestProjects()
+        {
+            return _context.Projects.OrderBy(p => p.TimeStamp)
+                .Include(c => c.Admin)
+                .Include(p => p.Admin.User)
+                .Take(10)
+                .ToList();
+        }
 
         public void Add(Project project)
         {

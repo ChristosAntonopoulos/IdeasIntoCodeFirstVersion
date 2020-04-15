@@ -16,6 +16,8 @@ namespace IdeasIntoCodeFirstVersion.Repositories
             _context = context;
         }
 
+
+        //DOMI
         public List<Developer> GetDevelopersToUpdate(int developerID)
         {
             return _context.Follows
@@ -39,6 +41,44 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         public int GetAdminId(string userID)
         {
             return _context.Developers.Where(d => d.User.Id == userID).SingleOrDefault().ID;
+        }
+
+
+        //TED
+        public Developer GetDeveloperWithUserUsingDeveloperId(int? ID)
+        {
+            return _context.Developers
+                .Include(d => d.User)
+                .SingleOrDefault(u => u.ID == ID);
+        }
+        public Developer GetDeveloperIncludeUserUsingUserId(string userID)
+        {
+            return _context.Developers.Include(d => d.User)
+                .Single(u => u.UserID == userID);
+        }
+        public int GetDeveloperIDUsingUserID(string userID)
+        {
+            return _context.Developers.Where(d => d.User.Id == userID).Select(d => d.ID).SingleOrDefault();
+        }
+
+        public Developer GetDeveloperWithEverythingUsingDeveloperId(int? ID)
+        {
+            return _context.Developers
+                .Include(u => u.ProgrammingLanguages)
+                .Include(d => d.ProjectsOwned)
+                .Include(d => d.Followers)
+                .Include(d => d.Following)
+                .Include(d => d.SendMessages)
+                .Include(d => d.RecievedMessages)
+                .Include(d => d.User)
+                .SingleOrDefault(u => u.ID == ID);
+        }
+        public Developer GetDeveloperWithUserAndProgrammingLanguagesUsingUserId(string userID)
+        {
+            return _context.Developers
+                .Include(d => d.ProgrammingLanguages)
+                .Include(d => d.User)
+                .SingleOrDefault(p => p.User.Id == userID);
         }
     }
 }
