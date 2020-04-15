@@ -10,15 +10,18 @@ using System.Net;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using IdeasIntoCodeFirstVersion.Interface;
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class DeveloperController : Controller
     {
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public DeveloperController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
         protected override void Dispose(bool disposing)
         {
@@ -32,10 +35,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var userId = User.Identity.GetUserId();
             if (ID == null)
             {
-                RedirectToAction("RegisterForm", ID = context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault());
+                RedirectToAction("RegisterForm", ID = unitOfWork.Developers.GetDeveloperIDUsingUserID(userId));
             }
-            var developer=context.Developers.Include(d=>d.User)
-                .SingleOrDefault(u => u.ID == ID);
+            var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(ID);
 
 
             return View("RegisterForm", developer);
@@ -46,8 +48,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult RegisterForm(Developer developer)
         {
             var userID = User.Identity.GetUserId();
-            var developerDb=context.Developers.Include(d => d.User)
-                .Single(u => u.UserID == userID);
+            var developerDb = unitOfWork.Developers.GetDeveloperWithUserUsingUserId(userID);
 
             
             developerDb.GitHub = developer.GitHub;
@@ -62,30 +63,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult NewsFeed()
         {
             var userId = User.Identity.GetUserId();
-            var developerid = context.Developers.Where(d => d.User.Id == userId).Select(d => d.ID).SingleOrDefault();
+            var developerId = unitOfWork.Developers.GetDeveloperIDUsingUserID(userId);
             var newsFeedList = new List<INewsFeed>();
-            var follows = context.Follows.Where(f => f.FollowerID == developerid).Select(f => f.FolloweeID).ToList();
-            var comments = context.Comments.Where(c => follows.Contains(c.DeveloperID))
-                .OrderBy(c => c.TimeStamp)
-                .Include(c => c.Developer)
-                .Include(c => c.Developer.User)
-                .Include(c => c.Project)
-                .Include(c => c.Project.Admin)
-                .Take(10).ToList();
-
-            var followers = context.Follows
-                .Where(f => follows
-                .Contains(f.FollowerID))
-                .OrderBy(f => f.TimeStamp)
-                .Include(f => f.Followee)
-                .Include(f => f.Followee.User)
-                .Include(f => f.Follower)
-                .Include(f => f.Follower.User)
-                .Take(10).ToList();
+            var follows = unitOfWork.Follows.GetFolloweesIdsUsingDeveloperId(developerId);
+            var comments = unitOfWork.Comments.GetCommentsOfFollowees(follows);
+            //Εδω φερνει λιστα απο τους followers των followees?
+            var followers = unitOfWork.Follows.GetFollowersOfFollowees(follows);
 
             newsFeedList.AddRange(comments);
             newsFeedList.AddRange(followers);
-            newsFeedList.AddRange(context.Projects.OrderBy(p => p.TimeStamp).Include(c => c.Admin).Include(p => p.Admin.User).Take(10).ToList());
+            newsFeedList.AddRange(unitOfWork.Projects.Get10NewestProjects());
 
 
             return View(newsFeedList.OrderBy(n => n.TimeStamp).ToList());
@@ -98,17 +85,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers
             var userId = User.Identity.GetUserId(); 
             if (ID == null)
             {
-                RedirectToAction("DeveloperProfile", ID=context.Developers.Where(d => d.UserID == userId).Select(d => d.ID).SingleOrDefault());                   
-            } 
-            var developer = context.Developers
-                .Include(u => u.ProgrammingLanguages)
-                .Include(d => d.ProjectsOwned)
-                .Include(d => d.Followers)
-                .Include(d => d.Following)
-                .Include(d => d.SendMessages)
-                .Include(d => d.RecievedMessages)
-                .Include(d => d.User)
-                .SingleOrDefault(u => u.ID == ID);
+                RedirectToAction("DeveloperProfile", ID=unitOfWork.Developers.GetDeveloperIDUsingUserID(userId));                   
+            }
+            var developer = unitOfWork.Developers.GetDeveloperWithEverythingUsingDeveloperId(ID);
             var viewModel = new DeveloperProfileViewModel
             {
                 DeveloperOfProfile = developer,
@@ -123,10 +102,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult Edit()
         {
             var currentUserID = User.Identity.GetUserId();
-            var developer = context.Developers
-                .Include(d => d.ProgrammingLanguages)
-                .Include(d => d.User)
-                .SingleOrDefault(p => p.User.Id == currentUserID);
+            var developer = unitOfWork.Developers.GetDeveloperWithUserAndProgrammingLanguagesUsingUserId(currentUserID);
             if (developer == null)
                 return HttpNotFound();
 
