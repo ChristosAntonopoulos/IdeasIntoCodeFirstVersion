@@ -114,15 +114,16 @@
             objHub.client.getProjectNotification = function (projectDto,devname,pic) {
 
                 console.log(pic);
+                console.log("irthe");
                 $("#newsfeed").append(
-                    "<img src="+pic.FileName+" width='36' height='36' class='rounded-circle mr-2' ">
+                    "<img src=" + pic.FileName + " width='36' height='36' class='rounded-circle mr-2'> " 
                     + "< div class= 'media' > <div class='media-body'><small class='float-right text-navy'>30m ago</small><strong>"
                     + devname + "</strong> created  <strong>"
                     + projectDto.Title + "</strong><br><small class='text-muted'>"
                     + projectDto.TimeStamp + "</small ><div class='border text-sm text-muted p-2 mt-1'>"
-                    + projectDto.Description + "</div></div></div>");
+                    + projectDto.Description + "</div></div></div>"
                  
-             };
+             )};
 
 
 

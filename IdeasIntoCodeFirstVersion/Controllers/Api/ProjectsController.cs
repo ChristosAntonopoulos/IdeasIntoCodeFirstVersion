@@ -10,24 +10,53 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using IdeasIntoCodeFirstVersion.Persistence;
+using IdeasIntoCodeFirstVersion.ViewModels;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.API
 {
     public class ProjectsController : ApiController
     {
         private ApplicationDbContext context;
+        private UnitOfWork unitOfWork;
         public ProjectsController()
         {
             context = new ApplicationDbContext();
-        }
-        //GET/ API/projects
-        public IHttpActionResult GetProjects()
-        {
-            return Ok(context.Projects.ToList());
+            unitOfWork = new UnitOfWork(context);
         }
 
-        [HttpPost]
-        
+        public IHttpActionResult MyProject(int ID)
+        {
+
+            //var userId = User.Identity.GetUserId();
+            var userId = context.Developers.Where(d => d.ID == ID).Select(d => d.UserID).FirstOrDefault();
+            var developer = unitOfWork.Developers.GetDeveloperIncludeProject(userId);
+
+            return Ok(developer);
+        }
+
+        public IHttpActionResult ProjectProfile(int ID)
+        {
+            var userId = User.Identity.GetUserId();
+            var developer = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
+            var project = unitOfWork.Projects.GetProjectWithProgrammingLanguagesAndCategories(ID);
+
+            var viewModel = new ProjectViewModel(developer, project);
+
+            if (developer.ID != project.AdminID)
+            {
+                viewModel.IsActive();
+            }
+
+            project.ModifyInActive(developer, viewModel);
+
+            return Ok(viewModel);
+        }
+
+
+
+
+        [HttpPost]        
         public IHttpActionResult Join(JoinDto joinDto)
         {
             var userId = User.Identity.GetUserId();

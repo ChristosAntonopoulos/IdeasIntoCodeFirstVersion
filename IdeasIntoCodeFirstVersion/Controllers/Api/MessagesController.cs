@@ -9,5 +9,6 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
     public class MessagesController : ApiController
     {
+       
     }
 }

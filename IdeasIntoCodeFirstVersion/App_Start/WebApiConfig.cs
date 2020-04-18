@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Http;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Web.Http.Cors;
 
 namespace IdeasIntoCodeFirstVersion
 {
@@ -12,6 +13,8 @@ namespace IdeasIntoCodeFirstVersion
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
+            //app.UseCors(CorsOptions.AllowAll);
             var setting = config.Formatters.JsonFormatter.SerializerSettings;
             setting.ContractResolver = new CamelCasePropertyNamesContractResolver();
             setting.Formatting = Formatting.Indented;
@@ -22,9 +25,11 @@ namespace IdeasIntoCodeFirstVersion
 
             config.MapHttpAttributeRoutes();
 
+            
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }
