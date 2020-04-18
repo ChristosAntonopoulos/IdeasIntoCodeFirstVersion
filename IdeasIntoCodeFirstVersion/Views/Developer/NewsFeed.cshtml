@@ -4,139 +4,299 @@
     ViewBag.Title = "NewsFeed";
 }
 
-<div class="container">
+    <div class="container">
+        <div class="row">
 
-    <div class="row">
+            <div class="card col-md-12 col-xl-12 mainbody">
 
-
-        <div class="col-md-8 col-xl-9">
-            <div class="card">
                 <div class="card-header">
-                    <div class="card-actions float-right">
-                        <div class="dropdown show">
-                            <a href="#" data-toggle="dropdown" data-display="static">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
-                                    <circle cx="12" cy="12" r="1"></circle>
-                                    <circle cx="19" cy="12" r="1"></circle>
-                                    <circle cx="5" cy="12" r="1"></circle>
-                                </svg>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="card-title mb-0">Activities</h5>
+                    <h5 class="card-title mb-0 text-center">Recent Activities</h5>
                 </div>
-                <div class="card-body h-100" id="newsfeed">
 
+                <div class="card-body h-100" id="newsfeed">
                     @foreach (var item in Model)
                     {
-                        if (item.GetType() == typeof(Follow))
-                        {
-                            <div class="media">
+                        <div class="card mb-5 mt-5 cardborder">
+                            <div class="media card-body">
                                 <div class="media-body">
-                                    <small class="float-right text-navy">@(item.TimeStamp)</small>
-                                    <strong>@((item as Follow).Follower.User.FullName)</strong> started following <strong>@((item as Follow).Followee.User.FullName)</strong>
-                                    <br>
-                                    <small class="text-muted">Today 7:51 pm</small>
-                                    <br>
-
-                                </div>
-                            </div>
-
-
-
-                        }
-                        else if (item.GetType() == typeof(Project))
-                        {
-                            <div class="media">
-                                <img src="~/Content/Images/ProfilePicture/@((item as Project).Admin.ID)/@((item as Project).Admin.Picture)" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Project).Admin.User.FullName)">
-                                <div class="media-body">
-                                    <small class="float-right text-navy">30m ago</small>
-                                    <strong>@((item as Project).Admin.User.FullName)</strong> created  <strong>@((item as Project).Title)</strong>
-                                    <br>
-                                    <small class="text-muted">Today 7:21 pm</small>
-
-                                    <div class="border text-sm text-muted p-2 mt-1">
-                                        @((item as Project).Description)
+                                    <small class="float-right text-navy text-muted">30m ago</small>
+                                    <p>
+                                        <img src="user-pic.jpg" width="36" height="36" class="rounded-circle mr-4"
+                                             alt="Tsap Teo"><strong>Ant Chris</strong> updated his profile picture
+                                    </p>
+                                    <span class="badge badge-pill badge-primary profpicicon">
+                                        <i class="fas fa-portrait fa-2x"></i>
+                                    </span>
+                                    <hr class="line" />
+                                    <div class="text-sm p-2 mt-1 text-center">
+                                        <img src="user-pic.jpg" width="300" height="300" class="rounded-circle mr-4"
+                                             alt="Tsap Teo">
                                     </div>
-
+                                    <button class="btn btn-success btn-sm float-right mt-2 ">
+                                        Visit Profile
+                                    </button>
 
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="card mb-5 mt-5 cardborder">
+                            <div class="media card-body">
+                                @if (item.GetType() == typeof(Project))
+                                {
+                                    <img src="~/Content/Images/ProfilePicture/@((item as Project).Admin.ID)/@((item as Project).Admin.Picture)" width="36" height="36" class="rounded-circle mr-4" alt="@((item as Project).Admin.User.FullName)">
+                                    <div class="media-body">
 
-
-
-
-                        }
-                        else
-                        {
-                            <div class="media">
-                                <img src="~/Content/Images/ProfilePicture/@((item as Comment).Developer.ID)/@((item as Comment).Developer.Picture)" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Comment).Project.Admin.User.FullName)">
-                                <div class="media-body">
-                                    <small class="float-right text-navy">30m ago</small>
-                                    <strong>@((item as Comment).Developer.User.FullName)</strong> commented at   <strong>@((item as Comment).Project.Title)</strong>
-                                    <br>
-                                    <small class="text-muted">Today 7:21 pm</small>
-
-                                    <div class="border text-sm text-muted p-2 mt-1">
-                                        @((item as Comment).Project.Description)
+                                        <small class="float-right text-navy text-muted">@(item.TimeStamp.Minute) minutes ago</small>
+                                        <strong>@((item as Project).Admin.User.FullName)</strong> create new project <strong>@((item as Project).Title)</strong>
+                                        <br>
+                                        <span class="badge badge-pill badge-primary createicon">
+                                            <i class="far fa-lightbulb fa-2x"></i>
+                                        </span>
+                                        <hr class="line" />
+                                        <div class="text-sm p-2 mt-1 text-center">
+                                            <p>@((item as Project).Description) </p>
+                                        </div>
+                                        <button class="btn btn-danger btn-sm mt-1 float-right">Visit Project</button>
+                                        
                                     </div>
-
-
+                                }
                                 </div>
-                            </div>
+                        </div>
 
-                        }
+                        <div class="card mb-5 mt-5 cardborder">
+                            <div class="media card-body">
+                                @if (item.GetType() == typeof(Follow))
+                                {
+                                    <div class="media-body">
+
+                                        <small class="float-right text-navy text-muted">@(item.TimeStamp.Minute) minutes ago</small>
+                                        <img src="user-pic.jpg" width="36" height="36" class="rounded-circle mr-4"
+                                             alt="Tsap Teo">
+                                        <strong>@((item as Follow).Follower.User.FullName)</strong> started following <strong>@((item as Follow).Followee.User.FullName)</strong>
+                                        <span class="badge badge-pill badge-primary followicon">
+                                            <i class="fas fa-user-plus fa-2x"></i>
+                                        </span>
+                                        
+                                    </div>
+                                }
+                                </div>
+                        </div>
+
+                        <div class="card mb-5 mt-5 cardborder">
+                            <div class="media card-body">
+                                @if (item.GetType() == typeof(Comment))
+                                {
+                                <img src="~/Content/Images/ProfilePicture/@((item as Comment).Developer.ID)/@((item as Comment).Developer.Picture)" width="36" height="36" class="rounded-circle mr-4" alt="@((item as Comment).Project.Admin.User.FullName)">
+                                <div class="media-body">
+                                    <small class="float-right text-navy text-muted">@(item.TimeStamp.Minute)</small>
+                                    <strong>@((item as Comment).Developer.User.FullName)</strong> commented at <strong>@((item as Comment).Project.Title)</strong>
+                                    <br>
+                                    <span class="badge badge-pill badge-primary commenticon">
+                                        <i class="fas fa-comments fa-2x"></i>
+                                    </span>
+                                    <hr class="line" />
+                                    <div class="text-sm p-2 mt-1">
+                                        <p>
+                                            @((item as Comment).Project.Description)
+                                            <button class="btn btn-secondary btn-sm float-right"> See all comments </button>
+                                        </p>
+                                    </div>
+                                </div>
+                                }
+
+                            </div>
+                        </div>
+
+                        
+
+                        
+
                     }
 
-                </div>
+                    </div>
+
+
+
             </div>
         </div>
-    </div>
 </div>
+        @*<div class="container">
+
+            <div class="row">
+
+
+                <div class="col-md-8 col-xl-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-actions float-right">
+                                <div class="dropdown show">
+                                    <a href="#" data-toggle="dropdown" data-display="static">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                            <circle cx="12" cy="12" r="1"></circle>
+                                            <circle cx="19" cy="12" r="1"></circle>
+                                            <circle cx="5" cy="12" r="1"></circle>
+                                        </svg>
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-0">Activities</h5>
+                        </div>
+                        <div class="card-body h-100" id="newsfeed">
+
+                            @foreach (var item in Model)
+                            {
+                                if (item.GetType() == typeof(Follow))
+                                {
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <small class="float-right text-navy">@(item.TimeStamp)</small>
+                                            <strong>@((item as Follow).Follower.User.FullName)</strong> started following <strong>@((item as Follow).Followee.User.FullName)</strong>
+                                            <br>
+                                            <small class="text-muted">Today 7:51 pm</small>
+                                            <br>
+
+                                        </div>
+                                    </div>
 
 
 
-@section Scripts {
-    <script src="~/signalr/hubs" type="text/javascript"></script>
+                                }
+                                else if (item.GetType() == typeof(Project))
+                                {
+                                    <div class="media">
+                                        <img src="~/Content/Images/ProfilePicture/@((item as Project).Admin.ID)/@((item as Project).Admin.Picture)" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Project).Admin.User.FullName)">
+                                        <div class="media-body">
+                                            <small class="float-right text-navy">30m ago</small>
+                                            <strong>@((item as Project).Admin.User.FullName)</strong> created  <strong>@((item as Project).Title)</strong>
+                                            <br>
+                                            <small class="text-muted">Today 7:21 pm</small>
 
-    <script type="text/javascript">
+                                            <div class="border text-sm text-muted p-2 mt-1">
+                                                @((item as Project).Description)
+                                            </div>
 
-        $(function () {
-            var objHub = $.connection.newsFeedTickerHub;
 
-            objHub.client.getProjectNotification = function (projectDto,devname,pic) {
-
-                console.log(pic);
-                $("#newsfeed").append(
-                    "<img src="+pic.FileName+" width='36' height='36' class='rounded-circle mr-2' ">
-                    + "< div class= 'media' > <div class='media-body'><small class='float-right text-navy'>30m ago</small><strong>"
-                    + devname + "</strong> created  <strong>"
-                    + projectDto.Title + "</strong><br><small class='text-muted'>"
-                    + projectDto.TimeStamp + "</small ><div class='border text-sm text-muted p-2 mt-1'>"
-                    + projectDto.Description + "</div></div></div>");
-                 
-             };
+                                        </div>
+                                    </div>
 
 
 
-            $.connection.hub.start().done(function () {
-
-                objHub.server.connect(1);
-
-             
-           });
-
-        });
 
 
+                                }
+                                else
+                                {
+                                    <div class="media">
+                                        <img src="~/Content/Images/ProfilePicture/@((item as Comment).Developer.ID)/@((item as Comment).Developer.Picture)" width="36" height="36" class="rounded-circle mr-2" alt="@((item as Comment).Project.Admin.User.FullName)">
+                                        <div class="media-body">
+                                            <small class="float-right text-navy">30m ago</small>
+                                            <strong>@((item as Comment).Developer.User.FullName)</strong> commented at   <strong>@((item as Comment).Project.Title)</strong>
+                                            <br>
+                                            <small class="text-muted">Today 7:21 pm</small>
 
-    </script>
+                                            <div class="border text-sm text-muted p-2 mt-1">
+                                                @((item as Comment).Project.Description)
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+        @section Scripts {
+            <script src="~/signalr/hubs" type="text/javascript"></script>
+
+            <script type="text/javascript">
+
+                $(function () {
+                    var objHub = $.connection.newsFeedTickerHub;
+
+                    objHub.client.getProjectNotification = function (projectDto, devname, pic) {
+
+                        console.log(pic);
+                        $("#newsfeed").append(
+                            "<img src=" + pic.FileName + " width='36' height='36' class='rounded-circle mr-2' " >
+                            + "< div class= 'media' > <div class='media-body'><small class='float-right text-navy'>30m ago</small><strong>"
+                            + devname + "</strong> created  <strong>"
+                            + projectDto.Title + "</strong><br><small class='text-muted'>"
+                            + projectDto.TimeStamp + "</small ><div class='border text-sm text-muted p-2 mt-1'>"
+                            + projectDto.Description + "</div></div></div>");
+
+                    };
+
+
+
+                    $.connection.hub.start().done(function () {
+
+                        objHub.server.connect(1);
+
+
+                    });
+
+                });
+
+
+
+            </script>
+        }
+
+<style>
+    .mainbody {
+    background-color: #404040;
+    font-family: 'Roboto', sans-serif;
 }
 
+.cardborder {
+    border: 3px solid blue;
+}
+
+.createicon {
+    right: -15px;
+    top: -15px;
+    position: absolute;
+}
+
+.followicon {
+    right: -15px;
+    top: -15px;
+    position: absolute;
+}
+
+.commenticon {
+    right: -15px;
+    top: -15px;
+    position: absolute;
+}
+
+.profpicicon {
+    right: -15px;
+    top: -15px;
+    position: absolute;
+}
+
+.card-header{
+    background-color: dodgerblue ;
+}
+
+.line{
+    border: 1px solid  #8EE4AF;
+    width: 100%;
+}
+</style>
