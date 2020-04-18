@@ -19,9 +19,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             context = new ApplicationDbContext();
         }
 
+        [HttpGet]
         public IHttpActionResult GetProgrammingLanguages()
         {
-            return Ok(context.ProgrammingLanguages.ToList().Select(Mapper.Map<ProgrammingLanguage, ProgrammingLanguageDto>));
+            var programminglanguages = context.ProgrammingLanguages.ToList()
+                .Select(Mapper.Map<ProgrammingLanguage, ProgrammingLanguageDto>);
+            return Ok(programminglanguages);
         }
     }
 }

@@ -13,6 +13,7 @@ using System.IO;
 using IdeasIntoCodeFirstVersion.Persistence;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using System.Web.Http.Cors;
+using IdeasIntoCodeFirstVersion.Interface;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.API
 {
@@ -31,7 +32,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         [HttpGet]
         public IHttpActionResult Data()
         {
-            var searchString = "d";
+            string searchString = "d";
             var developers = context.Developers.Include(d => d.User);
             var projects = context.Projects.AsQueryable();
 
@@ -49,6 +50,20 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
 
             return Ok(viewmodel);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IHttpActionResult Edit()
+        {
+            //var currentUserID = User.Identity.GetUserId();
+
+            var currentUserID = "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
+            var developer = unitOfWork.Developers.GetDeveloperWithUserAndProgrammingLanguagesUsingUserId(currentUserID);
+            //if (developer == null)
+            //    return HttpNotFound();
+
+            return Ok( developer);
+        }
         //[HttpGet]
         //public IHttpActionResult Get()
         //{
@@ -56,12 +71,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         //    return File(b, "image/jpeg");
         //}
         //GET/ API/developers/developerprofile/
-        [HttpPost]
-        public IHttpActionResult DeveloperProfile(int bob)
+        [HttpGet]
+        public IHttpActionResult DeveloperProfile(int ID )
         {
-            var userId = User.Identity.GetUserId();
-            var ID = 1;
-           
+            //var userId = User.Identity.GetUserId();
+
+             ID = 2;
             var developer = unitOfWork.Developers.GetDeveloperWithEverythingUsingDeveloperId(ID);
             var viewModel = new DeveloperProfileViewModel
             {
@@ -72,7 +87,26 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
 
             return Ok(viewModel);
         }
-        
 
+        
+        [HttpGet]
+        public IHttpActionResult NewsFeed()
+        {
+           // var userId = User.Identity.GetUserId();
+            var userId= "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
+            var developerId = unitOfWork.Developers.GetDeveloperIDUsingUserID(userId);
+            var newsFeedList = new List<INewsFeed>();
+            var follows = unitOfWork.Follows.GetFolloweesIdsUsingDeveloperId(developerId);
+            var comments = unitOfWork.Comments.GetCommentsOfFollowees(follows);
+            //Εδω φερνει λιστα απο τους followers των followees?
+            var followers = unitOfWork.Follows.GetFollowersOfFollowees(follows);
+
+            newsFeedList.AddRange(comments);
+            newsFeedList.AddRange(followers);
+            newsFeedList.AddRange(unitOfWork.Projects.Get10NewestProjects());
+
+
+            return Ok(newsFeedList.OrderBy(n => n.TimeStamp).ToList());
+        }
     }
 }

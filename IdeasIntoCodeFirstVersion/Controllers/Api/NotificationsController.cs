@@ -19,6 +19,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             context = new ApplicationDbContext();
         }
 
+        [HttpGet]
         public IEnumerable<Notification> GetNotifications()
         {
             var userId = User.Identity.GetUserId();
