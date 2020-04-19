@@ -8,15 +8,18 @@ using IdeasIntoCodeFirstVersion.ViewModels;
 using System.Data.Entity;
 using IdeasIntoCodeFirstVersion.Interface;
 using Microsoft.AspNet.Identity;
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class HomeController : Controller
     {
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public HomeController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
         protected override void Dispose(bool disposing)
         {
@@ -32,8 +35,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult Data(string searchString)
         {
-            var developers = context.Developers.Include(d => d.User);
-            var projects = context.Projects.AsQueryable();
+            var developers = unitOfWork.Developers.GetAllDevelopersIncludeUser();
+            var projects = unitOfWork.Projects.GetAllProjects();
             
             
             if (!string.IsNullOrEmpty(searchString))

@@ -51,11 +51,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(d => d.User)
                 .SingleOrDefault(u => u.ID == ID);
         }
-        public Developer GetDeveloperIncludeUserUsingUserId(string userID)
-        {
-            return _context.Developers.Include(d => d.User)
-                .Single(u => u.UserID == userID);
-        }
+        //public Developer GetDeveloperIncludeUserUsingUserId(string userID)
+        //{
+        //    return _context.Developers.Include(d => d.User)
+        //        .Single(u => u.UserID == userID);
+        //}
         public int GetDeveloperIDUsingUserID(string userID)
         {
             return _context.Developers.Where(d => d.User.Id == userID).Select(d => d.ID).SingleOrDefault();
@@ -79,6 +79,19 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(d => d.ProgrammingLanguages)
                 .Include(d => d.User)
                 .SingleOrDefault(p => p.User.Id == userID);
+        }
+
+        public IQueryable<Developer> GetAllDevelopersIncludeUser()
+        {
+            return _context.Developers.Include(d => d.User);
+        } 
+
+        public Developer GetDeveloperIncludeUserFollowers(string userID)
+        {
+            return _context.Developers
+                .Include(d => d.Followers.Select(f => f.Follower.User))
+                .Include(d => d.User)
+                .Single(d => d.User.Id == userID);
         }
     }
 }

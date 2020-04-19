@@ -16,6 +16,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
             _context = context;
         }
 
+        public IQueryable<Project> GetAllProjects()
+        {
+            return _context.Projects.AsQueryable();
+        }
+
         public Project FindProject(int? id)
         {
             return _context.Projects.Find(id);

@@ -304,8 +304,10 @@
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
+    <Compile Include="Repositories\DeveloperNotificationRepository.cs" />
     <Compile Include="Repositories\DeveloperRepository.cs" />
     <Compile Include="Repositories\FollowsRepository.cs" />
+    <Compile Include="Repositories\MessageRepository.cs" />
     <Compile Include="Repositories\ProgrammingLanguageRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Startup.cs" />

@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using IdeasIntoCodeFirstVersion.Persistence;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
@@ -13,43 +14,46 @@ namespace IdeasIntoCodeFirstVersion.Controllers
     public class MessageController : Controller
     {
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public MessageController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
 
         public void MarkAsRead(int messageID)
         {
-            var message = context.Messages.Single(m => m.ID == messageID);
+            var message = unitOfWork.Messages.GetMessage(messageID);
             Message.MarkAsRead(message);
-            context.SaveChanges();
+            unitOfWork.Complete();
         }
 
        public ActionResult GetMessages(string whatMessagesToGet)
         {
             var userId = User.Identity.GetUserId();
-            var user = context.Developers
-                .Include(d => d.User)
-                .Single(d => d.User.Id == userId);
-            var messages = new GetMessagesViewModel();
-            if (whatMessagesToGet == "Send")
-            {
-                 messages.Messages = context.Messages
-                    .Include(m => m.Receiver)
-                    .Include(m => m.Receiver.User)
-                    .Where(m => m.SenderID == user.ID).ToList();
-                 messages.WhatMessagesToGet = whatMessagesToGet;
-            }
-            else if (whatMessagesToGet == "Received")
-            {
-                 messages.Messages = context.Messages
-                    .Include(m => m.Sender)
-                    .Include(m => m.Sender.User)
-                    .Where(m => m.ReceiverID == user.ID).ToList();
-                 messages.WhatMessagesToGet = whatMessagesToGet;
-            }
-            else
+            var user = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
+            var messages = GetMessagesViewModel.GetMessages(user, whatMessagesToGet, context, unitOfWork);
+            if (messages == null)
                 return RedirectToAction("DeveloperProfile", "Developer", new { controller = "Developer", action = "DeveloperProfile", id = user.ID });
+            //if (whatMessagesToGet == "Send")
+            //{
+            //     messages.Messages = context.Messages
+            //        .Include(m => m.Receiver)
+            //        .Include(m => m.Receiver.User)
+            //        .Where(m => m.SenderID == user.ID).ToList();
+            //     messages.WhatMessagesToGet = whatMessagesToGet;
+            //}
+            //else if (whatMessagesToGet == "Received")
+            //{
+            //     messages.Messages = context.Messages
+            //        .Include(m => m.Sender)
+            //        .Include(m => m.Sender.User)
+            //        .Where(m => m.ReceiverID == user.ID).ToList();
+            //     messages.WhatMessagesToGet = whatMessagesToGet;
+            //}
+            //else
+            //    return RedirectToAction("DeveloperProfile", "Developer", new { controller = "Developer", action = "DeveloperProfile", id = user.ID });
+
             return View(messages);
         }
 
@@ -57,20 +61,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult SendMessage(int ID)
         {
             var userId = User.Identity.GetUserId();
-            var currentUser = context.Developers
-                .Include(d => d.Followers.Select(f => f.Follower.User))
-                .Include(d => d.User)
-                .Single(d => d.User.Id == userId);
-            var viewModel = new MessageFormViewModel();
-            if (ID != currentUser.ID)
-            {
-                viewModel.ReceiverID = ID;
-                viewModel.Receiver = context.Developers.Include(d => d.User).Single(d => d.ID == ID);
-            }
-            else
-            {
-                viewModel.Followers = currentUser.Followers.Select(f => f.Follower.User);
-            }
+            var currentUser = unitOfWork.Developers.GetDeveloperIncludeUserFollowers(userId);
+            var viewModel = MessageFormViewModel.CreateMessageFormViewModel(ID, currentUser, unitOfWork);
             return View(viewModel);
         }
 
@@ -84,16 +76,19 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 return View("SendMessage", viewModel);
             if (viewModel.ReceiverUserID != null)
             {
-                viewModel.ReceiverID = context.Developers.Single(d => d.UserID == viewModel.ReceiverUserID).ID;
+                viewModel.ReceiverID = unitOfWork.Developers.GetDeveloperIDUsingUserID(viewModel.ReceiverUserID);
+                //context.developers.single(d => d.userid == viewmodel.receiveruserid).id;
             }
             
             var userId = User.Identity.GetUserId();
-            var sender = context.Developers.Single(d => d.User.Id == userId);
-            var receiver = context.Developers.Single(d => d.ID == viewModel.ReceiverID);
-            var message = new Message(viewModel.Subject, viewModel.Text, sender, receiver);            
-            context.DeveloperNotifications.Add(new DeveloperNotification(receiver, new Notification(sender, NotificationType.Messaged)));               
+            var sender = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
+            var receiver = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(viewModel.ReceiverID);
+            //context.Developers.Single(d => d.ID == viewModel.ReceiverID);
+            var message = new Message(viewModel.Subject, viewModel.Text, sender, receiver);
+            unitOfWork.DeveloperNotifications.Add(sender, receiver);
+            //context.DeveloperNotifications.Add(new DeveloperNotification(receiver, new Notification(sender, NotificationType.Messaged)));               
             sender.SendMessage(message);
-            context.SaveChanges();
+            unitOfWork.Complete();
             return RedirectToAction("DeveloperProfile", "Developer", new { controller = "Developer", action = "DeveloperProfile", id = viewModel.ReceiverID });
         }
     }

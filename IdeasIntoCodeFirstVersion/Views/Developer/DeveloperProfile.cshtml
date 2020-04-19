@@ -18,15 +18,15 @@
 
 
                         <div class="d-flex justify-content-center">
-                            @*<div class="p-4">
-                                    @if (!Model.ShowActionButtons)
-                                    {
-                                        <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">New Message</a>
-                                        <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Send"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Send Messages</a>
-                                        <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Received"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Received Messages</a>
+                            <div class="p-4">
+                                @if (!Model.ShowActionButtons)
+                                {
+                                    <a href="@Url.Action("SendMessage", "Message", new {ID = Model.DeveloperOfProfile.ID })" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">New Message</a>
+                                    <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Send"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Send Messages</a>
+                                    <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Received"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Received Messages</a>
 
-                                    }
-                                </div>*@
+                                }
+                            </div>
                             <div class="p-4">
                                 @if (Model.ShowActionButtons)
                                 {
@@ -70,18 +70,18 @@
             <div class="col-6 col-md-4 row" id="fol">
                 <div class="col-6">
                     @*<ul class="list-group">*@
-                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Followers"})" class="list-group-item border-0">
-                            Followers
-                            <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Followers.Count</span>
-                        </a>
+                    <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Followers"})" class="list-group-item border-0">
+                        Followers
+                        <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Followers.Count</span>
+                    </a>
                     @*</ul>*@
                 </div>
                 <div class="col-6">
                     @*<ul class="list-group">*@
-                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Following"})" class="list-group-item border-0">
-                            Following
-                            <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Following.Count</span>
-                        </a>
+                    <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Following"})" class="list-group-item border-0">
+                        Following
+                        <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Following.Count</span>
+                    </a>
                     @*</ul>*@
                 </div>
             </div>
@@ -163,7 +163,7 @@
                         }
                     </ul>
                     <div class="card-body">
-                        <a href="@Url.Action("AddProgrammingLanguage", "ProgrammingLanguage")" class="card-link">Add</a>                      
+                        <a href="@Url.Action("AddProgrammingLanguage", "ProgrammingLanguage")" class="card-link">Add</a>
                     </div>
 
                 </div>
@@ -218,7 +218,7 @@
 
         </div>
     </div>
-    
+
 </section>
 @section scripts
 
@@ -293,6 +293,5 @@
     </script>
 
     <style>
-
     </style>
 }

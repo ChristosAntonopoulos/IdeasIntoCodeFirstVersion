@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using IdeasIntoCodeFirstVersion.Persistence;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,5 +29,21 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
         [Required]
         public DateTime DatePosted { get; set; }
         public IEnumerable<ApplicationUser> Followers { get; set; }
+
+        public static MessageFormViewModel CreateMessageFormViewModel(int ID, Developer developer, UnitOfWork unitOfWork)
+        {
+            var viewModel = new MessageFormViewModel();
+            if (ID != developer.ID)
+            {
+                viewModel.ReceiverID = ID;
+                viewModel.Receiver = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(ID);
+            }
+            else
+            {
+                viewModel.Followers = developer.Followers.Select(f => f.Follower.User);
+            }
+            return viewModel;
+        }
+
     }
 }

@@ -6,15 +6,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class ProgrammingLanguageController : Controller
     {
         private  ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public ProgrammingLanguageController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
         protected override void Dispose(bool disposing)
         {
@@ -24,32 +27,25 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult ShowSelectedProgrammingLanguage(int ID)
         {
-            var programmingLanguageToAdd = context.ProgrammingLanguages.Single(p => p.ID == ID); 
-
+            var programmingLanguageToAdd = unitOfWork.ProgrammingLanguages.GetProgrammingLanguage(ID); 
             return PartialView("_AddProgrammingLanguages", programmingLanguageToAdd);
         }
 
         public ActionResult FindProgrammingLanguageList (string searchString)
         {
-
-            var programmingLanguages = context.ProgrammingLanguages.Where(p => p.Name.StartsWith(searchString)).ToList();
-
+            var programmingLanguages = unitOfWork.ProgrammingLanguages.GetLanguagesUsingSearchString(searchString);
             return PartialView("_ProgrammingLanguageSearchResult", programmingLanguages);
         }
 
         public ActionResult AddProgrammingLanguage()
         {
             var currentUserID = User.Identity.GetUserId();
-            var developer = context.Developers
-                .Include(d => d.ProgrammingLanguages)
-                .Include(d => d.User)
-                .SingleOrDefault(p => p.User.Id == currentUserID);
+            var developer = unitOfWork.Developers.GetDeveloperWithUserAndProgrammingLanguagesUsingUserId(currentUserID);
             if (developer == null)
                 return HttpNotFound();
 
             return View("AddProgrammingLanguage", developer);
             //var programmingLanguages = context.ProgrammingLanguages.Where(p => p.Name.StartsWith(searchString)).ToList();
-            
         }
 
     }

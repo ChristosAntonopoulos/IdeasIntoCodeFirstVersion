@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using IdeasIntoCodeFirstVersion.Persistence;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
     public class CommentController : Controller
     {
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public CommentController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
         protected override void Dispose(bool disposing)
         {
@@ -24,17 +27,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public void AddComment(int currentProjectID, string commentText)
         {
             var userId = User.Identity.GetUserId();
-            var developer = context.Developers.Single(d => d.User.Id == userId);
-            var comment = new Comment()
-            {
-                Text = commentText,
-                ProjectID = currentProjectID,
-                DeveloperID = developer.ID,
-                TimeStamp = DateTime.Now
-            };
-            context.Comments.Add(comment);
-            context.SaveChanges();
-
+            var developer = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
+            var comment = new Comment(commentText, currentProjectID, developer.ID);
+           
+            unitOfWork.Comments.Add(comment);
+            unitOfWork.Complete();
         }
     }
 }

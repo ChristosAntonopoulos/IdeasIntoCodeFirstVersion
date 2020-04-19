@@ -19,5 +19,16 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         {
             return _context.ProgrammingLanguages.ToList();
         }
+
+        public ProgrammingLanguage GetProgrammingLanguage(int ID)
+        {
+            return _context.ProgrammingLanguages.Single(p => p.ID == ID);
+        }
+
+        public List<ProgrammingLanguage> GetLanguagesUsingSearchString(string searchString)
+        {
+            return _context.ProgrammingLanguages.Where(p => p.Name.StartsWith(searchString)).ToList();
+        }
+
     }
 }

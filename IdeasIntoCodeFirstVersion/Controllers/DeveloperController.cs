@@ -48,7 +48,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         public ActionResult RegisterForm(Developer developer)
         {
             var userID = User.Identity.GetUserId();
-            var developerDb = unitOfWork.Developers.GetDeveloperIncludeUserUsingUserId(userID);
+            var developerDb = unitOfWork.Developers.GetDeveloperIncludeUser(userID);
 
             
             developerDb.GitHub = developer.GitHub;
