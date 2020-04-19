@@ -7,7 +7,7 @@ using System.Data.Entity;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class DeveloperRepository
+    public class DeveloperRepository : IDeveloperRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -84,7 +84,7 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         public IQueryable<Developer> GetAllDevelopersIncludeUser()
         {
             return _context.Developers.Include(d => d.User);
-        } 
+        }
 
         public Developer GetDeveloperIncludeUserFollowers(string userID)
         {
@@ -92,6 +92,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(d => d.Followers.Select(f => f.Follower.User))
                 .Include(d => d.User)
                 .Single(d => d.User.Id == userID);
+        }
+
+        public Developer GetDeveloperWithFirstOrDefault(string userID)
+        {
+            return _context.Developers.Where(d => d.User.Id == userID).Include(d => d.User).FirstOrDefault();
         }
     }
 }

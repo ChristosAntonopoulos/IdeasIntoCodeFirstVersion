@@ -14,20 +14,15 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class HomeController : Controller
     {
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
-        public HomeController()
-        {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+        
+        private readonly IUnitOfWork unitOfWork;
+        public HomeController(IUnitOfWork unitOfWork)
+        {    
+            this.unitOfWork = unitOfWork;
         }
-        protected override void Dispose(bool disposing)
-        {
-            context.Dispose();
-        }
+       
         public ActionResult Index()
-        {
-            
+        {        
             return View();
         }
 
@@ -46,10 +41,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 
                 projects = projects.Where(p => p.Title.Contains(searchString));
             }
-
             var viewmodel = new SearchResultViewModel(developers, projects);
-            
-
             return View(viewmodel);
         }
 

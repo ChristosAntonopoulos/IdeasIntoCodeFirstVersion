@@ -11,17 +11,14 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class CommentController : Controller
     {
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
-        public CommentController()
+        
+        private readonly IUnitOfWork unitOfWork;
+        public CommentController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+           
+            this.unitOfWork = unitOfWork;
         }
-        protected override void Dispose(bool disposing)
-        {
-            context.Dispose();
-        }
+       
         // Post: Comment
         [HttpPost]
         public void AddComment(int currentProjectID, string commentText)

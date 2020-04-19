@@ -7,7 +7,7 @@ using System.Data.Entity;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class MessageRepository
+    public class MessageRepository : IMessageRepository
     {
         private readonly ApplicationDbContext _context;
         public MessageRepository(ApplicationDbContext context)
@@ -35,6 +35,6 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                    .Include(m => m.Sender.User)
                    .Where(m => m.ReceiverID == developer.ID).ToList();
         }
-        
+
     }
 }

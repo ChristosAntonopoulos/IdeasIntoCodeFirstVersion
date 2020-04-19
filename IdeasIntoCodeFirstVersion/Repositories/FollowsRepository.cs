@@ -7,7 +7,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class FollowsRepository
+    public class FollowsRepository : IFollowsRepository
     {
         private readonly ApplicationDbContext _context;
         public FollowsRepository(ApplicationDbContext context)
@@ -31,6 +31,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(f => f.Follower)
                 .Include(f => f.Follower.User)
                 .Take(10).ToList();
+        }
+
+        public bool CheckIfDeveloperFollowsDeveloperOfProfile(string userID, int? ID)
+        {
+            return _context.Follows.Any(f => f.Follower.UserID == userID && f.Followee.ID == ID);
         }
     }
 }

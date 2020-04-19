@@ -10,11 +10,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class FollowingController : Controller
     {
-        private ApplicationDbContext context;
-        public FollowingController()
-        {
-            context = new ApplicationDbContext();
-        }
+        //private ApplicationDbContext context;
+        //public FollowingController()
+        //{
+        //    context = new ApplicationDbContext();
+        //}
         // GET: Following
         public ActionResult GetListOfFollowers(int ID, string whatListToGet)
         {

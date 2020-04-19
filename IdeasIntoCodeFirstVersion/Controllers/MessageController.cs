@@ -13,12 +13,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class MessageController : Controller
     {
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
-        public MessageController()
+        private readonly IUnitOfWork unitOfWork;
+        public MessageController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork = unitOfWork;
         }
 
         public void MarkAsRead(int messageID)
@@ -32,7 +30,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
         {
             var userId = User.Identity.GetUserId();
             var user = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
-            var messages = GetMessagesViewModel.GetMessages(user, whatMessagesToGet, context, unitOfWork);
+            var messages = GetMessagesViewModel.GetMessages(user, whatMessagesToGet, unitOfWork);
             if (messages == null)
                 return RedirectToAction("DeveloperProfile", "Developer", new { controller = "Developer", action = "DeveloperProfile", id = user.ID });
             //if (whatMessagesToGet == "Send")

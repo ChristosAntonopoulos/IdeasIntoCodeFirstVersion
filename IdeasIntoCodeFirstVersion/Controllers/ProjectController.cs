@@ -15,13 +15,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class ProjectController : Controller
     {
-
-        private ApplicationDbContext context;
-        private UnitOfWork unitOfWork;
-        public ProjectController()
+        private IUnitOfWork unitOfWork;
+        public ProjectController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork = unitOfWork;
         }
 
         public ActionResult MyProject()
@@ -90,7 +87,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 unitOfWork.Projects.Add(project);
                 var newsFeedHub = new NewsFeedTickerHub();
                 var userId = User.Identity.GetUserId();
-                var currentDev = context.Developers.Where(d => d.User.Id == userId).Include(d => d.User).FirstOrDefault();
+                var currentDev = unitOfWork.Developers.GetDeveloperWithFirstOrDefault(userId);
                 var path = Server.MapPath("/Content/Images/homepage.jpg");
                 
                 var pic = base.File(path, "image/jpg");

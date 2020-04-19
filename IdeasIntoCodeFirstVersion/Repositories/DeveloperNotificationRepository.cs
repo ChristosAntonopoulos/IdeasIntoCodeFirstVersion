@@ -6,7 +6,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class DeveloperNotificationRepository
+    public class DeveloperNotificationRepository : IDeveloperNotificationRepository
     {
         private readonly ApplicationDbContext _context;
         public DeveloperNotificationRepository(ApplicationDbContext context)

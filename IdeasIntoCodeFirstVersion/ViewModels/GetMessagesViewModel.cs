@@ -13,7 +13,7 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
         public IEnumerable<Message> Messages { get; set; }
         public string WhatMessagesToGet { get; set; }
 
-        public static GetMessagesViewModel GetMessages(Developer developer, string whatMessagesToGet, ApplicationDbContext context, UnitOfWork unitOfWork)
+        public static GetMessagesViewModel GetMessages(Developer developer, string whatMessagesToGet, IUnitOfWork unitOfWork)
         {
             var messages = new GetMessagesViewModel();
 

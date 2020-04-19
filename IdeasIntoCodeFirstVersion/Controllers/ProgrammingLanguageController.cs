@@ -12,17 +12,14 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 {
     public class ProgrammingLanguageController : Controller
     {
-        private  ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
-        public ProgrammingLanguageController()
+       
+        private readonly IUnitOfWork unitOfWork;
+        public ProgrammingLanguageController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+           
+            this.unitOfWork = unitOfWork;
         }
-        protected override void Dispose(bool disposing)
-        {
-            context.Dispose();
-        }
+       
         // GET: ProgrammingLanguage
 
         public ActionResult ShowSelectedProgrammingLanguage(int ID)

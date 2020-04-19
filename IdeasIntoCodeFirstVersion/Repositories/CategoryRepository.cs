@@ -6,7 +6,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -18,7 +18,7 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         public List<ProjectCategory> GetCategories()
         {
             return _context.ProjectCategories.ToList();
-            
+
         }
     }
 }
