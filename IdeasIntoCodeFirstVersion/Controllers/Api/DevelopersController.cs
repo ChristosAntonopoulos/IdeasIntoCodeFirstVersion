@@ -51,19 +51,21 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             return Ok(viewmodel);
         }
 
-        [Authorize]
+        
         [HttpGet]
-        public IHttpActionResult Edit()
+        public IHttpActionResult Edit(int ID)
         {
             //var currentUserID = User.Identity.GetUserId();
 
-            var currentUserID = "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
-            var developer = unitOfWork.Developers.GetDeveloperWithUserAndProgrammingLanguagesUsingUserId(currentUserID);
+            //var currentUserID = "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
+            var developer = unitOfWork.Developers.GetDeveloperWithEverythingUsingDeveloperId(ID);
             //if (developer == null)
             //    return HttpNotFound();
 
             return Ok( developer);
         }
+
+
         //[HttpGet]
         //public IHttpActionResult Get()
         //{
@@ -88,7 +90,20 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             return Ok(viewModel);
         }
 
-        
+        [HttpPost]        
+        public IHttpActionResult RegisterForm(Developer developer)
+        {
+            //var userID = User.Identity.GetUserId();
+            var developerDb = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(developer.ID);
+            developerDb.GitHub = developer.GitHub;
+            developerDb.Linkedin = developer.Linkedin;
+            developerDb.BirthDate = developer.BirthDate;
+            context.SaveChanges();
+           
+            return Ok(developerDb);
+        }
+
+
         [HttpGet]
         public IHttpActionResult NewsFeed()
         {

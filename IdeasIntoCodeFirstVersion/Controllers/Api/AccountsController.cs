@@ -10,9 +10,12 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Web.Http.Cors;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
+
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountsController : ApiController
     {
         private ApplicationDbContext context;
@@ -27,8 +30,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         //[AllowAnonymous]
         //[ValidateAntiForgeryToken]
         public IHttpActionResult Login(LoginViewModel model)
+        
         {
-            return Ok();
+            var account=new AccountController();
+            var developer = account.Login(model);
+
+            return Ok(developer);
         }
 
         protected override void Dispose(bool disposing)

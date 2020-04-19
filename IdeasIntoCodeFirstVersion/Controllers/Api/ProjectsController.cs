@@ -32,7 +32,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         {
             ID = 2;
             //var userId = User.Identity.GetUserId();
-            var userId = context.Developers.Where(d => d.ID == ID).Select(d => d.UserID).FirstOrDefault();
+           var userId = context.Developers.Where(d => d.ID == ID).Select(d => d.UserID).FirstOrDefault();
             
             var developer = unitOfWork.Developers.GetDeveloperIncludeProject(userId);
 
@@ -58,6 +58,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             project.ModifyInActive(developer, viewModel);
 
             return Ok(viewModel);
+           
         }
 
        
