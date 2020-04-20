@@ -10,10 +10,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IdeasIntoCodeFirstVersion.Models;
 using System.Data.Entity.Validation;
+using System.Web.Http.Cors;
 
 namespace IdeasIntoCodeFirstVersion.Controllers
 {
-    [Authorize]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -67,38 +68,58 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+
+        //    // This doesn't count login failures towards account lockout
+        //    // To enable password failures to trigger account lockout, change to shouldLockout: true
+        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+        //    switch (result)
+        //    {
+        //        case SignInStatus.Success:
+        //            var user = context.Users.SingleOrDefault(u => u.Email == model.Email);
+        //            var userId = user.Id;
+        //            var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
+
+        //            //return RedirectToLocal(returnUrl);
+        //            return RedirectToAction("NewsFeed", "Developer");
+        //        case SignInStatus.LockedOut:
+        //            return View("Lockout");
+        //        case SignInStatus.RequiresVerification:
+        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //        case SignInStatus.Failure:
+        //        default:
+        //            ModelState.AddModelError("", "Invalid login attempt.");
+        //            return View(model);
+        //    }
+        //}
+
+      
+
+        public async  Task<Developer> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    var user = context.Users.SingleOrDefault(u => u.Email == model.Email);
-                    var userId = user.Id;
-                    var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
+            var result =await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var user = context.Users.SingleOrDefault(u => u.Email == model.Email);
+            var userId = user.Id;
+            var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
 
-                    //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("NewsFeed", "Developer");
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
+            return developer;
         }
+
 
         //
         // GET: /Account/VerifyCode
