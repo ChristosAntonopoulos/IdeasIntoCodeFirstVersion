@@ -7,9 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class NotificationsController : ApiController
     {
         private ApplicationDbContext context;
@@ -20,11 +22,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<Notification> GetNotifications()
+        public IEnumerable<Notification> GetNotifications(int ID)
         {
-            var userId = User.Identity.GetUserId();
+           
             var notifications = context.DeveloperNotifications
-                .Where(un => un.Developer.User.Id == userId && !un.IsRead)
+                .Where(un => un.Developer.ID == ID && !un.IsRead)
                 .Select(un => un.Notification)
                 .Include(n => n.Developer)
                 .Include(n => n.Project)

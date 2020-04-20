@@ -64,7 +64,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
 
             return Ok( developer);
         }
+        public IHttpActionResult GetDeveloper(int ID)
+        {
+            //var userId = User.Identity.GetUserId();
 
+            
+            var developer = unitOfWork.Developers.GetDeveloperWithEverythingUsingDeveloperId(ID);
+           
+
+            return Ok(developer);
+        }
 
         //[HttpGet]
         //public IHttpActionResult Get()
@@ -78,7 +87,6 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         {
             //var userId = User.Identity.GetUserId();
 
-             ID = 2;
             var developer = unitOfWork.Developers.GetDeveloperWithEverythingUsingDeveloperId(ID);
             var viewModel = new DeveloperProfileViewModel
             {
