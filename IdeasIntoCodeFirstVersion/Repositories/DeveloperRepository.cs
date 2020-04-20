@@ -38,6 +38,14 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
         }
 
+        //api
+        public Developer GetDeveloperIncludeUser(int developerId)
+        {
+            return _context.Developers.Include(d => d.User).SingleOrDefault(d=>d.ID==developerId);
+
+        }
+       
+
         public int GetAdminId(string userID)
         {
             return _context.Developers.Where(d => d.User.Id == userID).SingleOrDefault().ID;

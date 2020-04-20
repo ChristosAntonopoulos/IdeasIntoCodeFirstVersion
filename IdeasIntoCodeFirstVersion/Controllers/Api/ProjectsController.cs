@@ -40,10 +40,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         [HttpGet]
         public IHttpActionResult ProjectProfile(int ID)
         {
-            ID = 2;
+            
             //var userId = User.Identity.GetUserId();
-            var userId = "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
-            var developer = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
+            var developer = unitOfWork.Developers.GetDeveloperIncludeUser(ID);
+            
             var project = unitOfWork.Projects.GetProjectWithProgrammingLanguagesAndCategories(ID);
 
             var viewModel = new ProjectViewModel(developer, project);
@@ -64,8 +64,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         public IHttpActionResult New()
         {
             //var userID = User.Identity.GetUserId();
-            var userID = "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
-            var viewModel = new ProjectFormViewModel(new Project(unitOfWork.Developers.GetAdminId(userID)));
+            var ID = 1;
+            //var viewModel = new ProjectFormViewModel(new Project(unitOfWork.Developers.GetAdminId(userID)));
+            var viewModel = new ProjectFormViewModel(new Project(ID));
 
             return Ok( viewModel);
         }
@@ -73,7 +74,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         [HttpGet]
         public IHttpActionResult Edit(int ID)
         {
-            ID = 2;
+            ID = 1;
             var project = unitOfWork.Projects.FindProject(ID);
 
             //if (project == null)
@@ -84,6 +85,40 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             return Ok( viewModel);
         }
 
+
+        [HttpPost]
+        public IHttpActionResult Save(Project project)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ProjectFormViewModel(project);
+
+                return Ok(viewModel);
+            }
+
+            if (project.ID == 0)
+            {
+                project.TimeStamp = DateTime.Now;
+
+                unitOfWork.Projects.Add(project);
+                var newsFeedHub = new NewsFeedTickerHub();
+                //var currentDev = context.Developers.Where(d => d.User.Id == userId).Include(d => d.User).FirstOrDefault();
+                //var path = Server.MapPath("/Content/Images/homepage.jpg");
+
+                //var pic = base.File(path, "image/jpg");
+
+                //newsFeedHub.SendNotification(unitOfWork.Developers.GetDevelopersToUpdate(project.AdminID), project, currentDev, pic);
+
+            }
+            else
+            {
+                var projectDb = unitOfWork.Projects.FindProject(project.ID);
+                projectDb.Title = project.Title;
+                projectDb.Description = project.Description;
+            }
+            unitOfWork.Complete();
+            return Ok(project);
+        }
         [HttpPost]        
         public IHttpActionResult Join(JoinDto joinDto)
         {

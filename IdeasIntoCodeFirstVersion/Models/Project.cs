@@ -46,7 +46,7 @@ namespace IdeasIntoCodeFirstVersion.Models
             Comments = new List<Comment>();
         }
 
-
+        
         public Project(int AdminId)
         {
             AdminID = AdminId;
