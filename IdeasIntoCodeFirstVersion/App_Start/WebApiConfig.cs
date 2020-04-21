@@ -25,7 +25,12 @@ namespace IdeasIntoCodeFirstVersion
 
             config.MapHttpAttributeRoutes();
 
-            
+            //config.MapMvcAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                       "DevelopersData",
+                    "api/developers/data/{searchString}",
+               new { controller = "Developers", action = "Data" });
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
