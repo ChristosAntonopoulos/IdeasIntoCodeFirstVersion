@@ -25,10 +25,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<Notification> GetNotifications(int ID)
+        public IHttpActionResult GetNotifications(int ID)
         {
             var notifications = unitOfWork.DeveloperNotifications.GetNotificationsIncludeProjectDeveloperUser(ID);
-            return notifications;
+            return Ok(notifications);
         }
     }
 }

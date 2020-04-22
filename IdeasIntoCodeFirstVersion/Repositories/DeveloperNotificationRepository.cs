@@ -21,6 +21,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
             _context.DeveloperNotifications.Add(new DeveloperNotification(receiver, new Notification(sender, NotificationType.Messaged)));
         }
 
+        public void Add(Project project, Developer developer)
+        {
+            _context.DeveloperNotifications.Add(new DeveloperNotification(project.Admin, new Notification(developer, project, NotificationType.JoinRequest)));
+        }
+
         public List<Notification> GetNotificationsIncludeProjectDeveloperUser(int ID)
         {
             return _context.DeveloperNotifications

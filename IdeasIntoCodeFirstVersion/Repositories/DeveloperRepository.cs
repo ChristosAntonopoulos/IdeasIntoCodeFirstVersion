@@ -53,6 +53,12 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
 
         //TED
+        public Developer GetDeveloperIncludeProjectUsingId(int ID)
+        {
+            return _context.Developers.Include(d => d.ProjectsOwned)
+          .Include(d => d.TeamParicipating.Select(t => t.Project)).SingleOrDefault(d => d.ID == ID);
+        }
+
         public Developer GetDeveloperWithUserUsingDeveloperId(int? ID)
         {
             return _context.Developers

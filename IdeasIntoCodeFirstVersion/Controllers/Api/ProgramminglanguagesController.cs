@@ -9,7 +9,7 @@ using AutoMapper;
 using IdeasIntoCodeFirstVersion.DTOs;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using System.Data.Entity;
-
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
@@ -17,16 +17,17 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     {
 
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public ProgrammingLanguagesController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
 
         [HttpGet]
         public IHttpActionResult GetProgrammingLanguages()
         {
-            var programminglanguages = context.ProgrammingLanguages.ToList()
-                .Select(Mapper.Map<ProgrammingLanguage, ProgrammingLanguageDto>);
+            var programminglanguages = unitOfWork.ProgrammingLanguages.GetProgrammingLanguageDtos();
             return Ok(programminglanguages);
         }
         //create new
@@ -35,7 +36,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         {
             var project = new ProjectWithProgrammingLanguagesViewModel()
             {
-                ProgrammingLanguages = context.ProgrammingLanguages.ToList()
+                ProgrammingLanguages = unitOfWork.ProgrammingLanguages.GetLanguages()
             };
             return Ok(project);
         }
@@ -49,40 +50,30 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 return Ok();
             }
 
-            Project project = context.Projects
-                .SingleOrDefault(p => p.ID == id);
+            Project project = unitOfWork.Projects.GetProject(id);
             //if (trainer == null)
             //{
             //    return HttpNotFound();
             //}
-            var programmingLanguages = context.ProgrammingLanguages.ToList();
-
-
-            var viewmodel = new ProjectWithProgrammingLanguagesViewModel()
-            {
-                ProgrammingLanguages = programmingLanguages,
-                Project=project
-            };
-
+            var programmingLanguages = unitOfWork.ProgrammingLanguages.GetLanguages();
+            var viewmodel = new ProjectWithProgrammingLanguagesViewModel(project, programmingLanguages);
             return Ok( viewmodel);
         }
 
         [HttpPost]
         public IHttpActionResult Save(Project project, string[] language)
         {
-
-
             if (project.ID == 0)
             {
                 if (language != null)
                 {
                     PopulateProjectLanguage(project, language);
                 }
-                context.Projects.Add(project);
+                unitOfWork.Projects.Add(project);
             }
             else
             {
-                var projectDb = context.Projects.Include(p=>p.ProgrammingLanguages).Single(p => p.ID == project.ID);
+                var projectDb = unitOfWork.Projects.GetProjectIncludeProgrammingLanguages(project.ID);
                 if (language != null)
                 {
                     if (projectDb.ProgrammingLanguages.Count() == 0)
@@ -97,13 +88,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                
 
             }
-                        context.SaveChanges();
+                        unitOfWork.Complete();
             return Ok(project);
         }
 
         public void UpdateProjectLanguage(Project project, string[] language)
         {
-            foreach (var languagesdb in context.ProgrammingLanguages)
+            foreach (var languagesdb in unitOfWork.ProgrammingLanguages.GetLanguages())
             {
                 if (language.Contains(languagesdb.ID.ToString()))
                 {
@@ -124,7 +115,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
         public void PopulateProjectLanguage(Project project, string[] language)
         {
-            var languagesDb = context.ProgrammingLanguages.ToList();
+            var languagesDb = unitOfWork.ProgrammingLanguages.GetLanguages();
             //var trainerCourses = new HashSet<int>(trainer.Courses.Select(c => c.ID));
             foreach (var languageId in language)
             {

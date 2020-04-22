@@ -66,7 +66,6 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                     viewModel.ReceiverID = unitOfWork.Developers.GetDeveloperIDUsingUserID(viewModel.ReceiverUserID);
                    //context.Developers.Single(d => d.UserID == viewModel.ReceiverUserID).ID;
             }
-
             //var userId = User.Identity.GetUserId();
             var sender = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(userID);
             var receiver = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(viewModel.ReceiverID);
