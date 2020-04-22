@@ -30,9 +30,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
 
 
         [HttpGet]
-        public IHttpActionResult Data()
+        [Route("api/developers/data/{searchString}")]
+        public IHttpActionResult Data(string searchString)
         {
-            string searchString = "d";
+           // string searchString=id ;
             var developers = context.Developers.Include(d => d.User);
             var projects = context.Projects.AsQueryable();
 
