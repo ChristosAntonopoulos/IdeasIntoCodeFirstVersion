@@ -88,5 +88,13 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(d => d.User)
                 .SingleOrDefault(p => p.User.Id == userID);
         }
+
+        public Developer GetDeveloperIncludeFollowersIncludeUser(int ID)
+        {
+            return _context.Developers
+                .Include(d => d.Followers.Select(f => f.Follower.User))
+                .Include(d => d.User)
+                .Single(d => d.ID == ID);
+        }
     }
 }

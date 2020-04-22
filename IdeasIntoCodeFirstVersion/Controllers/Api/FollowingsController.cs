@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
 using System.Web.Http.Cors;
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
@@ -17,9 +18,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     public class FollowingsController : ApiController
     {
         private ApplicationDbContext context;
+
+        private readonly UnitOfWork unitOfWork;
         public FollowingsController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
         public IEnumerable<Developer> GetListOfFollowers(int ID, string list)
         {
@@ -27,15 +31,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             var listToDisplay = new List<Developer>();
             if (list == "Followers")
             {
-                listToDisplay = context.Follows.Where(f => f.FolloweeID == ID).Select(f => f.Follower)
-                .Include(f => f.User)
-                .ToList();
+                listToDisplay = unitOfWork.Follows.GetFollowers(ID);
             }
             else if (list == "Following")
             {
-                listToDisplay = context.Follows.Where(f => f.FollowerID == ID).Select(f => f.Followee)
-                .Include(f => f.User)
-                .ToList();
+                listToDisplay = unitOfWork.Follows.GetFollowees(ID);
             }
             return listToDisplay;
         }
@@ -45,39 +45,21 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         public IHttpActionResult Follow(FollowingDto followingDto)
         {
             
-            var developer = context.Developers.Where(d => d.ID == followingDto.FollowerID).SingleOrDefault();
-            if (context.Follows.Any(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID))
-            {
-                var follow = context.Follows.Single(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID);
-                context.Follows.Remove(follow);
-            }
-            else
-            {
-                var following = new Follow(developer.ID, followingDto.FolloweeID);
-                context.DeveloperNotifications.Add(new DeveloperNotification(followingDto.FolloweeID, new Notification(developer, NotificationType.Followed)));
-                context.Follows.Add(following);
-            }
-            context.SaveChanges();
+            var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(followingDto.FollowerID);
+            var following = new Follow(developer.ID, followingDto.FolloweeID);
+            context.DeveloperNotifications.Add(new DeveloperNotification(followingDto.FolloweeID, new Notification(developer, NotificationType.Followed)));
+            unitOfWork.Follows.Add(following);
+            unitOfWork.Complete();
             return Ok();
         }
 
         [HttpPost]
         public IHttpActionResult UnFollow(FollowingDto followingDto)
         {
-
-            var developer = context.Developers.Where(d => d.ID == followingDto.FollowerID).SingleOrDefault();
-            if (context.Follows.Any(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID))
-            {
-                var follow = context.Follows.Single(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID);
-                context.Follows.Remove(follow);
-            }
-            else
-            {
-                var following = new Follow(developer.ID, followingDto.FolloweeID);
-                context.DeveloperNotifications.Add(new DeveloperNotification(followingDto.FolloweeID, new Notification(developer, NotificationType.Followed)));
-                context.Follows.Add(following);
-            }
-            context.SaveChanges();
+            var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(followingDto.FollowerID);
+            var follow = unitOfWork.Follows.GetFollow(developer.ID, followingDto.FolloweeID);
+            unitOfWork.Follows.Delete(follow);
+            unitOfWork.Complete();
             return Ok();
         }
     }
