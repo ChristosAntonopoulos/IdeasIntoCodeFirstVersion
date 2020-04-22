@@ -37,5 +37,21 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         {
             return _context.Follows.Any(f => f.Follower.UserID == userID && f.Followee.ID == ID);
         }
+
+        public IEnumerable<Developer> GetFollowersIncludeUser(int developerID)
+        {
+            return _context.Follows.Where(f => f.FolloweeID == developerID).Select(f => f.Follower)
+                .Include(f => f.User)
+                .ToList();
+        }
+
+        public IEnumerable<Developer> GetFolloweesIncludeUser(int developerID)
+        {
+            return _context.Follows.Where(f => f.FollowerID == developerID).Select(f => f.Followee)
+                .Include(f => f.User)
+                .ToList();
+        }
+
+
     }
 }

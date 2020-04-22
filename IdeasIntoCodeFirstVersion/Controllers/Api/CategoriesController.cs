@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using IdeasIntoCodeFirstVersion.DTOs;
 using IdeasIntoCodeFirstVersion.Models;
+using IdeasIntoCodeFirstVersion.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +13,15 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
     public class CategoriesController : ApiController
     {
-
-        private ApplicationDbContext context;
-        public CategoriesController()
+        private readonly IUnitOfWork unitOfWork;
+        public CategoriesController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
+            this.unitOfWork = unitOfWork;
         }
 
         public IHttpActionResult GetCategories()
         {
-            return Ok(context.ProjectCategories.ToList().Select(Mapper.Map<ProjectCategory, ProjectCategoryDto>));
+            return Ok(unitOfWork.Categories.GetCategoriesAsDtos());
         }
     }
 }

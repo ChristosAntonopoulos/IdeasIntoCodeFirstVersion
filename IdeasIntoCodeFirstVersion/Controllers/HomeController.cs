@@ -52,7 +52,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
 
         public ActionResult AboutUs()
         {
-            return View();
+            return View("TestLogin");
         }
     }
 }

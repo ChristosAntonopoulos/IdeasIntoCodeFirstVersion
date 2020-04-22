@@ -10,15 +10,16 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
 using System.IO;
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.API
 {
     public class DevelopersController : ApiController
     {
-        private ApplicationDbContext context;
-        public DevelopersController()
+        private readonly IUnitOfWork unitOfWork;
+        public DevelopersController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
+            this.unitOfWork = unitOfWork;
         }
         //[HttpGet]
         //public IHttpActionResult Get()
@@ -30,11 +31,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         public IHttpActionResult GetDevelopers()
         {
             var userId = User.Identity.GetUserId();
-            var dev = context.Developers
-                        .SingleOrDefault(d => d.UserID==userId);
-
-            
-
+            var dev = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
             return Ok(dev);
         }
     }

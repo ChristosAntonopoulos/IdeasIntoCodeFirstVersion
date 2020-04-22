@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "TestLogin";
+}
+
+<h2>TestLogin</h2>
+
+<div class="col-md-10 col-md-offset-1">
+    <div class="well">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="success">
+                    <th colspan="2">
+                        Test Login
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Username</td>
+                    <td><input type="text" id="txtUsername" placeholder="Email" /></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" id="txtPassword" placeholder="Password" /></td>
+                </tr>
+                <tr class="success">
+                    <td colspan="2">
+                        <input id="btnLogin" class="btn btn-success" type="button" value="Login"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts{
+    <script>
+    $(document).ready(function () {
+        $("#btnLogin").click(function () {
+            $.ajax({
+                url: '/api/accounts',
+                method: 'POST',
+                data: {
+                    username: $('#txtUsername').val(),
+                    password: $('#txtPassword').val(),
+                    remember: true,
+                    returnurl: 'www.google.com'
+                }
+            });
+        });
+    });
+    </script>    
+}
