@@ -8,9 +8,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using System.Web.Http.Cors;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
+
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class FollowingsController : ApiController
     {
         private ApplicationDbContext context;
@@ -41,8 +44,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         [HttpPost]
         public IHttpActionResult Follow(FollowingDto followingDto)
         {
-            var userId = User.Identity.GetUserId();
-            var developer = context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
+            
+            var developer = context.Developers.Where(d => d.ID == followingDto.FollowerID).SingleOrDefault();
             if (context.Follows.Any(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID))
             {
                 var follow = context.Follows.Single(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID);
@@ -58,5 +61,24 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             return Ok();
         }
 
+        [HttpPost]
+        public IHttpActionResult UnFollow(FollowingDto followingDto)
+        {
+
+            var developer = context.Developers.Where(d => d.ID == followingDto.FollowerID).SingleOrDefault();
+            if (context.Follows.Any(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID))
+            {
+                var follow = context.Follows.Single(f => f.FolloweeID == followingDto.FolloweeID && f.FollowerID == developer.ID);
+                context.Follows.Remove(follow);
+            }
+            else
+            {
+                var following = new Follow(developer.ID, followingDto.FolloweeID);
+                context.DeveloperNotifications.Add(new DeveloperNotification(followingDto.FolloweeID, new Notification(developer, NotificationType.Followed)));
+                context.Follows.Add(following);
+            }
+            context.SaveChanges();
+            return Ok();
+        }
     }
 }

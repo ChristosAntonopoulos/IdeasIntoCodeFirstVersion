@@ -11,6 +11,13 @@ namespace IdeasIntoCodeFirstVersion
 {
     public partial class Startup
     {
+
+        public static void RegisterAuth(IAppBuilder app)
+        {
+            // other code
+            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            // other code
+        }
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {

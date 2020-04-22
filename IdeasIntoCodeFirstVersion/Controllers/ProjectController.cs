@@ -95,7 +95,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 
                 var pic = base.File(path, "image/jpg");
 
-                newsFeedHub.SendNotification(unitOfWork.Developers.GetDevelopersToUpdate(project.AdminID), project,currentDev, pic);
+                //newsFeedHub.SendNotification(unitOfWork.Developers.GetDevelopersToUpdate(project.AdminID), project,currentDev, pic);
 
             }
             else
