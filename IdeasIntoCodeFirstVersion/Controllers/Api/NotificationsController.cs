@@ -22,7 +22,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<Notification> GetNotifications(int ID)
+        public IHttpActionResult GetNotifications(int ID)
         {
            
             var notifications = context.DeveloperNotifications
@@ -33,7 +33,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 .Include(n => n.Developer.User)
                 .ToList();
 
-            return notifications;
+            return Ok(notifications);
           
         }
     }
