@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using IdeasIntoCodeFirstVersion.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,23 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
     {
         public IEnumerable<Message> Messages { get; set; }
         public string WhatMessagesToGet { get; set; }
+
+        public static GetMessagesViewModel GetMessagesReceivedOrSend(string whatMessagesToGet, UnitOfWork unitOfWork, int userID)
+        {
+            var messages = new GetMessagesViewModel();
+            if (whatMessagesToGet == "Send")
+            {
+                messages.Messages = unitOfWork.Messages.GetSendMessagesIncludeReceiver(userID);
+                messages.WhatMessagesToGet = whatMessagesToGet;
+            }
+            else if (whatMessagesToGet == "Received")
+            {
+                messages.Messages = unitOfWork.Messages.GetReceivedMessagesIncludeSender(userID);
+                messages.WhatMessagesToGet = whatMessagesToGet;
+            }
+            else
+                return messages;
+            return messages;
+        }
     }
 }

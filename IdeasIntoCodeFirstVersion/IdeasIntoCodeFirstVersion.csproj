@@ -204,6 +204,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CategoriesController.cs" />
+    <Compile Include="Controllers\Api\CommentsController.cs" />
     <Compile Include="Controllers\Api\DevelopersController.cs" />
     <Compile Include="Controllers\Api\FollowingsController.cs" />
     <Compile Include="Controllers\Api\MessagesController.cs" />
@@ -317,8 +318,10 @@
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
+    <Compile Include="Repositories\DeveloperNotificationRepository.cs" />
     <Compile Include="Repositories\DeveloperRepository.cs" />
     <Compile Include="Repositories\FollowsRepository.cs" />
+    <Compile Include="Repositories\MessageRepository.cs" />
     <Compile Include="Repositories\ProgrammingLanguageRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Startup.cs" />

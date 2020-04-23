@@ -1,4 +1,6 @@
-﻿using IdeasIntoCodeFirstVersion.Models;
+﻿using AutoMapper;
+using IdeasIntoCodeFirstVersion.DTOs;
+using IdeasIntoCodeFirstVersion.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,12 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         public List<ProgrammingLanguage> GetLanguages()
         {
             return _context.ProgrammingLanguages.ToList();
+        }
+
+        public IEnumerable<ProgrammingLanguageDto> GetProgrammingLanguageDtos()
+        {
+            return _context.ProgrammingLanguages.ToList()
+                .Select(Mapper.Map<ProgrammingLanguage, ProgrammingLanguageDto>);
         }
     }
 }

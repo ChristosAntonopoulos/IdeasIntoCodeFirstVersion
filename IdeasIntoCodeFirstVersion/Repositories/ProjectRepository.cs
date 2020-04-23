@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using IdeasIntoCodeFirstVersion.Dtos;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
@@ -14,6 +15,16 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         public ProjectRepository(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public Project GetProject(int? ID)
+        {
+            return _context.Projects.SingleOrDefault(p => p.ID == ID);
+        }
+
+        public Project GetProjectIncludeProgrammingLanguages(int? ID)
+        {
+            return _context.Projects.Include(p => p.ProgrammingLanguages).Single(p => p.ID == ID);
         }
 
         public Project FindProject(int? id)
@@ -32,6 +43,15 @@ namespace IdeasIntoCodeFirstVersion.Repositories
               .Include(p => p.Comments.Select(c => c.Developer).Select(c => c.User)).Single(p => p.ID == ID);
             
         }
+
+        public Project GetProjectIncludeTeamMembersAndAdmin(JoinDto joinDto)
+        {
+            return _context.Projects
+                .Include(p => p.Team.TeamMembers)
+                .Include(p => p.Admin)
+                .Where(p => p.ID == joinDto.ProjectID).SingleOrDefault();
+        }
+
         public List<Project> Get10NewestProjects()
         {
             return _context.Projects.OrderBy(p => p.TimeStamp)
@@ -39,6 +59,12 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(p => p.Admin.User)
                 .Take(10)
                 .ToList();
+        }
+
+        public bool CheckIfProjectExist(Developer developer, JoinDto joinDto)
+        {
+            return _context.Projects.Include(p => p.Team.TeamMembers)
+                .Any(d => d.Team.TeamMembers.Any(t => t.ID == developer.ID) && d.ID == joinDto.ProjectID);
         }
 
         public void Add(Project project)

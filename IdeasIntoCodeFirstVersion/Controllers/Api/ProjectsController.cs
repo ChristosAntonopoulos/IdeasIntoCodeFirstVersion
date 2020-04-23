@@ -30,9 +30,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         [HttpGet]
         public IHttpActionResult MyProject(int ID)
         {
-           var userId = context.Developers.Where(d => d.ID == ID).Select(d => d.UserID).FirstOrDefault();
+           //var userId = context.Developers.Where(d => d.ID == ID).Select(d => d.UserID).FirstOrDefault();
             
-            var developer = unitOfWork.Developers.GetDeveloperIncludeProject(userId);
+            var developer = unitOfWork.Developers.GetDeveloperIncludeProjectUsingId(ID);
 
             return Ok(developer);
         }
@@ -120,27 +120,22 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             return Ok(project);
         }
         [HttpPost]        
-        public IHttpActionResult Join(JoinDto joinDto)
+        public IHttpActionResult Join(JoinDto joinDto, int ID)
         {
-            var userId = User.Identity.GetUserId();
-            var developer = context.Developers.Where(d => d.User.Id == userId).SingleOrDefault();
+            //var userId = User.Identity.GetUserId();
+            var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(ID);
 
-            
-            var exists = context.Projects.Include(p => p.Team.TeamMembers)
-                .Any(d => d.Team.TeamMembers.Any(t => t.ID == developer.ID) &&
-                  d.ID == joinDto.ProjectID);   
+
+            var exists = unitOfWork.Projects.CheckIfProjectExist(developer, joinDto);  
 
             if (exists)
-                return BadRequest("The join already exists");           
-           
-            var project = context.Projects
-                .Include(p => p.Team.TeamMembers)
-                .Include(p=>p.Admin)
-                .Where(p=>p.ID==joinDto.ProjectID).SingleOrDefault();
+                return BadRequest("The join already exists");
+
+            var project = unitOfWork.Projects.GetProjectIncludeTeamMembersAndAdmin(joinDto);
 
             project.Team.TeamMembers.Add(developer);
-            context.DeveloperNotifications.Add(new DeveloperNotification(project.Admin,new Notification(developer,project,NotificationType.JoinRequest)));
-            context.SaveChanges();
+            unitOfWork.DeveloperNotifications.Add(project, developer);
+            unitOfWork.Complete();
             return Ok();
         }
     }

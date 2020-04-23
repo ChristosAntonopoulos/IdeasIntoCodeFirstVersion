@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using IdeasIntoCodeFirstVersion.Persistence;
 using IdeasIntoCodeFirstVersion.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
@@ -13,9 +14,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers
     public class MessageController : Controller
     {
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public MessageController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
 
         public void MarkAsRead(int messageID)
@@ -28,9 +31,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
        public ActionResult GetMessages(string whatMessagesToGet)
         {
             var userId = User.Identity.GetUserId();
-            var user = context.Developers
-                .Include(d => d.User)
-                .Single(d => d.User.Id == userId);
+            var user = unitOfWork.Developers.GetDeveloperIncludeUser(userId);
             var messages = new GetMessagesViewModel();
             if (whatMessagesToGet == "Send")
             {

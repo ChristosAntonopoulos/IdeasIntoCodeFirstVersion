@@ -53,6 +53,12 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
 
         //TED
+        public Developer GetDeveloperIncludeProjectUsingId(int ID)
+        {
+            return _context.Developers.Include(d => d.ProjectsOwned)
+          .Include(d => d.TeamParicipating.Select(t => t.Project)).SingleOrDefault(d => d.ID == ID);
+        }
+
         public Developer GetDeveloperWithUserUsingDeveloperId(int? ID)
         {
             return _context.Developers
@@ -87,6 +93,14 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(d => d.ProgrammingLanguages)
                 .Include(d => d.User)
                 .SingleOrDefault(p => p.User.Id == userID);
+        }
+
+        public Developer GetDeveloperIncludeFollowersIncludeUser(int ID)
+        {
+            return _context.Developers
+                .Include(d => d.Followers.Select(f => f.Follower.User))
+                .Include(d => d.User)
+                .Single(d => d.ID == ID);
         }
     }
 }

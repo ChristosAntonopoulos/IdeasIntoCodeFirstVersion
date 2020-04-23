@@ -32,5 +32,34 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(f => f.Follower.User)
                 .Take(10).ToList();
         }
+
+        public List<Developer> GetFollowers(int ID)
+        {
+            return _context.Follows.Where(f => f.FolloweeID == ID).Select(f => f.Follower)
+                .Include(f => f.User)
+                .ToList();
+        }
+
+        public List<Developer> GetFollowees(int ID)
+        {
+            return _context.Follows.Where(f => f.FollowerID == ID).Select(f => f.Follower)
+                .Include(f => f.User)
+                .ToList();
+        }
+
+        public Follow GetFollow(int followerID, int followeeID)
+        {
+            return _context.Follows.Single(f => f.FolloweeID == followeeID && f.FollowerID == followerID);
+        }
+        
+        public void Add(Follow following)
+        {
+            _context.Follows.Add(following);
+        }
+
+        public void Delete(Follow follow)
+        {
+
+        }
     }
 }

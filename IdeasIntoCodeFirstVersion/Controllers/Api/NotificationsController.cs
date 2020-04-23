@@ -1,4 +1,5 @@
 ﻿using IdeasIntoCodeFirstVersion.Models;
+using IdeasIntoCodeFirstVersion.Persistence;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -15,26 +16,19 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     public class NotificationsController : ApiController
     {
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
 
         public NotificationsController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
 
         [HttpGet]
-        public IEnumerable<Notification> GetNotifications(int ID)
+        public IHttpActionResult GetNotifications(int ID)
         {
-           
-            var notifications = context.DeveloperNotifications
-                .Where(un => un.Developer.ID == ID && !un.IsRead)
-                .Select(un => un.Notification)
-                .Include(n => n.Developer)
-                .Include(n => n.Project)
-                .Include(n => n.Developer.User)
-                .ToList();
-
-            return notifications;
-          
+            var notifications = unitOfWork.DeveloperNotifications.GetNotificationsIncludeProjectDeveloperUser(ID);
+            return Ok(notifications);
         }
     }
 }
