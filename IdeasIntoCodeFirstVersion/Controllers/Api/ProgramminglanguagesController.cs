@@ -16,12 +16,10 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     public class ProgrammingLanguagesController : ApiController
     {
 
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
-        public ProgrammingLanguagesController()
+        private readonly IUnitOfWork unitOfWork;
+        public ProgrammingLanguagesController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]

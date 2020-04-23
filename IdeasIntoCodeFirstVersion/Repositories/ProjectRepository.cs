@@ -8,7 +8,7 @@ using IdeasIntoCodeFirstVersion.Dtos;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class ProjectRepository
+    public class ProjectRepository : IProjectRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -20,6 +20,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         public Project GetProject(int? ID)
         {
             return _context.Projects.SingleOrDefault(p => p.ID == ID);
+        }
+
+        public IQueryable<Project> GetProjects()
+        {
+            return _context.Projects.AsQueryable();
         }
 
         public Project GetProjectIncludeProgrammingLanguages(int? ID)
@@ -46,7 +51,7 @@ namespace IdeasIntoCodeFirstVersion.Repositories
               .Include(p => p.ProgrammingLanguages)
               .Include(p => p.ProjectCategories)
               .Include(p => p.Comments.Select(c => c.Developer).Select(c => c.User)).Single(p => p.ID == ID);
-            
+
         }
 
         public Project GetProjectIncludeTeamMembersAndAdmin(JoinDto joinDto)

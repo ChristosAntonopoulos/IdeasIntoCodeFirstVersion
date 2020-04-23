@@ -16,12 +16,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     public class CategoriesController : ApiController
     {
 
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
-        public CategoriesController()
+        
+        private readonly IUnitOfWork unitOfWork;
+        public CategoriesController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            
+            this.unitOfWork = unitOfWork;
         }
 
         public IHttpActionResult GetCategories()
@@ -101,7 +101,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
         public void UpdateProjectCategory(Project project, string[] category)
         {
-            foreach (var categoriesdb in context.ProjectCategories)
+            foreach (var categoriesdb in unitOfWork.Categories.GetCategories())
             {
                 if (category.Contains(categoriesdb.ID.ToString()))
                 {

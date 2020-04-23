@@ -16,13 +16,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MessagesController : ApiController
     {
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
+        
+        private readonly IUnitOfWork unitOfWork;
 
-        public MessagesController()
+        public MessagesController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]

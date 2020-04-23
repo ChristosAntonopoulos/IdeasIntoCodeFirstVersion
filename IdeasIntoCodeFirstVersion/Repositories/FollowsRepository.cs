@@ -7,7 +7,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class FollowsRepository
+    public class FollowsRepository : IFollowsRepository
     {
         private readonly ApplicationDbContext _context;
         public FollowsRepository(ApplicationDbContext context)
@@ -51,7 +51,7 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         {
             return _context.Follows.Single(f => f.FolloweeID == followeeID && f.FollowerID == followerID);
         }
-        
+
         public void Add(Follow following)
         {
             _context.Follows.Add(following);

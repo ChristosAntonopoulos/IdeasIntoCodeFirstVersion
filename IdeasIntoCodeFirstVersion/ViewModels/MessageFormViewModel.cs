@@ -30,7 +30,7 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
         public DateTime DatePosted { get; set; }
         public IEnumerable<ApplicationUser> Followers { get; set; }
 
-        public static MessageFormViewModel GetMessageFormViewModel(int ID, Developer currentUser, UnitOfWork unitOfWork)
+        public static MessageFormViewModel GetMessageFormViewModel(int ID, Developer currentUser, IUnitOfWork unitOfWork)
         {
             var viewModel = new MessageFormViewModel();
             if (ID != currentUser.ID)

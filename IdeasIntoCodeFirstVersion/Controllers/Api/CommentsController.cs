@@ -12,12 +12,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
     public class CommentsController : ApiController
     {
-        private ApplicationDbContext context;
-        private UnitOfWork unitOfWork;
-        public CommentsController()
+        
+        private IUnitOfWork unitOfWork;
+        public CommentsController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            
+            this.unitOfWork = unitOfWork;
         }
 
         // Post: Comment

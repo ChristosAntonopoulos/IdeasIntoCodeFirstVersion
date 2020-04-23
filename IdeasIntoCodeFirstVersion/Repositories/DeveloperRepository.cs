@@ -7,7 +7,7 @@ using System.Data.Entity;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class DeveloperRepository
+    public class DeveloperRepository : IDeveloperRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -41,10 +41,10 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         //api
         public Developer GetDeveloperIncludeUser(int developerId)
         {
-            return _context.Developers.Include(d => d.User).SingleOrDefault(d=>d.ID==developerId);
+            return _context.Developers.Include(d => d.User).SingleOrDefault(d => d.ID == developerId);
 
         }
-       
+
 
         public int GetAdminId(string userID)
         {
@@ -101,6 +101,21 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(d => d.Followers.Select(f => f.Follower.User))
                 .Include(d => d.User)
                 .Single(d => d.ID == ID);
+        }
+
+        public bool CheckIfCurrentUserFollowsUserOfProfile(int ID, int currentUserID)
+        {
+            return _context.Follows.Any(f => f.Follower.ID == currentUserID && f.Followee.ID == ID);
+        }
+
+        public IQueryable<Developer> GetDevelopersIncludeUsers()
+        {
+            return _context.Developers.Include(d => d.User);
+        }
+
+        public void Add(Developer developer)
+        {
+            _context.Developers.Add(developer);
         }
     }
 }

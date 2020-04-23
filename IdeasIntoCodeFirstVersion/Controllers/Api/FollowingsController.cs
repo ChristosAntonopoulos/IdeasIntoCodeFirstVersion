@@ -17,17 +17,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class FollowingsController : ApiController
     {
-        private ApplicationDbContext context;
-
-        private readonly UnitOfWork unitOfWork;
-        public FollowingsController()
+        
+        private readonly IUnitOfWork unitOfWork;
+        public FollowingsController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            
+            this.unitOfWork = unitOfWork;
         }
         public IEnumerable<Developer> GetListOfFollowers(int ID, string list)
         {
-            var developer = context.Developers.SingleOrDefault(d => d.ID == ID);
+            var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(ID);
             var listToDisplay = new List<Developer>();
             if (list == "Followers")
             {
@@ -47,7 +46,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             
             var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(followingDto.FollowerID);
             var following = new Follow(developer.ID, followingDto.FolloweeID);
-            context.DeveloperNotifications.Add(new DeveloperNotification(followingDto.FolloweeID, new Notification(developer, NotificationType.Followed)));
+            unitOfWork.DeveloperNotifications.Add(developer, followingDto.FolloweeID);
             unitOfWork.Follows.Add(following);
             unitOfWork.Complete();
             return Ok();

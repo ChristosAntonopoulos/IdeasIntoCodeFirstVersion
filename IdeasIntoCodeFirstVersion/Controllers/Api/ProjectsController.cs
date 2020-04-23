@@ -19,12 +19,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProjectsController : ApiController
     {
-        private ApplicationDbContext context;
-        private UnitOfWork unitOfWork;
-        public ProjectsController()
+
+        private IUnitOfWork unitOfWork;
+        public ProjectsController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]
