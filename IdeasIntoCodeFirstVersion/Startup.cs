@@ -12,7 +12,7 @@ namespace IdeasIntoCodeFirstVersion
            // app.UseCors(CorsOptions.AllowAll);
             app.MapSignalR();
             ConfigureAuth(app);
-            RegisterAuth(app);
+            //RegisterAuth(app);
         }
     }
 }

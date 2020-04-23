@@ -13,6 +13,7 @@ using Microsoft.Owin.Security;
 using System.Web.Http.Cors;
 using System.Web;
 
+
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
 
@@ -93,17 +94,42 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             unitOfWork = new UnitOfWork(context);
         }
 
+        //[HttpPost]
+        ////[AllowAnonymous]
+        ////[ValidateAntiForgeryToken]
+
+        //public async Task<IHttpActionResult> Login(LoginViewModel model)
+        //{
+           
+        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+        //    var user = context.Users.SingleOrDefault(u => u.Email == model.Email);
+        //    var userId = user.Id;
+        //    var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
+
+        //    return Ok(developer);
+        //}
+
         [HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        
         public async Task<IHttpActionResult> Login(LoginViewModel model)
         {
-           
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            var user = context.Users.SingleOrDefault(u => u.Email == model.Email);
-            var userId = user.Id;
-            var developer = context.Developers.SingleOrDefault(d => d.UserID == userId);
+          
 
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var developer = context.Developers.SingleOrDefault(d => d.ID == 1);
+
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        var user = context.Users.SingleOrDefault(u => u.Email == model.Email);
+            //        var userId = user.Id;
+                    
+
+            //        return Ok(developer);
+            //}
             return Ok(developer);
         }
 
