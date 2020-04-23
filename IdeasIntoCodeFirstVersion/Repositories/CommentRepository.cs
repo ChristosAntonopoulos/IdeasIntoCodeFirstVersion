@@ -25,5 +25,10 @@ namespace IdeasIntoCodeFirstVersion.Repositories
                 .Include(c => c.Project.Admin)
                 .Take(10).ToList();
         }
+
+        public void Add(Comment comment)
+        {
+            _context.Comments.Add(comment);
+        }
     }
 }

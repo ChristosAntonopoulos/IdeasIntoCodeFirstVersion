@@ -65,6 +65,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
 
             return Ok( developer);
         }
+
+        [HttpGet]
         public IHttpActionResult GetDeveloper(int ID)
         {
             //var userId = User.Identity.GetUserId();
@@ -114,13 +116,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
 
 
         [HttpGet]
-        public IHttpActionResult NewsFeed()
+        public IHttpActionResult NewsFeed(int ID)
         {
            // var userId = User.Identity.GetUserId();
-            var userId= "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
-            var developerId = unitOfWork.Developers.GetDeveloperIDUsingUserID(userId);
+            //var userId= "c8b92021-4913-4a83-a79f-4d56ef1a12bc";
+            //var developerId = unitOfWork.Developers.getdevelop(userId);
             var newsFeedList = new List<INewsFeed>();
-            var follows = unitOfWork.Follows.GetFolloweesIdsUsingDeveloperId(developerId);
+            var follows = unitOfWork.Follows.GetFolloweesIdsUsingDeveloperId(ID);
             var comments = unitOfWork.Comments.GetCommentsOfFollowees(follows);
             //Εδω φερνει λιστα απο τους followers των followees?
             var followers = unitOfWork.Follows.GetFollowersOfFollowees(follows);

@@ -11,5 +11,14 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
       
         public Project Project { get; set; }
         public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+
+        public ProjectWithProgrammingLanguagesViewModel()
+        { }
+
+        public ProjectWithProgrammingLanguagesViewModel(Project project, List<ProgrammingLanguage> programmingLanguages)
+        {
+            Project = project;
+            ProgrammingLanguages = programmingLanguages;
+        }
     }
 }

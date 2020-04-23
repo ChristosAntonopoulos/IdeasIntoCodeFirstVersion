@@ -17,6 +17,9 @@ namespace IdeasIntoCodeFirstVersion.Persistence
         public ProjectRepository Projects { get;private set; }
         public FollowsRepository Follows { get; private set; }
         public CommentRepository Comments { get; private set; }
+        public MessageRepository Messages { get; private set; }
+        public DeveloperNotificationRepository DeveloperNotifications { get; private set; }
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -26,6 +29,8 @@ namespace IdeasIntoCodeFirstVersion.Persistence
             Projects = new ProjectRepository(context);
             Follows = new FollowsRepository(context);
             Comments = new CommentRepository(context);
+            Messages = new MessageRepository(context);
+            DeveloperNotifications = new DeveloperNotificationRepository(context);
         }
 
         public void Complete()

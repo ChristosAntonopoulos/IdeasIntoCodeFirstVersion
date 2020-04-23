@@ -19,6 +19,18 @@ namespace IdeasIntoCodeFirstVersion.Models
         [Required]
         public int ProjectID { get; set; }
         public Project Project { get; set; }
+
+
+        public Comment()
+        { }
+
+        public Comment(string commentText, Developer developer, int currentProjectID)
+        {
+            Text = commentText;
+            ProjectID = currentProjectID;
+            DeveloperID = developer.ID;
+            TimeStamp = DateTime.Now;
+        }
     }
 
 }
