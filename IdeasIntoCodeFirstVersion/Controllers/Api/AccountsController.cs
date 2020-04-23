@@ -36,7 +36,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         {
             get
             {
-                return _signInManager ?? HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.Current.GetOwinContext()
+                    .Get<ApplicationSignInManager>();
             }
             private set
             {
@@ -48,7 +49,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         {
             get
             {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.Current.GetOwinContext()
+                    .GetUserManager<ApplicationUserManager>();
             }
             private set
             {

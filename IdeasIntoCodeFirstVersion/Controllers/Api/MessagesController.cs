@@ -9,9 +9,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MessagesController : ApiController
     {
         private ApplicationDbContext context;
@@ -29,6 +31,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
              var messages = unitOfWork.Messages.GetMessagesReceived(id);
             return Ok(messages);
         }
+        [HttpPost]
         public void MarkAsRead(int messageID)
         {
             var message = unitOfWork.Messages.GetMessage(messageID);
@@ -36,15 +39,32 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
             unitOfWork.Complete();
         }
 
-        public IHttpActionResult GetMessages(string whatMessagesToGet, int developerID)
+        [HttpGet]
+        public IHttpActionResult AllReceivedMessages(int ID)
         {
-            //var userId = User.Identity.GetUserId();
-            var user = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(developerID);
-            var messages = GetMessagesViewModel.GetMessagesReceivedOrSend(whatMessagesToGet, unitOfWork, user.ID);
+            var user = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(ID);
+            var messages = GetMessagesViewModel.GetMessagesReceivedOrSend("Received", unitOfWork, user.ID);
             return Ok(messages);
         }
+        [HttpGet]
+        public IHttpActionResult GetSendMessages(int ID)
+        {
+            //var userId = User.Identity.GetUserId();
+            var user = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(ID);
+            var messages = GetMessagesViewModel.GetMessagesReceivedOrSend("Send", unitOfWork, user.ID);
+            return Ok(messages);
+        }
+        //public IHttpActionResult GetMessages(string whatMessagesToGet, int developerID)
+        //{
+        //    //var userId = User.Identity.GetUserId();
+        //    var user = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(developerID);
+        //    var messages = GetMessagesViewModel.GetMessagesReceivedOrSend(whatMessagesToGet, unitOfWork, user.ID);
+        //    return Ok(messages);
+        //}
 
         // GET: Message
+        [HttpGet]
+        [Route("api/messages/sendMessage/{id},{currentId}")]
         public IHttpActionResult SendMessage(int ID, int currentUserID)
         {
             //var userId = User.Identity.GetUserId();

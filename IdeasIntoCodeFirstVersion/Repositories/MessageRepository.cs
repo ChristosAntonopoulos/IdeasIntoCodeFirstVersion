@@ -27,10 +27,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
         public IEnumerable<Message> GetSendMessagesIncludeReceiver(int userID)
         {
-           return _context.Messages
+           var mes= _context.Messages
                    .Include(m => m.Receiver)
                    .Include(m => m.Receiver.User)
                    .Where(m => m.SenderID == userID).ToList();
+            return mes;
         }
 
         public IEnumerable<Message> GetReceivedMessagesIncludeSender(int userID)
