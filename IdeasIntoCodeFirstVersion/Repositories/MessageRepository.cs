@@ -7,7 +7,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class MessageRepository
+    public class MessageRepository : IMessageRepository
     {
         private readonly ApplicationDbContext _context;
         public MessageRepository(ApplicationDbContext context)
@@ -27,10 +27,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
         public IEnumerable<Message> GetSendMessagesIncludeReceiver(int userID)
         {
-           return _context.Messages
-                   .Include(m => m.Receiver)
-                   .Include(m => m.Receiver.User)
-                   .Where(m => m.SenderID == userID).ToList();
+            var mes = _context.Messages
+                    .Include(m => m.Receiver)
+                    .Include(m => m.Receiver.User)
+                    .Where(m => m.SenderID == userID).ToList();
+            return mes;
         }
 
         public IEnumerable<Message> GetReceivedMessagesIncludeSender(int userID)

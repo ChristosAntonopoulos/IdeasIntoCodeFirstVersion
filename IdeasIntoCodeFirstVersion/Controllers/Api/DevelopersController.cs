@@ -20,12 +20,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DevelopersController : ApiController
     {
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
-        public DevelopersController()
+        
+        private readonly IUnitOfWork unitOfWork;
+        public DevelopersController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork = unitOfWork;
         }
 
 
@@ -33,9 +32,9 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         [Route("api/developers/data/{searchString}")]
         public IHttpActionResult Data(string searchString)
         {
-           // string searchString=id ;
-            var developers = context.Developers.Include(d => d.User);
-            var projects = context.Projects.AsQueryable();
+            // string searchString=id ;
+            var developers = unitOfWork.Developers.GetDevelopersIncludeUsers();
+            var projects = unitOfWork.Projects.GetProjects();
 
 
             if (!string.IsNullOrEmpty(searchString))
@@ -86,7 +85,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         //}
         //GET/ API/developers/developerprofile/
         [HttpGet]
-        public IHttpActionResult DeveloperProfile(int ID )
+        public IHttpActionResult DeveloperProfile(int ID, int currentUserId)
         {
             //var userId = User.Identity.GetUserId();
 
@@ -94,7 +93,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             var viewModel = new DeveloperProfileViewModel
             {
                 DeveloperOfProfile = developer,
-                ConnectedDeveloperAlreadyFollowsProfileDeveloper = context.Follows.Any(f => f.Follower.ID == ID && f.Followee.ID == ID),
+                ConnectedDeveloperAlreadyFollowsProfileDeveloper = unitOfWork.Developers.CheckIfCurrentUserFollowsUserOfProfile(ID, currentUserId),
                 ShowActionButtons = !(developer.ID == ID)
             };
 
@@ -109,7 +108,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             developerDb.GitHub = developer.GitHub;
             developerDb.Linkedin = developer.Linkedin;
             developerDb.BirthDate = developer.BirthDate;
-            context.SaveChanges();
+            unitOfWork.Complete();
            
             return Ok(developerDb);
         }

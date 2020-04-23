@@ -9,22 +9,24 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
     public class CategoriesController : ApiController
     {
 
-        private ApplicationDbContext context;
-        public CategoriesController()
+        
+        private readonly IUnitOfWork unitOfWork;
+        public CategoriesController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
+            
+            this.unitOfWork = unitOfWork;
         }
 
         public IHttpActionResult GetCategories()
         {
-            var categories = context.ProjectCategories.ToList()
-                .Select(Mapper.Map<ProjectCategory, ProjectCategoryDto>);
+            var categories = unitOfWork.Categories.GetCategoriesDtos();
             return Ok(categories);
         }
 
@@ -33,7 +35,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         {
             var project = new ProjectWithCategoriesViewModel()
             {
-                ProjectCategories = context.ProjectCategories.ToList()
+                ProjectCategories = unitOfWork.Categories.GetCategories()
             };
             return Ok(project);
         }
@@ -46,13 +48,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 return Ok();
             }
 
-            Project project = context.Projects
-                .SingleOrDefault(p => p.ID == id);
+            Project project = unitOfWork.Projects.GetProject(id);
             //if (trainer == null)
             //{
             //    return HttpNotFound();
             //}
-            var categories = context.ProjectCategories.ToList();
+            var categories = unitOfWork.Categories.GetCategories();
 
 
             var viewmodel = new ProjectWithCategoriesViewModel()
@@ -75,11 +76,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 {
                     PopulateProjectCategory(project, category);
                 }
-                context.Projects.Add(project);
+                unitOfWork.Projects.Add(project);
             }
             else
             {
-                var projectDb = context.Projects.Include(p => p.ProjectCategories).Single(p => p.ID == project.ID);
+                var projectDb = unitOfWork.Projects.GetProjectIncludeProjectCategories(project.ID);
                 if (category != null)
                 {
                     if (projectDb.ProjectCategories.Count() == 0)
@@ -94,13 +95,13 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
 
             }
-            context.SaveChanges();
+            unitOfWork.Complete();
             return Ok(project);
         }
 
         public void UpdateProjectCategory(Project project, string[] category)
         {
-            foreach (var categoriesdb in context.ProjectCategories)
+            foreach (var categoriesdb in unitOfWork.Categories.GetCategories())
             {
                 if (category.Contains(categoriesdb.ID.ToString()))
                 {
@@ -121,7 +122,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
         public void PopulateProjectCategory(Project project, string[] category)
         {
-            var categoriesDb = context.ProjectCategories.ToList();
+            var categoriesDb = unitOfWork.Categories.GetCategories();
             //var trainerCourses = new HashSet<int>(trainer.Courses.Select(c => c.ID));
             foreach (var categoryId in category)
             {

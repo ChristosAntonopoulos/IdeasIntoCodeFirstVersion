@@ -15,13 +15,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class NotificationsController : ApiController
     {
-        private ApplicationDbContext context;
-        private readonly UnitOfWork unitOfWork;
+        
+        private readonly IUnitOfWork unitOfWork;
 
-        public NotificationsController()
+        public NotificationsController(IUnitOfWork unitOfWork)
         {
-            context = new ApplicationDbContext();
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]

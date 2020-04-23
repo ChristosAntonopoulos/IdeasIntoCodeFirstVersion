@@ -13,7 +13,7 @@ namespace IdeasIntoCodeFirstVersion.ViewModels
         public IEnumerable<Message> Messages { get; set; }
         public string WhatMessagesToGet { get; set; }
 
-        public static GetMessagesViewModel GetMessagesReceivedOrSend(string whatMessagesToGet, UnitOfWork unitOfWork, int userID)
+        public static GetMessagesViewModel GetMessagesReceivedOrSend(string whatMessagesToGet, IUnitOfWork unitOfWork, int userID)
         {
             var messages = new GetMessagesViewModel();
             if (whatMessagesToGet == "Send")

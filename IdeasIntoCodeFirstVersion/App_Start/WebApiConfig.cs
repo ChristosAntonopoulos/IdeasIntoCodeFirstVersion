@@ -25,8 +25,6 @@ namespace IdeasIntoCodeFirstVersion
 
             config.MapHttpAttributeRoutes();
 
-            //config.MapMvcAttributeRoutes();
-
             config.Routes.MapHttpRoute(
                        "DevelopersData",
                     "api/developers/data/{searchString}",

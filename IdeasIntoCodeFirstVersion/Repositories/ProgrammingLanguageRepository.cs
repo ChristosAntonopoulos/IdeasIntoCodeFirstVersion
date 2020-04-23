@@ -8,7 +8,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class ProgrammingLanguageRepository
+    public class ProgrammingLanguageRepository : IProgrammingLanguageRepository
     {
         private readonly ApplicationDbContext _context;
 

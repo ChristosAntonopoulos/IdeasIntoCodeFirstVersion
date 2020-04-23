@@ -7,18 +7,18 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Persistence
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoryRepository Categories { get;private set; }
-        public ProgrammingLanguageRepository ProgrammingLanguages { get;private set; }
-        public DeveloperRepository Developers { get;private set; }
-        public ProjectRepository Projects { get;private set; }
-        public FollowsRepository Follows { get; private set; }
-        public CommentRepository Comments { get; private set; }
-        public MessageRepository Messages { get; private set; }
-        public DeveloperNotificationRepository DeveloperNotifications { get; private set; }
+        public ICategoryRepository Categories { get; private set; }
+        public IProgrammingLanguageRepository ProgrammingLanguages { get; private set; }
+        public IDeveloperRepository Developers { get; private set; }
+        public IProjectRepository Projects { get; private set; }
+        public IFollowsRepository Follows { get; private set; }
+        public ICommentRepository Comments { get; private set; }
+        public IMessageRepository Messages { get; private set; }
+        public IDeveloperNotificationRepository DeveloperNotifications { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {

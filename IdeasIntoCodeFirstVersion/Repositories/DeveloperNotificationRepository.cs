@@ -7,7 +7,7 @@ using System.Web;
 
 namespace IdeasIntoCodeFirstVersion.Repositories
 {
-    public class DeveloperNotificationRepository
+    public class DeveloperNotificationRepository : IDeveloperNotificationRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -24,6 +24,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
         public void Add(Project project, Developer developer)
         {
             _context.DeveloperNotifications.Add(new DeveloperNotification(project.Admin, new Notification(developer, project, NotificationType.JoinRequest)));
+        }
+
+        public void Add(Developer developer, int followeeID)
+        {
+            _context.DeveloperNotifications.Add(new DeveloperNotification(followeeID, new Notification(developer, NotificationType.Followed)));
         }
 
         public List<Notification> GetNotificationsIncludeProjectDeveloperUser(int ID)
