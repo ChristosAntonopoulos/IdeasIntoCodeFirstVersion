@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using IdeasIntoCodeFirstVersion.Persistence;
 
 namespace IdeasIntoCodeFirstVersion.Controllers.Api
 {
@@ -16,15 +17,16 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
     {
 
         private ApplicationDbContext context;
+        private readonly UnitOfWork unitOfWork;
         public CategoriesController()
         {
             context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(context);
         }
 
         public IHttpActionResult GetCategories()
         {
-            var categories = context.ProjectCategories.ToList()
-                .Select(Mapper.Map<ProjectCategory, ProjectCategoryDto>);
+            var categories = unitOfWork.Categories.GetCategoriesDtos();
             return Ok(categories);
         }
 
@@ -33,7 +35,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         {
             var project = new ProjectWithCategoriesViewModel()
             {
-                ProjectCategories = context.ProjectCategories.ToList()
+                ProjectCategories = unitOfWork.Categories.GetCategories()
             };
             return Ok(project);
         }
@@ -46,13 +48,12 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 return Ok();
             }
 
-            Project project = context.Projects
-                .SingleOrDefault(p => p.ID == id);
+            Project project = unitOfWork.Projects.GetProject(id);
             //if (trainer == null)
             //{
             //    return HttpNotFound();
             //}
-            var categories = context.ProjectCategories.ToList();
+            var categories = unitOfWork.Categories.GetCategories();
 
 
             var viewmodel = new ProjectWithCategoriesViewModel()
@@ -75,11 +76,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                 {
                     PopulateProjectCategory(project, category);
                 }
-                context.Projects.Add(project);
+                unitOfWork.Projects.Add(project);
             }
             else
             {
-                var projectDb = context.Projects.Include(p => p.ProjectCategories).Single(p => p.ID == project.ID);
+                var projectDb = unitOfWork.Projects.GetProjectIncludeProjectCategories(project.ID);
                 if (category != null)
                 {
                     if (projectDb.ProjectCategories.Count() == 0)
@@ -94,7 +95,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
 
             }
-            context.SaveChanges();
+            unitOfWork.Complete();
             return Ok(project);
         }
 
@@ -121,7 +122,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
         public void PopulateProjectCategory(Project project, string[] category)
         {
-            var categoriesDb = context.ProjectCategories.ToList();
+            var categoriesDb = unitOfWork.Categories.GetCategories();
             //var trainerCourses = new HashSet<int>(trainer.Courses.Select(c => c.ID));
             foreach (var categoryId in category)
             {

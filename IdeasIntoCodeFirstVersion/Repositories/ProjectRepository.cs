@@ -27,6 +27,11 @@ namespace IdeasIntoCodeFirstVersion.Repositories
             return _context.Projects.Include(p => p.ProgrammingLanguages).Single(p => p.ID == ID);
         }
 
+        public Project GetProjectIncludeProjectCategories(int? ID)
+        {
+            return _context.Projects.Include(p => p.ProjectCategories).Single(p => p.ID == ID);
+        }
+
         public Project FindProject(int? id)
         {
             return _context.Projects.Find(id);
