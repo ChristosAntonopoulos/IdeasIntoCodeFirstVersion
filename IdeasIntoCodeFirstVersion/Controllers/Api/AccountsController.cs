@@ -80,7 +80,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href="" + callbackUrl + "">here</a>");
                     //UserManager.AddToRole(user.Id, "User");
-                    context.Developers.Add(new Developer { UserID = user.Id, DateCreated = DateTime.Now, BirthDate = DateTime.Now });
+                    context.Developers.Add(new Developer { UserID = user.Id, DateCreated = DateTime.Now, BirthDate = model.BirthDate });
                     context.SaveChanges();
 
                     newdev=context.Developers.FirstOrDefault(d => d.User.Email == model.Email);

@@ -45,7 +45,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers
                 viewModel.IsActive();
             }
 
-            project.ModifyInActive(developer, viewModel);
+            //project.ModifyInActive(developer, viewModel);
            
             return View(viewModel);
         }

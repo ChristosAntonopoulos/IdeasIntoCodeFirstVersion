@@ -263,10 +263,6 @@
     <Compile Include="Migrations\202002271721541_Initial.Designer.cs">
       <DependentUpon>202002271721541_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002271808157_PopulateCategoriesProgrammingLanguages.cs" />
-    <Compile Include="Migrations\202002271808157_PopulateCategoriesProgrammingLanguages.Designer.cs">
-      <DependentUpon>202002271808157_PopulateCategoriesProgrammingLanguages.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202002271827480_AddFollowToModel.cs" />
     <Compile Include="Migrations\202002271827480_AddFollowToModel.Designer.cs">
       <DependentUpon>202002271827480_AddFollowToModel.cs</DependentUpon>
@@ -311,10 +307,6 @@
     <Compile Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.Designer.cs">
       <DependentUpon>202003271759314_AddPictureAndDescriptionToDeveloper.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003290856595_populateDB.cs" />
-    <Compile Include="Migrations\202003290856595_populateDB.Designer.cs">
-      <DependentUpon>202003290856595_populateDB.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202003281433093_MessageIsRead.cs" />
     <Compile Include="Migrations\202003281433093_MessageIsRead.Designer.cs">
       <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
@@ -322,6 +314,10 @@
     <Compile Include="Migrations\202004020754249_AddLinkedintoDeveloperModel.cs" />
     <Compile Include="Migrations\202004020754249_AddLinkedintoDeveloperModel.Designer.cs">
       <DependentUpon>202004020754249_AddLinkedintoDeveloperModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004241041287_populateDb.cs" />
+    <Compile Include="Migrations\202004241041287_populateDb.Designer.cs">
+      <DependentUpon>202004241041287_populateDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1154,9 +1150,6 @@
     <EmbeddedResource Include="Migrations\202002271721541_Initial.resx">
       <DependentUpon>202002271721541_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002271808157_PopulateCategoriesProgrammingLanguages.resx">
-      <DependentUpon>202002271808157_PopulateCategoriesProgrammingLanguages.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002271827480_AddFollowToModel.resx">
       <DependentUpon>202002271827480_AddFollowToModel.cs</DependentUpon>
     </EmbeddedResource>
@@ -1190,14 +1183,14 @@
     <EmbeddedResource Include="Migrations\202003271759314_AddPictureAndDescriptionToDeveloper.resx">
       <DependentUpon>202003271759314_AddPictureAndDescriptionToDeveloper.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003290856595_populateDB.resx">
-      <DependentUpon>202003290856595_populateDB.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003281433093_MessageIsRead.resx">
       <DependentUpon>202003281433093_MessageIsRead.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004020754249_AddLinkedintoDeveloperModel.resx">
       <DependentUpon>202004020754249_AddLinkedintoDeveloperModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004241041287_populateDb.resx">
+      <DependentUpon>202004241041287_populateDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -37,11 +37,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult ProjectProfile(int ID)
+        public IHttpActionResult ProjectProfile(int ID,int developerID)
         {
             
             //var userId = User.Identity.GetUserId();
-            var developer = unitOfWork.Developers.GetDeveloperIncludeUser(ID);
+            var developer = unitOfWork.Developers.GetDeveloperIncludeUser(developerID);
             
             var project = unitOfWork.Projects.GetProjectWithProgrammingLanguagesAndCategories(ID);
 
@@ -52,7 +52,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
                 viewModel.IsActive();
             }
 
-            project.ModifyInActive(developer, viewModel);
+            //project.ModifyInActive(developer, viewModel);
 
             return Ok(viewModel);
            
@@ -76,9 +76,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             
             var project = unitOfWork.Projects.FindProject(ID);
 
-            //if (project == null)
-            //    return HttpNotFound();
-            //allagh
+            
             var viewModel = new ProjectFormViewModel(project, unitOfWork.Categories.GetCategories(), unitOfWork.ProgrammingLanguages.GetLanguages());
 
             return Ok( viewModel.Project);
