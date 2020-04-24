@@ -62,6 +62,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
 
         public async Task<IHttpActionResult> Register(RegisterViewModel model)
         {
+            Developer newdev = new Developer();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, LastName = model.LastName };
@@ -82,12 +83,11 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
                     context.Developers.Add(new Developer { UserID = user.Id, DateCreated = DateTime.Now, BirthDate = DateTime.Now });
                     context.SaveChanges();
 
-                   
+                    newdev=context.Developers.FirstOrDefault(d => d.User.Email == model.Email);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            return Ok(model);
+            return Ok(newdev);
             
         }
         public AccountsController()

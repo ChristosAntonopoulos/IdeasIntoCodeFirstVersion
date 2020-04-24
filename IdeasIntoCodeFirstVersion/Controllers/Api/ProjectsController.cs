@@ -60,20 +60,20 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
 
        
         [HttpGet]
-        public IHttpActionResult New()
+        public IHttpActionResult New(int ID)
         {
             //var userID = User.Identity.GetUserId();
-            var ID = 1;
+           
             //var viewModel = new ProjectFormViewModel(new Project(unitOfWork.Developers.GetAdminId(userID)));
             var viewModel = new ProjectFormViewModel(new Project(ID));
 
-            return Ok( viewModel);
+            return Ok( viewModel.Project);
         }
 
         [HttpGet]
         public IHttpActionResult Edit(int ID)
         {
-            ID = 1;
+            
             var project = unitOfWork.Projects.FindProject(ID);
 
             //if (project == null)
@@ -81,7 +81,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             //allagh
             var viewModel = new ProjectFormViewModel(project, unitOfWork.Categories.GetCategories(), unitOfWork.ProgrammingLanguages.GetLanguages());
 
-            return Ok( viewModel);
+            return Ok( viewModel.Project);
         }
 
 

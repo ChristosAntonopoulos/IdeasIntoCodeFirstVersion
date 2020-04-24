@@ -85,7 +85,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
         //}
         //GET/ API/developers/developerprofile/
         [HttpGet]
-        public IHttpActionResult DeveloperProfile(int ID, int currentUserId)
+        public IHttpActionResult DeveloperProfile(int ID,int currentUserID)
         {
             //var userId = User.Identity.GetUserId();
 
@@ -93,7 +93,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             var viewModel = new DeveloperProfileViewModel
             {
                 DeveloperOfProfile = developer,
-                ConnectedDeveloperAlreadyFollowsProfileDeveloper = unitOfWork.Developers.CheckIfCurrentUserFollowsUserOfProfile(ID, currentUserId),
+                ConnectedDeveloperAlreadyFollowsProfileDeveloper = unitOfWork.Developers.CheckIfCurrentUserFollowsUserOfProfile(ID, currentUserID),
                 ShowActionButtons = !(developer.ID == ID)
             };
 

@@ -9,10 +9,9 @@ namespace IdeasIntoCodeFirstVersion
     {
         public void Configuration(IAppBuilder app)
         {
-           // app.UseCors(CorsOptions.AllowAll);
+            //app.UseCors(CorsOptions.AllowAll);
             app.MapSignalR();
-            ConfigureAuth(app);
-            //RegisterAuth(app);
+            ConfigureAuth(app);            
         }
     }
 }

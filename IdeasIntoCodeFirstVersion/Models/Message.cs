@@ -26,7 +26,6 @@ namespace IdeasIntoCodeFirstVersion.Models
         public int ReceiverID { get; set; }
         public Developer Receiver { get; set; }
         public DateTime DatePosted { get; set; }
-
         public bool IsRead { get; set; }
 
         private Message()

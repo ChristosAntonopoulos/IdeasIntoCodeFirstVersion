@@ -55,8 +55,8 @@ namespace IdeasIntoCodeFirstVersion.Controllers.Api
         [HttpPost]
         public IHttpActionResult UnFollow(FollowingDto followingDto)
         {
-            var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(followingDto.FollowerID);
-            var follow = unitOfWork.Follows.GetFollow(developer.ID, followingDto.FolloweeID);
+            //var developer = unitOfWork.Developers.GetDeveloperWithUserUsingDeveloperId(followingDto.FollowerID);
+            var follow = unitOfWork.Follows.GetFollow(followingDto.FollowerID, followingDto.FolloweeID);
             unitOfWork.Follows.Delete(follow);
             unitOfWork.Complete();
             return Ok();

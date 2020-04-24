@@ -49,7 +49,7 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
         public Follow GetFollow(int followerID, int followeeID)
         {
-            return _context.Follows.Single(f => f.FolloweeID == followeeID && f.FollowerID == followerID);
+                return _context.Follows.Single(f => f.FolloweeID == followeeID && f.FollowerID == followerID);
         }
 
         public void Add(Follow following)
@@ -59,7 +59,7 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
         public void Delete(Follow follow)
         {
-
+            _context.Follows.Remove(follow);
         }
     }
 }
