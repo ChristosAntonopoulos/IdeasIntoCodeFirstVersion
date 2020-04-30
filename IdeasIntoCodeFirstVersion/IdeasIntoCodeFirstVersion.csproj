@@ -319,6 +319,10 @@
     <Compile Include="Migrations\202004241041287_populateDb.Designer.cs">
       <DependentUpon>202004241041287_populateDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004301412525_NewDataBase.cs" />
+    <Compile Include="Migrations\202004301412525_NewDataBase.Designer.cs">
+      <DependentUpon>202004301412525_NewDataBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -1191,6 +1195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004241041287_populateDb.resx">
       <DependentUpon>202004241041287_populateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004301412525_NewDataBase.resx">
+      <DependentUpon>202004301412525_NewDataBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
