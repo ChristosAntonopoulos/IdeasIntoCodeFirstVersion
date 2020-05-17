@@ -94,7 +94,7 @@ namespace IdeasIntoCodeFirstVersion.Controllers.API
             {
                 DeveloperOfProfile = developer,
                 ConnectedDeveloperAlreadyFollowsProfileDeveloper = unitOfWork.Developers.CheckIfCurrentUserFollowsUserOfProfile(ID, currentUserID),
-                ShowActionButtons = !(developer.ID == ID)
+                ShowActionButtons = !(developer.ID == currentUserID)
             };
 
             return Ok(viewModel);
