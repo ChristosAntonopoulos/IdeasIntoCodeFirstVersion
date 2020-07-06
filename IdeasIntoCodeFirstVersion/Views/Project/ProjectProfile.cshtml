@@ -2,84 +2,186 @@
 @{
     ViewBag.Title = "ProjectProfile";
 }
+<div class="d-flex align-items-stretch container mt-3">
+    <div id="content" class="col-md-12">
+        <div class="comlabel">
+            <div class='row'>
+                <div class='col-10'>
+                    <h1 class="mb-4 text-center">
+                        @Model.Project.Title
+                    </h1>
+                </div>
+                <div class='col-2 mt-2'>
+                    @if (Model.Action == true)
+                    {
+                        <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
 
-<section class="py-5 bg-light" id="section1">
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="text-center col-12">
-                    <div>
-                        <h2 class="mb-3 text-center">@Model.Project.Title</h2>
-                        @if (Model.Action == true)
-                        {
-                            <button data-project-id="@Model.Project.ID" class="btn btn-warning btn-sm js-toggle-join">Join</button>
+                    }
+                    @if (Model.Action == false)
+                    {
+                        <button data-project-id="@Model.Project.ID" class="btn js-toggle-join choosebtn" disabled="disabled">Joined</button>
+                    }
+                    @if (Model.Action == null)
+                    {
+                        <button class="btn btn-info btn-sm js-toggle-join" href="#">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    }
 
-                        }
-                        @if (Model.Action == false)
-                        {
-                            <button data-project-id="@Model.Project.ID" class="btn btn-info  btn-sm js-toggle-join" disabled="disabled">Joined</button>
-                        }
-                        @if (Model.Action == null)
-                        {
-                            <button class="btn btn-info btn-sm js-toggle-join" href="#">
-                                <i class="fas fa-cog"></i>
-                            </button>
-                        }
-
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
-
-<section class="py-5" id="section2">
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 ">
-                    <h3>Description:</h3>
-                </div>
-                <div class="col-md-9 mt-2">
-                    <p>@Model.Project.Description</p>
+        <div class="col-12">
+            <div class="techs">
+                <div class="row">
+                    @foreach(var category in Model.Project.ProjectCategories)
+                    {
+                    <span class="list-group-item border-2 mr-3 techs">
+                        @category.Name
+                    </span>
+                   }
                 </div>
             </div>
-            <div class="row mt-2">
-                <div class="col-md-3">
-                    <h3>Project Admin:</h3>
-                </div>
-                <div class="col-md-9">
-                    <a href="@Url.Action("DeveloperProfile", "Developer", new { ID=Model.Project.Admin.ID })">
-                        <img class="rounded-circle" src="~/Content/Images/ProfilePicture/@Model.Project.Admin.ID/@Model.Project.Admin.Picture" style="width: 50px;">
-                        <small>@Model.Project.Admin.User.Name</small>
-                    </a>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 ">
-                    <h3>Team Members:</h3>
-                </div>
-                <div class="col-md-9 mt-2">
-                    <div class="row">
-                        <div class="row">
-                            @foreach (var member in Model.Project.Team.TeamMembers)
-                            {
-                                <a href="@Url.Action("DeveloperProfile", "Developer", new { ID=member.ID })">
-                                    <div class="col-md-1 column">
-                                        <img class="rounded-circle" src="~/Content/Images/ProfilePicture/@member.ID/@member.Picture" style="width: 50px;">
-                                        <small>@member.User.Name</small>
-                                    </div>
-                                </a>
-                            }
+        </div>
+        <hr class="line" />
+        <div class="card-group">
+            <a href="@Url.Action("DeveloperProfile", "Developer", new { ID=Model.Project.Admin.ID })">
+                <div class="card mb-3 ownproj cardsizead">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="~/Content/Images/ProfilePicture/@Model.Project.Admin.ID/@Model.Project.Admin.Picture"
+                                 alt="picture"
+                                 class="rounded-circle photoadmca mt-3 ml-2" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+
+                                <h5 class="card-title">@Model.Project.Admin.User.Name</h5>
+                                <p class="card-text">
+                                </p>
+                                <p class="card-text">
+                                    <small>Admin</small>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+            </a>
+
         </div>
+        @foreach (var member in Model.Project.Team.TeamMembers)
+        {<a href="@Url.Action("DeveloperProfile", "Developer", new { ID=member.ID })">
+             <div class="card mb-3 ownproj cardsizead">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="~/Content/Images/ProfilePicture/@member.ID/@member.Picture"
+                                 alt="picture"
+                                 class="rounded-circle photoadmca mt-3 ml-2" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@member.User.Name</h5>
+                                <p class="card-text">
+                                </p>
+                                <p class="card-text">
+                                    <small>Members</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+             </div>
+
+         </a>
+         }
+
+
+        <hr class="line" />
+        <div class="row">
+            <div class="col-5">
+                <h4 class="techtitle pb-3">
+                    <strong>Description</strong>
+                </h4>
+                <p class='comlabel'>@Model.Project.Description</p>
+            </div>
+            <div class="col-1 vl"></div>
+            <div class="col-5">
+                <div class="techs">
+                    
+                        <h4 class="techtitle pb-3">
+                            <strong>Languages</strong>
+                        </h4>
+                        @foreach (var language in Model.Project.ProgrammingLanguages)
+                        {
+                            <span class="list-group-item border-2 mr-3 techs">
+                                @language.Name
+                            </span>
+                        }
+                   
+                </div>
+            </div>
+            @*<TechCard programmingLanguages={this.state.ProjectProfile.project.programmingLanguages} />*@
+        </div>
+        <hr class="line" />
+        <section class="py-5 comments">
+            <div>
+                <div class="container">
+                    <div class="row" id="comments">
+                        <div class="col-12 pb-3">
+                            <h2 class='comlabel'>
+                                <strong>Comment Section</strong>
+                            </h2>
+                        </div>
+                        <div class="col-10">
+                            <form class="comment-form" method="post" action="">
+                                <textarea id="commentText"
+                                          class="comment-area col-md-12"
+                                          name="user_comment"
+                                          placeholder="Write your comment here"></textarea>
+                            </form>
+                        </div>
+                        <div class="col-2 mt-2">
+                           
+                            <button data-project-id="@Model.Project.ID"
+                                    data-developer-id="@Model.Developer.User.FullName"
+                                    id="submitComment"
+                                    type="submit"
+                                    class="btn  postbtn">
+                                Post
+                            </button>
+                        </div>
+                        @foreach (var comment in Model.Developer.Comments)
+                        {
+                            <div class="row mt-5 commnetborder">
+                                <div class="col-1 mt-4">
+                                    <img src="~/Content/Images/ProfilePicture/@comment.Developer.ID/@comment.Developer.Picture"
+                                         class="img img-rounded img-fluid"
+                                         alt="developerimg" />
+                                </div>
+                                <div class="col-11">
+                                    <strong>@comment.Developer.User.FullName</strong>
+                                    <p>
+                                        @comment.Text
+                                    </p>
+                                    <small class=" text-center">
+                                        @comment.TimeStamp
+                                    </small>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</section>
+</div>
+
+
+
+
+
+
 
 <section class="py-5 bg-light" id="section3">
     <div>
@@ -118,7 +220,7 @@
 </section>
 
 
-<section class="py-5" id="section4">
+@*<section class="py-5" id="section4">
     <div>
         <div class="container">
             <div class="row">
@@ -138,55 +240,9 @@
             </div>
         </div>
     </div>
-</section>
-
-<section class="py-5 bg-light" id="section5">
-    <div>
-        <div class="container">
-            <div class="row" id="comments">
-
-                <div class="col-12 text-center pb-3">
-                    <h2><strong>Comments</strong></h2>
-                </div>
-
-                <div class="col-10">
-                    <form class="comment-form" method="post" action="">
-                        <textarea id="commentText" class="comment-area col-md-12" name="user_comment"
-                                  placeholder="Write your comment here"></textarea>
-                    </form>
-                </div>
-                <div class="col-2 mt-2">
-                    <button data-project-id="@Model.Project.ID" data-developer-id="@Model.Developer.User.FullName" id="submitComment" type="submit"
-                            class="btn  btn-primary">
-                        Post
-                    </button>
-                </div>
+</section>*@
 
 
-
-                @foreach (var comment in Model.Project.Comments)
-                {
-                    <div class="row mt-5">
-
-                        <div class="col-1">
-                            <img src="~/Content/Images/ProfilePicture/@comment.Developer.ID/@comment.Developer.Picture" class="img img-rounded img-fluid" />
-                        </div>
-
-                        <div class="col-11">
-                            <p><strong>@comment.Developer.User.FullName</strong></p>
-                            <p>@comment.Text</p>
-                            <p class="text-secondary text-center">@comment.TimeStamp</p>
-                        </div>
-
-                    </div>
-                }
-
-            </div>
-
-
-        </div>
-    </div>
-</section>
 
 
 

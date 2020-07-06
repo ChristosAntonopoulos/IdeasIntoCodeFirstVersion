@@ -2,24 +2,80 @@
 @{
     ViewBag.Title = "MyProject";
 }
-<button class="btn btn-primary" onclick="window.location.href='@Url.Action("New","Project")'">
-    New Project
-</button>
-<h2>MyProjects</h2>
+<div class="container text-center mt-5">
+    <h4 class='techtitle pb-3'><strong>Your Projects</strong></h4>
+    <div class="row">
+        <div class="p-4">
+           
+            <button type="button" class="btn btnprof" onclick="window.location.href='@Url.Action("New","Project")'">
+                <FontAwesomeIcon icon={faLightbulb} />New Project
+            </button>
+         
+        </div>
 
-<h2>Project Owned</h2>
+        <div class="w-100 mb-3 mt-3"></div>
+        <h4 class='techtitle pb-3'><strong>Projects Owned</strong></h4>
+        <div class="container">
+            <div class='row'>
 
-@foreach (var myproject in Model.ProjectsOwned)
-{
-    <li>@Html.ActionLink(myproject.Title, "ProjectProfile", "Project", new { id=myproject.ID}, null)</li>
+                <div class="">
+                    <div class="card-group">
 
-}
-<h2>Project  Participating</h2>
-@foreach (var team in Model.TeamParicipating)
-{
-    <li>@Html.ActionLink(team.Project.Title, "ProjectProfile", "Project", new {id=team.ProjectID }, null)</li>
+                        @foreach (var myproject in Model.ProjectsOwned)
+                        {
+                            <div class="card ownproj mr-3">
+                                <div class="card-header">
+                                    
+                                    <h4>@Html.ActionLink(myproject.Title, "ProjectProfile", "Project", new { id = myproject.ID }, null)</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p>@myproject.Description</p>
+                                    <div class="d-flex justify-content-center"></div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 mb-5 mt-5"></div>
+        <hr />
+        <div class="w-100 mb-3 mt-3"></div>
+
+        <h4 class='techtitle pb-3'><strong>Project participating</strong></h4>
+        <div class="container">
+            <div class='row'>
+
+                <div class="">
+                    <div class="card-group">
+                        @foreach (var team in Model.TeamParicipating)
+                        {
+                    
+                    <div class="card ownproj mr-3" >
+                        <div class="card-header">
+                            
+                            <h4>@Html.ActionLink(team.Project.Title, "ProjectProfile", "Project", new { id = team.ProjectID }, null)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>@team.Project.Description</p>
+                            <div class="d-flex justify-content-center"></div>
+                        </div>
+                    </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 mb-5 mt-5"></div>
+    </div>
+</div>
 
 
-}
+
+
 
 
