@@ -38,7 +38,7 @@
             const whatListToGet = $("#whatListToGet").attr("data-list");
             var table = $("#developers").DataTable({
                 ajax: {
-                    url: "/api/followings/",
+                    url: "/api/followings/GetListOfFollowers",
                     data: {
                         ID: developerID,
                         list: whatListToGet

@@ -3,223 +3,159 @@
 @{
     ViewBag.Title = "DeveloperProfile";
 }
+<div class="container text-center mt-5">
+    <div class="row">
+        <div class="col-md-6 ">
 
-<section id="profile" class="my-5 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8" id="prof">
+            <div class="card profpic">
 
-                <div class="card">
+                <div class="card-body">
+                    <img src="~/Content/Images/ProfilePicture/1/1075605a-6f18-4f8c-bdc0-ff6620554bb1DeathNote.png" alt="profilePic" class="img-fluid rounded-circle w-60 mb-3 imgpic" />
 
-                    <div class="card-body">
-                        <img src="~/Content/Images/ProfilePicture/@Model.DeveloperOfProfile.ID/@Model.DeveloperOfProfile.Picture" alt="" width="150" class="img-fluid rounded-circle w-60 mb-3">
+                    <h3 class='devname'></h3>
 
-                        <h4>@Model.DeveloperOfProfile.User.FullName</h4>
+                    <div class="d-flex justify-content-center">
+                        <div class="p-4">
 
+                            <button type="button" onClick={this.followrequest} class="btn js-toggle-follow btnprof">
+                            </button>
 
-                        <div class="d-flex justify-content-center">
-                            @*<div class="p-4">
-                                    @if (!Model.ShowActionButtons)
-                                    {
-                                        <a href="@Url.Action("SendMessage", "Message", new {developerID = Model.DeveloperOfProfile.ID })" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">New Message</a>
-                                        <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Send"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Send Messages</a>
-                                        <a href="@Url.Action("GetMessages", "Message", new {whatMessagesToGet = "Received"})" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Received Messages</a>
+                        </div>
+                        <div class="p-4">
 
-                                    }
-                                </div>*@
-                            <div class="p-4">
-                                @if (Model.ShowActionButtons)
-                                {
-                                    if (Model.ConnectedDeveloperAlreadyFollowsProfileDeveloper)
-                                    {
-                                        <button data-folowee-id="@Model.DeveloperOfProfile.ID" type="button" class="btn btn-success js-toggle-unfollow">
-                                            <i class="fas fa-user-plus"></i>
-                                            Unfollow
-                                        </button>
-                                    }
-                                    else
-                                    {
+                            <button type="button" class="btn btnprof">
 
-                                        <button data-folowee-id="@Model.DeveloperOfProfile.ID" type="button" class="btn btn-primary js-toggle-follow">
-                                            <i class="fas fa-user-plus"></i>
-                                            Follow
-                                        </button>
-                                    }
-
-                                }
-                            </div>
-                            <div class="p-4">
-                                @if (Model.ShowActionButtons)
-                                {
-                                    <a href="@Url.Action("SendMessage", "Message", new {ID = Model.DeveloperOfProfile.ID })">Message</a>
-                                    @*<button  type="button" class="btn btn-primary">
-                                            <i class="fas fa-envelope"></i>
-                                            Message
-                                        </button>*@
-                                }
-
-                            </div>
-
+                                Message
+                            </button>
 
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-6 col-md-4 row" id="fol">
-                <div class="col-6">
-                    @*<ul class="list-group">*@
-                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Followers"})" class="list-group-item border-0">
-                            Followers
-                            <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Followers.Count</span>
-                        </a>
-                    @*</ul>*@
-                </div>
-                <div class="col-6">
-                    @*<ul class="list-group">*@
-                        <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Following"})" class="list-group-item border-0">
-                            Following
-                            <span class="badge badge-success badge-pill">@Model.DeveloperOfProfile.Following.Count</span>
-                        </a>
-                    @*</ul>*@
-                </div>
-            </div>
         </div>
+        <div class="col-6 col-md-6 row followb">
+            <div class="col-6">
+                <ul class="list-group">
+                    <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Followers"})" >
+                        <li class="list-group-item border-0  ">
+                            <span class="badge badge-pill numsize">
+                                @Model.DeveloperOfProfile.Followers.Count
+                            </span>
+                            <br />
+                            <strong>Followers</strong>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+            <div class="col-6">
+                <ul class="list-group">
+                    <a href="@Url.Action("GetListOfFollowers", "Following", new {ID = Model.DeveloperOfProfile.ID, whatListToGet = "Following"})" >
+                        <li class="list-group-item border-0">
+                            <span class="badge badge-pill numsize">
+                                @Model.DeveloperOfProfile.Following.Count
+                            </span>
+                            <br />
+                            <strong>Following</strong>
 
-
-
-    </div>
-</section>
-
-
-<section id="profile" class="my-5 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th scope="col">
-                                <i class="fab fa-github"></i> GitHub:
-                            </th>
-                            <td scope="col"><a href="@Model.DeveloperOfProfile.GitHub">@Model.DeveloperOfProfile.GitHub</a></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <i class="far fa-envelope-open"></i>
-                                E-mail:
-                            </th>
-                            <td>@Model.DeveloperOfProfile.User.Email</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <i class="fab fa-linkedin"></i>
-                                Linkedin:
-
-                            </th>
-                            <td scope="col"><a href="@Model.DeveloperOfProfile.Linkedin">@Model.DeveloperOfProfile.Linkedin</a></td>
-
-                        </tr>
-                    </tbody>
-                </table>
-
+                        </li>
+                        </a>
+                </ul>
             </div>
 
 
-            <div class="col-lg-6">
+            <div class="col-md-12 decrdev">
                 <div class="info-header mb-5">
-                    <h4 class="text-primary pb-3">
-                        Description:
-                    </h4>
-                    <p class="lead pb-3">
-                        @Model.DeveloperOfProfile.Description
-                    </p>
+                    <h4 class="pb-3">Description:</h4>
+                    <p class="lead pb-3">@Model.DeveloperOfProfile.Description</p>
                 </div>
             </div>
 
-
         </div>
-    </div>
-</section>
+        <hr class="line" />
+        <div class="w-100 mb-1 mt-1"></div>
 
-<section id="profile" class="my-5 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
+        <div class="col-md-5">
+            <table class="table table-borderless contactinf">
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                          
+                            E-mail:
+                        </th>
+                        <td>@Model.DeveloperOfProfile.User.Email</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">
+                          
+                            GitHub:
+                        </th>
+                        <td scope="col">
+                           @Model.DeveloperOfProfile.GitHub
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                          
+                            Linkedin:
+                        </th>
+                        <td scope="col">
+                           @Model.DeveloperOfProfile.Linkedin
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Tech you prefer:</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @foreach (var programmingLanguage in Model.DeveloperOfProfile.ProgrammingLanguages)
+        <div class="col-1 vl"></div>
+        <div class="col-md-6">
+            <div class='techs'>
+                <h4 class='techtitle pb-3'><strong>Technologies</strong></h4>
+                <div class='row'>
+                    @foreach (var tech in Model.DeveloperOfProfile.ProgrammingLanguages)
+                    {
+                    <span class="list-group-item border-2 mr-3 techs mt-2" >
+                        @tech.Name
+                    </span>
+                       
+                    }
+                </div>
+            </div>
+        </div>
+
+        <hr class="line" />
+        <div class="w-100 mb-3 mt-3"></div>
+
+        <div class="container">
+            <div class='row'>
+                <div class="">
+                    <div class="card-group">
+                        @foreach (var project in Model.DeveloperOfProfile.ProjectsOwned)
                         {
-                            <li class="list-group-item border-0">@programmingLanguage.Name</li>
-
+                            <div class="card ownproj mr-3" key={p.id}>
+                                <div class="card-header">
+                                    <h4>@project.Title</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p>@project.Description</p>
+                                    <div class="d-flex justify-content-center"></div>
+                                </div>
+                            </div>
 
                         }
-                    </ul>
-                    <div class="card-body">
-                        <a href="@Url.Action("AddProgrammingLanguage", "ProgrammingLanguage")" class="card-link">Add</a>                      
+
+
+
                     </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="my-5 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="info-header mb-5">
-                    <h1 class="text-primary pb-3">
-                        Meet My Ideas
-                    </h1>
-                    <p class="lead">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias laborum numquam aperiam
-                        dolores a porro!
-                    </p>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-
-            @foreach (var project in Model.DeveloperOfProfile.ProjectsOwned)
-            {
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="~/Content/Images/userpic.png" alt="" class="img-fluid rounded-circle w-50 mb-3">
-                            <h3>@project.Title</h3>
-                            <h5 class="text-muted">Game</h5>
-                            <p>
-                                @project.Description
-                            </p>
-                            <div class="d-flex justify-content-center">
-
-                                <button type="button" class="btn btn-warning" onclick="window.location.href='@Url.Action("ProjectProfile", "Project", new { ID = project.ID })'">See More</button>
-
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            }
-
-
-
-        </div>
+        <div class="w-100 mb-5 mt-5"></div>
     </div>
-    
-</section>
+</div>
+
+
+
 @section scripts
 
 
@@ -231,7 +167,7 @@
             };
             $('.js-toggle-follow').clickToggle(function (ev) {
                 var button = $(ev.target);
-                $.post("/api/followings", { followeeId: button.attr("data-folowee-id") })
+                $.post("/api/followings/", { followeeId: button.attr("data-folowee-id") })
                     .done(function () {
                         button
                             .removeClass("btn-primary")
@@ -291,8 +227,6 @@
 
         })
     </script>
+    }
 
-    <style>
-
-    </style>
-}
+    

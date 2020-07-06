@@ -8,11 +8,12 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    
+   
+
 </head>
 <body>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        @*<nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -40,88 +41,101 @@
 
                 </div>
             </div>
+        </nav>*@
+
+        <nav class="navbar-expand-lg  mainnavbar">
+            <div class="container-fluid">
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <a class="navbar-brand mr-auto pt-3 " href="#">
+                        <strong>Ideas into Coding</strong>
+                    </a>
+                    <div class="form-inline mr-auto my-2 my-lg-0 float-left pt-2">
+                        <input class="form-control mr-sm-2"
+                               type="search"
+                               placeholder="Search..."
+                               aria-label="Search"
+                               name="searchString"
+                               onChange={this.onChange} />
+                        <button class="btn btn-outline-secondary my-2 my-sm-0"
+                                type="submit"
+                                onClick={this.search}>
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    @{
+                        Html.RenderPartial("_LoginPartial");
+                    }
+                </div>
+            </div>
         </nav>
 
-        <div class="row">
+        <div class="row col-12 mainclassbody">
             @if (Request.IsAuthenticated)
             {
 
-                <nav id="sidebar" class="col-2 thanasis">
-                    <!-- <div type="button" class="sidebar-header text-center" id="sidebarCollapse">
-                <h3>Ideas into Coading</h3>
-                <strong>IiC</strong>
-            </div> -->
-
-                    <div class="card" id="proPic">
-
+                <nav class="col-2 sidebar">
+                    <div class="card proPic" id="proPic">
                         <div class="card-body" id="picture" name="pic">
-                            <img src="" alt="picture" class="img-fluid rounded-circle w-60">
+                            <img src={ProfliePic} alt="picture" class="img-fluid rounded-circle w-60" />
                             <div class="d-flex justify-content-center">
                             </div>
                         </div>
                     </div>
-
-
                     <ul class="list-unstyled components">
                         <li class="active">
                             <a href="@Url.Action("DeveloperProfile", "Developer")">
-                                <i class="fas fa-user-circle"></i>
+                                <FontAwesomeIcon icon={faUserCircle} class='mr-3' />
                                 My Profile
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("MyProject","Project")" aria-expanded="false">
-                                <i class="far fa-lightbulb"></i>
-                                Projects
-                            </a>
-
+                            <a href="@Url.Action("MyProject", "Project")" aria-expanded="false">
+                                <FontAwesomeIcon icon={faLightbulb} class='mr-3' />
+                                My Project
+                                </a>
                         </li>
                         <li>
-                            <a href="#messageSubMenu" data-toggle="collapse" aria-expanded="false"
-                               @*class="dropdown-toggle"*@>
-                                <i class="far fa-comment-dots"></i>
+                            <a href="@Url.Action("MyProject", "Project")" aria-expanded="false">
+                                <FontAwesomeIcon icon={faCommentDots} class='mr-3' />
                                 Message
                             </a>
-                            <ul class="collapse list-unstyled" id="messageSubMenu">
-                                @*<li>
-                                <a href="#">Message 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Message 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Message 3</a>
-                            </li>*@
-                            </ul>
                         </li>
                         <li>
-                            <a href="#" id="github">
-                                <i class="fab fa-github"></i>
+                            <a href={localStorage.getItem("gitHub")} id="github">
+                                <FontAwesomeIcon icon={faGithub} class='mr-3' />
                                 GitHub
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AboutUs", "Home")">
-                                <i class="fas fa-paper-plane"></i>
+                            <a href="">
+                                <FontAwesomeIcon icon={faPaperPlane} class='mr-3' />
                                 About Us
                             </a>
                         </li>
                         <li>
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <a href="javascript:document.getElementById('logoutForm').submit()">
-                                    <i class="fas fa-sign-out-alt nav-link"></i>
-                                    Log Off
-                                </a>
-                            }
+                            <a href="#" onClick={this.logOut}>
+                                <FontAwesomeIcon icon={faSignOutAlt} class='mr-3' />
+                                Log Off
+                            </a>
+
 
                         </li>
                     </ul>
                 </nav>
             }
 
-            <div class="col-10">
+             
+
+            <div class="col-10 landingmain">
                 @RenderBody()
 
             </div>

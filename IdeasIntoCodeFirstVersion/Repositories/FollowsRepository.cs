@@ -42,7 +42,7 @@ namespace IdeasIntoCodeFirstVersion.Repositories
 
         public List<Developer> GetFollowees(int ID)
         {
-            return _context.Follows.Where(f => f.FollowerID == ID).Select(f => f.Follower)
+            return _context.Follows.Where(f => f.FollowerID == ID).Select(f => f.Followee)
                 .Include(f => f.User)
                 .ToList();
         }

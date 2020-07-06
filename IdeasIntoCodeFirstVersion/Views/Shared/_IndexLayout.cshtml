@@ -11,36 +11,48 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar-expand-lg  mainnavbar">
         <div class="container-fluid">
-            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
                     aria-label="Toggle navigation">
                 <i class="fas fa-align-justify"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <a class="navbar-brand mr-auto" href="#"><strong>Ideas into Coading</strong></a>
-                @using (Html.BeginForm("Data", "Home"))
-                {
-                    <div class="form-inline mr-auto my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search..."
-                               aria-label="Search" name="searchString">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                }
+                <a class="navbar-brand mr-auto pt-3 " href="#">
+                    <strong>Ideas into Coding</strong>
+                </a>
+                <div class="form-inline mr-auto my-2 my-lg-0 float-left pt-2">
+                    <input class="form-control mr-sm-2"
+                           type="search"
+                           placeholder="Search..."
+                           aria-label="Search"
+                           name="searchString"
+                           onChange={this.onChange} />
+                    <button class="btn btn-outline-secondary my-2 my-sm-0"
+                            type="submit"
+                            onClick={this.search}>
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div>
+                  
+                    <div class='mt-2'>
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <button class=' pr-3 pl-2 btnprof mr-3'>Home</button>
+                        
 
-
-                @Html.Partial("_LoginPartial")
-
-
-
-
+                        <i class="fa fa-globe" aria-hidden="true"></i> <button class=' pr-3 pl-2 btnprof mr-3'>Notifications</button>
+                    </div>                    
+                  
+                </div>
             </div>
         </div>
     </nav>
-
     <div class="row">
 
 
@@ -51,125 +63,7 @@
     </div>
 
 
-    <footer id="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center py-4">
-                    <h3>OtiNaNaiTeam</h3>
-                    <p>
-                        Copyright &copy;
-                        <span id="year"></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
-    <style>
-        
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: #d9853b;
-    color: #fff;
-    transition: all 0.3s;
-    opacity: 0.8;
-}
-
-     /*#sidebar.active {              gia na ginei to HOOOOOOOOOOOOVEEEEEEEEEER
-  margin-left: -250px;
-} 
-
-     #sidebar .sidebar-header {               gia thn eikona profile
-  padding: 20px;
-  background: #558c89;
-}*/ 
-
-    #sidebar ul.components {
-        padding: 20px 0;
-        border-bottom: 1px solid #558c89;
-    }
-
-    #sidebar ul p {
-        color: #fff;
-        padding: 10px;
-    }
-
-    #sidebar ul li a {
-        padding: 10px;
-        font-size: 1.1em;
-        display: block;
-    }
-
-        #sidebar ul li a:hover {
-            color: #558c89;
-            background: #fff;
-        }
-
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #558c89;
-}
-
-.navbar {
-  background-color: #558C89;
-  border-bottom: #D9853B 3px solid;
-  opacity: 0.8;
-}
-
-#home-section {
-  background: url(/Content//Images/homepage.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  min-height: 700px;
-}
-
-#home-section .dark-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 700px;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-#home-section .home-inner {
-  padding-top: 150px;
-}
-
-#home-section .card-form {
-  opacity: 0.8;
-}
-
-#home-section .fas,
-#create-section .fas {
-  color: #008ed6;
-  padding: 2px;
-  border-radius: 2px;
-}
-
-#explore-section .fas,
-#share-section .fas {
-  background: #333;
-  color: #fff;
-  padding: 2px;
-  border-radius: 2px;
-}
-
-#explore-head-section{
-  background-color: #558C89;
-}
-
-#main-footer{
-  background-color: #558C89;
-}
-
-#explore-section{
-  background-color: #ECECEA;
-}
-    </style>
 
 
 
